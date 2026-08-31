@@ -1,531 +1,576 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Ivory Vows</title>
+<title>Ivory Vows</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      background: #f7f2e9;
-      color: #4b1820;
-      font-family: Georgia, "Times New Roman", serif;
-    }
+body {
+  overflow-x: hidden;
+  background: #f7f2e9;
+}
 
-    /* ==============================
-       OPENING SCREEN
-    ============================== */
 
-    #opening {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      height: 100svh;
-      overflow: hidden;
-      background-image: url("Gatep.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+/* =========================
+   OPENING
+========================= */
 
-    /* ==============================
-       WELCOME VIDEO
-       STAYS UNDER THE GATE
-    ============================== */
+#opening {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: #f7f2e9;
+}
 
-    #welcomeVideo {
-      position: absolute;
-      inset: 0;
 
-      width: 100%;
-      height: 100%;
+/* =========================
+   GATE PICTURE
+========================= */
 
-      object-fit: cover;
+#gatePicture {
+  position: absolute;
+  inset: 0;
 
-      z-index: 1;
-    }
+  width: 100%;
+  height: 100%;
 
-    /* ==============================
-       GATE VIDEO
-    ============================== */
+  object-fit: cover;
+  object-position: center;
 
-    #gateVideo {
-      position: absolute;
-      inset: 0;
+  z-index: 5;
 
-      width: 100%;
-      height: 100%;
+  opacity: 1;
 
-      object-fit: cover;
+  transition: opacity 1.4s ease;
+}
 
-      z-index: 2;
 
-      background-image: url("Gatep.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+/* =========================
+   WELCOME VIDEO
+   UNDER EVERYTHING
+========================= */
 
-      opacity: 1;
+#welcomeVideo {
+  position: absolute;
+  inset: 0;
 
-      transition: opacity 1.5s ease;
-    }
+  width: 100%;
+  height: 100%;
 
-    #gateVideo.fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
+  object-fit: cover;
 
-    /* ==============================
-       TAP TO OPEN
-       TEXT ONLY — NO BOX
-    ============================== */
+  z-index: 1;
+}
 
-    #tapToOpen {
-      position: absolute;
 
-      left: 50%;
-      top: 50%;
+/* =========================
+   GATE VIDEO
+========================= */
 
-      transform: translate(-50%, -50%);
+#gateVideo {
+  position: absolute;
+  inset: 0;
 
-      z-index: 10;
+  width: 100%;
+  height: 100%;
 
-      background: transparent;
-      border: none;
-      outline: none;
+  object-fit: cover;
 
-      padding: 15px;
+  z-index: 4;
 
-      color: #ffffff;
+  opacity: 0;
 
-      font-family:
-        "Snell Roundhand",
-        "Brush Script MT",
-        "Segoe Script",
-        cursive;
+  transition: opacity 0.2s ease;
+}
 
-      font-size: 36px;
-      font-weight: normal;
-      font-style: italic;
 
-      letter-spacing: 1px;
+/* =========================
+   TAP TO OPEN
+========================= */
 
-      text-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.55),
-        0 0 12px rgba(0, 0, 0, 0.25);
+#tapToOpen {
+  position: absolute;
 
-      cursor: pointer;
+  left: 50%;
+  top: 50%;
 
-      transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
-    }
+  transform: translate(-50%, -50%);
 
-    #tapToOpen.hide {
-      opacity: 0;
+  z-index: 10;
 
-      transform:
-        translate(-50%, -50%)
-        scale(0.95);
+  border: none;
+  outline: none;
+  background: transparent;
 
-      pointer-events: none;
-    }
+  padding: 15px 20px;
 
-    /* ==============================
-       MAIN SCROLLING PAGE
-    ============================== */
+  color: white;
 
-    main {
-      width: 100%;
+  font-family:
+    "Snell Roundhand",
+    "Brush Script MT",
+    "Segoe Script",
+    cursive;
 
-      background:
-        radial-gradient(
-          circle at top,
-          rgba(255,255,255,0.85),
-          transparent 45%
-        ),
-        #f7f2e9;
-    }
+  font-size: 36px;
+  font-style: italic;
+  font-weight: normal;
 
-    .section {
-      width: 100%;
+  letter-spacing: 1px;
 
-      padding: 80px 18px;
+  cursor: pointer;
 
-      text-align: center;
-    }
+  text-shadow:
+    0 2px 6px rgba(0,0,0,0.55),
+    0 0 15px rgba(0,0,0,0.3);
 
-    .section-title {
-      margin-bottom: 20px;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
 
-      color: #641c27;
 
-      font-size: 28px;
+#tapToOpen.hide {
+  opacity: 0;
 
-      letter-spacing: 2px;
-    }
+  transform:
+    translate(-50%, -50%)
+    scale(0.95);
 
-    .divider {
-      width: 80px;
-      height: 1px;
+  pointer-events: none;
+}
 
-      margin:
-        0 auto
-        35px;
 
-      background: #9b7b48;
-    }
+/* =========================
+   GATE PICTURE DISAPPEARS
+========================= */
 
-    .placeholder {
-      width: 100%;
-      max-width: 800px;
+#gatePicture.hide {
+  opacity: 0;
+  pointer-events: none;
+}
 
-      min-height: 180px;
 
-      margin: auto;
+/* =========================
+   GATE VIDEO APPEARS
+========================= */
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+#gateVideo.playing {
+  opacity: 1;
+}
 
-      border: 1px dashed rgba(100,28,39,0.25);
 
-      color: #8a7474;
+/* =========================
+   MAIN INVITATION
+========================= */
 
-      font-size: 13px;
+main {
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255,255,255,0.85),
+      transparent 45%
+    ),
+    #f7f2e9;
+}
 
-      letter-spacing: 1px;
-    }
 
-    /* ==============================
-       FAMILY / DRESS VIDEOS
-    ============================== */
+.section {
+  width: 100%;
+  padding: 80px 18px;
+  text-align: center;
+}
 
-    .content-video {
-      display: block;
 
-      width: 100%;
-      max-width: 850px;
+.section-title {
+  margin-bottom: 20px;
 
-      height: auto;
+  color: #641c27;
 
-      margin: 0 auto;
-    }
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
-    /* ==============================
-       MOBILE
-    ============================== */
+  font-size: 28px;
+  letter-spacing: 2px;
+}
 
-    @media (max-width: 600px) {
 
-      #tapToOpen {
-        font-size: 31px;
-      }
+.divider {
+  width: 80px;
+  height: 1px;
 
-      .section {
-        padding: 65px 16px;
-      }
+  margin:
+    0 auto 35px;
 
-      .section-title {
-        font-size: 25px;
-      }
-    }
-  </style>
+  background: #9b7b48;
+}
+
+
+.placeholder {
+  width: 100%;
+  max-width: 800px;
+
+  min-height: 180px;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px dashed rgba(100,28,39,0.25);
+
+  color: #8a7474;
+
+  font-size: 13px;
+
+  letter-spacing: 1px;
+}
+
+
+.content-video {
+  display: block;
+
+  width: 100%;
+  max-width: 850px;
+
+  height: auto;
+
+  margin: 0 auto;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  #tapToOpen {
+    font-size: 31px;
+  }
+
+  .section {
+    padding: 65px 16px;
+  }
+
+  .section-title {
+    font-size: 25px;
+  }
+}
+</style>
 </head>
 
 
 <body>
 
 
-  <!-- =====================================
-       OPENING
-  ====================================== -->
+<!-- =========================
+     OPENING
+========================= -->
 
-  <section id="opening">
-
-
-    <!--
-      WELCOME VIDEO
-      It is underneath the gate.
-    -->
-
-    <video
-      id="welcomeVideo"
-      src="welcome.mp4"
-      muted
-      playsinline
-      loop
-      preload="auto">
-    </video>
+<section id="opening">
 
 
-    <!--
-      GATE VIDEO
-      Gatep.jpg is the visible poster.
-    -->
+  <!-- ACTUAL GATE PICTURE -->
 
-    <video
-      id="gateVideo"
-      src="gate.mp4"
-      poster="Gatep.jpg"
-      muted
-      playsinline
-      preload="auto">
-    </video>
+  <img
+    id="gatePicture"
+    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
+    alt="Wedding invitation"
+  >
 
 
-    <!--
-      TEXT ONLY
-      NO BOX
-    -->
+  <!-- WELCOME VIDEO UNDERNEATH -->
 
-    <button id="tapToOpen">
-      Tap to Open
-    </button>
+  <video
+    id="welcomeVideo"
+    src="welcome.mp4"
+    muted
+    playsinline
+    loop
+    preload="auto">
+  </video>
 
+
+  <!-- GATE VIDEO -->
+
+  <video
+    id="gateVideo"
+    src="gate.mp4"
+    muted
+    playsinline
+    preload="auto">
+  </video>
+
+
+  <!-- CURSIVE TEXT -->
+
+  <button id="tapToOpen">
+    Tap to Open
+  </button>
+
+
+</section>
+
+
+
+<!-- =========================
+     SCROLLING INVITATION
+========================= -->
+
+<main>
+
+
+  <!-- SCRATCH -->
+
+  <section
+    class="section"
+    id="scratch">
+
+    <h2 class="section-title">
+      A Little Surprise
+    </h2>
+
+    <div class="divider"></div>
+
+    <div class="placeholder">
+      SCRATCH TO REVEAL
+    </div>
 
   </section>
 
 
 
-  <!-- =====================================
-       SCROLLING INVITATION
-  ====================================== -->
+  <!-- FAMILY -->
 
-  <main>
+  <section
+    class="section"
+    id="family">
 
+    <video
+      class="content-video"
+      src="family.mp4"
+      playsinline
+      controls
+      preload="metadata">
+    </video>
 
-    <!-- SCRATCH TO REVEAL -->
+  </section>
 
-    <section
-      class="section"
-      id="scratch">
 
-      <h2 class="section-title">
-        A Little Surprise
-      </h2>
 
-      <div class="divider"></div>
+  <!-- COUNTDOWN -->
 
-      <div class="placeholder">
-        SCRATCH TO REVEAL
-      </div>
+  <section
+    class="section"
+    id="countdown">
 
-    </section>
+    <h2 class="section-title">
+      Countdown
+    </h2>
 
+    <div class="divider"></div>
 
+    <div class="placeholder">
+      COUNTDOWN EMBED
+    </div>
 
-    <!-- FAMILY VIDEO -->
+  </section>
 
-    <section
-      class="section"
-      id="family">
 
-      <video
-        class="content-video"
-        src="family.mp4"
-        playsinline
-        controls
-        preload="metadata">
-      </video>
 
-    </section>
+  <!-- TIMELINE -->
 
+  <section
+    class="section"
+    id="timeline">
 
+    <h2 class="section-title">
+      Timeline
+    </h2>
 
-    <!-- COUNTDOWN -->
+    <div class="divider"></div>
 
-    <section
-      class="section"
-      id="countdown">
+    <div class="placeholder">
+      TIMELINE
+    </div>
 
-      <h2 class="section-title">
-        Countdown
-      </h2>
+  </section>
 
-      <div class="divider"></div>
 
-      <div class="placeholder">
-        COUNTDOWN EMBED
-      </div>
 
-    </section>
+  <!-- VENUE -->
 
+  <section
+    class="section"
+    id="venue">
 
+    <h2 class="section-title">
+      The Venue
+    </h2>
 
-    <!-- TIMELINE -->
+    <div class="divider"></div>
 
-    <section
-      class="section"
-      id="timeline">
+    <div class="placeholder">
+      VENUE PICTURE
+    </div>
 
-      <h2 class="section-title">
-        Timeline
-      </h2>
+    <div style="height:40px;"></div>
 
-      <div class="divider"></div>
+    <div class="placeholder">
+      MAP
+    </div>
 
-      <div class="placeholder">
-        TIMELINE
-      </div>
+  </section>
 
-    </section>
 
 
+  <!-- DRESS CODE -->
 
-    <!-- VENUE -->
+  <section
+    class="section"
+    id="dress">
 
-    <section
-      class="section"
-      id="venue">
+    <video
+      class="content-video"
+      src="dress.mp4"
+      playsinline
+      controls
+      preload="metadata">
+    </video>
 
-      <h2 class="section-title">
-        The Venue
-      </h2>
+  </section>
 
-      <div class="divider"></div>
 
-      <div class="placeholder">
-        VENUE PICTURE
-      </div>
 
-      <div style="height:40px;"></div>
+  <!-- RSVP -->
 
-      <div class="placeholder">
-        MAP
-      </div>
+  <section
+    class="section"
+    id="rsvp">
 
-    </section>
+    <h2 class="section-title">
+      RSVP
+    </h2>
 
+    <div class="divider"></div>
 
+    <div class="placeholder">
+      RSVP
+    </div>
 
-    <!-- DRESS CODE -->
+  </section>
 
-    <section
-      class="section"
-      id="dress">
 
-      <video
-        class="content-video"
-        src="dress.mp4"
-        playsinline
-        controls
-        preload="metadata">
-      </video>
+</main>
 
-    </section>
 
 
+<script>
 
-    <!-- RSVP -->
+/* =========================
+   ELEMENTS
+========================= */
 
-    <section
-      class="section"
-      id="rsvp">
+const gatePicture =
+  document.getElementById("gatePicture");
 
-      <h2 class="section-title">
-        RSVP
-      </h2>
+const gateVideo =
+  document.getElementById("gateVideo");
 
-      <div class="divider"></div>
+const welcomeVideo =
+  document.getElementById("welcomeVideo");
 
-      <div class="placeholder">
-        RSVP
-      </div>
+const tapToOpen =
+  document.getElementById("tapToOpen");
 
-    </section>
 
+/* =========================
+   TAP TO OPEN
+========================= */
 
-  </main>
+tapToOpen.addEventListener(
+  "click",
+  function() {
 
+    /* Hide text */
 
+    tapToOpen.classList.add("hide");
 
-  <!-- =====================================
-       JAVASCRIPT
-  ====================================== -->
 
-  <script>
+    /* Start Welcome underneath */
 
-    const gateVideo =
-      document.getElementById("gateVideo");
-
-    const welcomeVideo =
-      document.getElementById("welcomeVideo");
-
-    const tapToOpen =
-      document.getElementById("tapToOpen");
-
-
-    /* ==============================
-       TAP TO OPEN
-    ============================== */
-
-    tapToOpen.addEventListener(
-      "click",
-      function () {
-
-        /*
-          Hide the cursive text
-        */
-
-        tapToOpen.classList.add("hide");
-
-
-        /*
-          Start Welcome video
-        */
-
-        welcomeVideo.play().catch(
-          function () {}
-        );
-
-
-        /*
-          Start Gate video
-        */
-
-        gateVideo.play().catch(
-          function () {}
-
-        );
-
-      }
+    welcomeVideo.play().catch(
+      function() {}
     );
 
 
-    /* ==============================
-       WHEN GATE FINISHES
-    ============================== */
+    /*
+      Start Gate video
+    */
 
-    gateVideo.addEventListener(
-      "ended",
-      function () {
+    gateVideo.currentTime = 0;
 
-        /*
-          Fade the gate away
-        */
+    gateVideo.classList.add("playing");
 
-        gateVideo.classList.add(
-          "fade-out"
-        );
-
-      }
+    gateVideo.play().catch(
+      function() {}
     );
 
-  </script>
+
+    /*
+      Remove the picture
+      so gate video takes over
+    */
+
+    setTimeout(
+      function() {
+
+        gatePicture.classList.add("hide");
+
+      },
+      150
+    );
+
+  }
+);
+
+
+/* =========================
+   GATE FINISHES
+========================= */
+
+gateVideo.addEventListener(
+  "ended",
+  function() {
+
+    /*
+      Gate video fades away
+    */
+
+    gateVideo.style.opacity = "0";
+
+  }
+);
+
+</script>
 
 
 </body>
