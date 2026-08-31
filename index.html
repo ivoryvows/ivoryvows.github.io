@@ -1,573 +1,2020 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0">
+<title>Our Wedding</title>
 
-<title>Ivory Vows</title>
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;600&family=Parisienne&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+<!-- LEAFLET MAP -->
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
 <style>
 
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-  overflow-x:hidden;
-  background:#f7f2e9;
+    width:100%;
+    overflow-x:hidden;
+    background:#fffdf8;
+    color:#651b27;
+    font-family:"Cormorant Garamond",serif;
+}
+
+section{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+}
+
+button,
+a{
+    -webkit-tap-highlight-color:transparent;
 }
 
 
-/* =========================
-   OPENING
-========================= */
+/* =====================================================
+   COMMON FLORAL DECORATION
+===================================================== */
 
-#opening{
-  position:relative;
+.corner-flower{
+    position:absolute;
+    width:115px;
+    height:115px;
+    object-fit:contain;
+    opacity:.95;
+    pointer-events:none;
+    z-index:2;
+}
 
-  width:100%;
-  height:100vh;
-  height:100svh;
+.corner-flower.top-left{
+    top:-18px;
+    left:-18px;
+}
 
-  overflow:hidden;
+.corner-flower.top-right{
+    top:-18px;
+    right:-18px;
+    transform:scaleX(-1);
+}
 
-  background:#f7f2e9;
+.corner-flower.bottom-left{
+    bottom:-18px;
+    left:-18px;
+    transform:scaleY(-1);
+}
+
+.corner-flower.bottom-right{
+    bottom:-18px;
+    right:-18px;
+    transform:scale(-1);
 }
 
 
-/* =========================
-   WELCOME
-========================= */
+/* =====================================================
+   GATE / OPENING
+===================================================== */
 
-#welcomeVideo{
-
-  position:absolute;
-  inset:0;
-
-  width:100%;
-  height:100%;
-
-  object-fit:cover;
-
-  z-index:1;
+#gateScreen{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    background:#fffdf8;
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
 }
 
+.gate-image{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
 
-/* =========================
-   GATE VIDEO
-========================= */
+.gate-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    padding-bottom:80px;
+    background:linear-gradient(
+        to bottom,
+        transparent 55%,
+        rgba(45,5,12,.35)
+    );
+}
+
+.open-button{
+    position:relative;
+    z-index:3;
+    padding:13px 30px;
+    border:1px solid #d8b96a;
+    background:rgba(255,253,248,.88);
+    color:#651b27;
+    font-family:"Cormorant Garamond",serif;
+    font-size:19px;
+    letter-spacing:2px;
+    cursor:pointer;
+    transition:.4s;
+}
+
+.open-button:active{
+    transform:scale(.96);
+}
 
 #gateVideo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 1.8s ease;
+    z-index:4;
+}
 
-  position:absolute;
-  inset:0;
+#gateScreen.video-playing .gate-image,
+#gateScreen.video-playing .gate-overlay{
+    opacity:0;
+    transition:opacity 1.5s ease;
+}
 
-  width:100%;
-  height:100%;
+#gateScreen.video-playing #gateVideo{
+    opacity:1;
+}
 
-  object-fit:cover;
-
-  z-index:5;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  transition:opacity 0.2s ease;
-
+#gateScreen.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity 1.5s ease;
 }
 
 
-/* =========================
-   GATE PICTURE
-========================= */
+/* =====================================================
+   WELCOME
+===================================================== */
 
-#gatePicture{
+#welcome{
+    min-height:100vh;
+    background:#fffdf8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-  position:absolute;
-  inset:0;
+.welcome-video{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
+}
 
-  width:100%;
-  height:100%;
+.welcome-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(255,253,248,.12);
+    z-index:1;
+    pointer-events:none;
+}
 
-  object-fit:cover;
-  object-position:center;
+.welcome-content{
+    position:relative;
+    z-index:3;
+    text-align:center;
+    padding:30px;
+}
 
-  z-index:6;
+.welcome-small{
+    font-size:20px;
+    letter-spacing:3px;
+    margin-bottom:12px;
+}
 
-  transition:opacity 1.3s ease;
+.welcome-title{
+    font-family:"Parisienne",cursive;
+    font-size:64px;
+    color:#651b27;
+}
 
+.welcome-subtitle{
+    font-size:21px;
+    letter-spacing:2px;
+    margin-top:12px;
 }
 
 
-/* =========================
-   TAP TO OPEN
-========================= */
+/* =====================================================
+   SECTION COMMON
+===================================================== */
 
-#tapToOpen{
-
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  transform:translate(-50%,-50%);
-
-  z-index:10;
-
-  background:transparent;
-
-  border:none;
-  outline:none;
-
-  padding:15px 20px;
-
-  color:#fff;
-
-  font-family:
-    "Snell Roundhand",
-    "Brush Script MT",
-    "Segoe Script",
-    cursive;
-
-  font-size:36px;
-
-  font-style:italic;
-
-  font-weight:normal;
-
-  letter-spacing:1px;
-
-  cursor:pointer;
-
-  text-shadow:
-    0 2px 7px rgba(0,0,0,.6),
-    0 0 15px rgba(0,0,0,.3);
-
-  transition:
-    opacity .8s ease,
-    transform .8s ease;
-
+.luxury-section{
+    min-height:100vh;
+    padding:80px 20px;
+    background:#fffdf8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-
-#tapToOpen.hide{
-
-  opacity:0;
-
-  transform:
-    translate(-50%,-50%)
-    scale(.95);
-
-  pointer-events:none;
-
+.section-inner{
+    position:relative;
+    width:100%;
+    max-width:850px;
+    text-align:center;
 }
-
-
-/* =========================
-   MAIN PAGE
-========================= */
-
-main{
-
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(255,255,255,.85),
-      transparent 45%
-    ),
-    #f7f2e9;
-
-}
-
-
-.section{
-
-  width:100%;
-
-  padding:80px 18px;
-
-  text-align:center;
-
-}
-
 
 .section-title{
+    font-family:"Parisienne",cursive;
+    font-size:54px;
+    color:#651b27;
+    margin-bottom:10px;
+}
 
-  margin-bottom:20px;
-
-  color:#641c27;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size:28px;
-
-  letter-spacing:2px;
-
+.section-subtitle{
+    font-size:21px;
+    color:#651b27;
+    margin-bottom:30px;
 }
 
 
-.divider{
+/* =====================================================
+   SCRATCH
+===================================================== */
 
-  width:80px;
+.scratch-frame{
+    position:relative;
+    max-width:650px;
+    margin:auto;
+    padding:35px;
+    border:1px solid #b18a45;
+    background:#fffdf8;
+    box-shadow:0 8px 30px rgba(101,27,39,.08);
+}
 
-  height:1px;
-
-  margin:
-    0 auto 35px;
-
-  background:#9b7b48;
-
+.scratch-frame iframe{
+    display:block;
+    width:100%;
+    height:500px;
+    border:none;
 }
 
 
-.placeholder{
+/* =====================================================
+   FAMILY
+===================================================== */
 
-  width:100%;
+.family-section{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fffdf8;
+}
 
-  max-width:800px;
-
-  min-height:180px;
-
-  margin:auto;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  border:1px dashed
-    rgba(100,28,39,.25);
-
-  color:#8a7474;
-
-  font-size:13px;
-
-  letter-spacing:1px;
-
+.family-video{
+    width:100%;
+    max-width:850px;
+    max-height:80vh;
+    object-fit:contain;
+    display:block;
 }
 
 
-.content-video{
+/* =====================================================
+   COUNTDOWN
+===================================================== */
 
-  display:block;
-
-  width:100%;
-
-  max-width:850px;
-
-  height:auto;
-
-  margin:0 auto;
-
+.countdown-section{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:80px 20px;
+    background:#fffdf8;
 }
 
+.countdown-frame{
+    position:relative;
+    width:100%;
+    max-width:760px;
+    padding:70px 45px;
+    border:1px solid #b18a45;
+    background:#fffdf8;
+    box-shadow:
+        0 12px 35px rgba(101,27,39,.08),
+        inset 0 0 0 7px #fffdf8,
+        inset 0 0 0 8px rgba(177,138,69,.35);
+}
+
+.countdown-frame:before,
+.countdown-frame:after{
+    content:"";
+    position:absolute;
+    left:10%;
+    right:10%;
+    height:1px;
+    background:#b18a45;
+}
+
+.countdown-frame:before{
+    top:35px;
+}
+
+.countdown-frame:after{
+    bottom:35px;
+}
+
+.countdown-title{
+    text-align:center;
+    font-family:"Parisienne",cursive;
+    color:#651b27;
+    font-size:58px;
+    margin-bottom:8px;
+}
+
+.countdown-subtitle{
+    text-align:center;
+    font-size:21px;
+    color:#651b27;
+    margin-bottom:35px;
+}
+
+.countdown-embed{
+    position:relative;
+    width:100%;
+    min-height:120px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.countdown-embed .tickcounter{
+    width:100% !important;
+}
+
+.countdown-flower{
+    position:absolute;
+    width:85px;
+    height:85px;
+    object-fit:contain;
+    z-index:5;
+    pointer-events:none;
+}
+
+.countdown-flower.left{
+    top:-48px;
+    left:-40px;
+}
+
+.countdown-flower.right{
+    top:-48px;
+    right:-40px;
+    transform:scaleX(-1);
+}
+
+.countdown-flower.bottom-left{
+    bottom:-48px;
+    left:-40px;
+    transform:scaleY(-1);
+}
+
+.countdown-flower.bottom-right{
+    bottom:-48px;
+    right:-40px;
+    transform:scale(-1);
+}
+
+
+/* =====================================================
+   TIMELINE
+===================================================== */
+
+.timeline-section{
+    position:relative;
+    background:#fffdf8;
+    padding:80px 10px 100px;
+}
+
+.timeline-heading{
+    text-align:center;
+    font-family:"Parisienne",cursive;
+    font-size:58px;
+    color:#651b27;
+    margin-bottom:30px;
+}
+
+.timeline{
+    position:relative;
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    padding:50px 10px 100px;
+}
+
+.timeline-line{
+    position:absolute;
+    top:50px;
+    bottom:100px;
+    left:50%;
+    width:1.5px;
+    background:#651b27;
+    transform:translateX(-50%);
+    z-index:1;
+}
+
+.moving-flower{
+    position:absolute;
+    left:50%;
+    top:50px;
+    width:58px;
+    height:58px;
+    transform:translate(-50%,0);
+    z-index:10;
+    pointer-events:none;
+    transition:top .12s linear;
+}
+
+.moving-flower img{
+    width:58px;
+    height:58px;
+    object-fit:contain;
+}
+
+.event{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:250px;
+    align-items:center;
+    z-index:2;
+}
+
+.event-text{
+    text-align:center;
+    padding:10px 12px;
+}
+
+.time{
+    font-family:"Parisienne",cursive;
+    font-size:35px;
+    line-height:1.1;
+    color:#651b27;
+    margin-bottom:8px;
+}
+
+.event-name{
+    font-family:"Parisienne",cursive;
+    font-size:39px;
+    line-height:1.05;
+    color:#651b27;
+}
+
+.event-image{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:5px;
+}
+
+.event-image img{
+    width:190px;
+    height:190px;
+    object-fit:contain;
+    display:block;
+}
+
+/* alternating sides */
+
+.event:nth-of-type(1) .event-text{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(1) .event-image{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(2) .event-image{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(2) .event-text{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(3) .event-text{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(3) .event-image{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(4) .event-image{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(4) .event-text{
+    grid-column:2;
+    grid-row:1;
+}
+
+
+/* =====================================================
+   VENUE / MAP
+===================================================== */
+
+.map-section{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:70px 18px;
+    background:#fffdf8;
+}
+
+.map-content{
+    width:100%;
+    max-width:760px;
+    text-align:center;
+}
+
+.map-title{
+    font-family:"Parisienne",cursive;
+    font-size:58px;
+    color:#651b27;
+    margin-bottom:5px;
+}
+
+.map-subtitle{
+    font-size:21px;
+    color:#651b27;
+    margin-bottom:25px;
+}
+
+#map{
+    width:100%;
+    height:410px;
+    border:1px solid #b18a45;
+    overflow:hidden;
+}
+
+.venue-name{
+    font-family:"Parisienne",cursive;
+    font-size:34px;
+    color:#651b27;
+    margin-top:22px;
+    margin-bottom:15px;
+}
+
+.map-button{
+    display:inline-block;
+    padding:11px 28px;
+    border:1px solid #651b27;
+    color:#651b27;
+    background:transparent;
+    text-decoration:none;
+    font-family:"Montserrat",sans-serif;
+    font-size:11px;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+.map-button:active{
+    background:#651b27;
+    color:#fffdf8;
+}
+
+
+/* =====================================================
+   DRESS CODE
+===================================================== */
+
+.dress-section{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:70px 20px;
+    background:#fffdf8;
+}
+
+.dress-video{
+    width:100%;
+    max-width:850px;
+    max-height:75vh;
+    object-fit:contain;
+}
+
+
+/* =====================================================
+   RSVP
+===================================================== */
+
+.rsvp-section{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:70px 20px;
+    background:#fffdf8;
+}
+
+.rsvp-card{
+    position:relative;
+    width:100%;
+    max-width:600px;
+    padding:65px 35px;
+    border:1px solid #b18a45;
+    background:#fffdf8;
+    text-align:center;
+}
+
+.rsvp-card:before,
+.rsvp-card:after{
+    content:"";
+    position:absolute;
+    left:12%;
+    right:12%;
+    height:1px;
+    background:#b18a45;
+}
+
+.rsvp-card:before{
+    top:32px;
+}
+
+.rsvp-card:after{
+    bottom:32px;
+}
+
+.rsvp-kindly{
+    font-size:20px;
+    letter-spacing:2px;
+    margin-bottom:8px;
+}
+
+.rsvp-title{
+    font-family:"Parisienne",cursive;
+    font-size:55px;
+    color:#651b27;
+    line-height:1.1;
+    margin-bottom:15px;
+}
+
+.rsvp-description{
+    font-size:20px;
+    line-height:1.4;
+    margin-bottom:28px;
+}
+
+.rsvp-button{
+    padding:12px 32px;
+    background:transparent;
+    border:1px solid #651b27;
+    color:#651b27;
+    font-family:"Montserrat",sans-serif;
+    font-size:11px;
+    letter-spacing:2px;
+    cursor:pointer;
+}
+
+#rsvpForm{
+    display:none;
+}
+
+.form-title{
+    font-family:"Parisienne",cursive;
+    font-size:48px;
+    color:#651b27;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    font-size:21px;
+    color:#651b27;
+    margin-bottom:5px;
+}
+
+input{
+    display:block;
+    width:230px;
+    height:35px;
+    margin:0 auto 20px;
+    padding:5px;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid #b18a45;
+    outline:none;
+    text-align:center;
+    font-family:"Montserrat",sans-serif;
+    font-size:12px;
+    color:#651b27;
+}
+
+input::placeholder{
+    color:#651b27;
+    opacity:.6;
+}
+
+.question{
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.choice-row{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:22px;
+}
+
+.choice{
+    width:150px;
+    padding:9px 5px;
+    background:transparent;
+    border:1px solid #b18a45;
+    color:#651b27;
+    font-family:"Cormorant Garamond",serif;
+    font-size:17px;
+    cursor:pointer;
+}
+
+.choice.selected{
+    background:rgba(177,138,69,.25);
+}
+
+.confirm-button{
+    padding:10px 25px;
+    background:transparent;
+    border:1px solid #651b27;
+    color:#651b27;
+    font-family:"Montserrat",sans-serif;
+    font-size:10px;
+    letter-spacing:2px;
+    cursor:pointer;
+}
+
+#success{
+    display:none;
+}
+
+.success-title{
+    font-family:"Parisienne",cursive;
+    font-size:55px;
+    color:#651b27;
+    margin-bottom:10px;
+}
+
+.success-text{
+    font-size:22px;
+    line-height:1.5;
+}
+
+
+/* =====================================================
+   MUSIC BUTTON
+===================================================== */
+
+.music-button{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:1px solid #b18a45;
+    background:rgba(255,253,248,.94);
+    color:#651b27;
+    z-index:9000;
+    font-size:19px;
+    cursor:pointer;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:600px){
 
-  #tapToOpen{
-    font-size:31px;
-  }
+    .corner-flower{
+        width:80px;
+        height:80px;
+    }
 
-  .section{
-    padding:65px 16px;
-  }
+    .welcome-small{
+        font-size:15px;
+    }
 
-  .section-title{
-    font-size:25px;
-  }
+    .welcome-title{
+        font-size:52px;
+    }
+
+    .welcome-subtitle{
+        font-size:17px;
+    }
+
+    .luxury-section{
+        padding:65px 12px;
+    }
+
+    .section-title{
+        font-size:45px;
+    }
+
+    .scratch-frame{
+        padding:20px;
+    }
+
+    .scratch-frame iframe{
+        height:460px;
+    }
+
+    .countdown-frame{
+        padding:60px 20px;
+    }
+
+    .countdown-title{
+        font-size:45px;
+    }
+
+    .countdown-subtitle{
+        font-size:18px;
+    }
+
+    .countdown-flower{
+        width:65px;
+        height:65px;
+    }
+
+    .countdown-flower.left,
+    .countdown-flower.bottom-left{
+        left:-25px;
+    }
+
+    .countdown-flower.right,
+    .countdown-flower.bottom-right{
+        right:-25px;
+    }
+
+    .timeline-heading{
+        font-size:48px;
+    }
+
+    .timeline{
+        padding-left:2px;
+        padding-right:2px;
+    }
+
+    .event{
+        min-height:230px;
+    }
+
+    .time{
+        font-size:28px;
+    }
+
+    .event-name{
+        font-size:31px;
+    }
+
+    .event-image img{
+        width:165px;
+        height:165px;
+    }
+
+    .moving-flower{
+        width:46px;
+        height:46px;
+    }
+
+    .moving-flower img{
+        width:46px;
+        height:46px;
+    }
+
+    #map{
+        height:330px;
+    }
+
+    .map-title{
+        font-size:48px;
+    }
+
+    .venue-name{
+        font-size:28px;
+    }
+
+    .rsvp-card{
+        padding:60px 18px;
+    }
+
+    .rsvp-title{
+        font-size:45px;
+    }
+
+    .rsvp-description{
+        font-size:18px;
+    }
+
+    .choice{
+        width:135px;
+        font-size:15px;
+    }
 
 }
 
 </style>
-
 </head>
 
 
 <body>
 
 
-<!-- =========================
-     OPENING
-========================= -->
+<!-- =====================================================
+     GATE
+===================================================== -->
 
-<section id="opening">
+<div id="gateScreen">
 
+    <img
+        class="gate-image"
+        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
+        alt="Wedding Gate">
 
-<img
-  id="gatePicture"
-  src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
-  alt="Wedding Gate">
+    <div class="gate-overlay">
 
+        <button
+            class="open-button"
+            onclick="openInvitation()">
 
-<video
-  id="welcomeVideo"
-  src="welcome.mp4"
-  muted
-  playsinline
-  loop
-  preload="auto">
-</video>
+            Tap to Open
 
+        </button>
 
-<video
-  id="gateVideo"
-  src="gate.MP4"
-  muted
-  playsinline
-  preload="auto">
-</video>
+    </div>
 
 
-<button id="tapToOpen">
-  Tap to Open
+    <video
+        id="gateVideo"
+        playsinline
+        preload="auto">
+
+        <source
+            src="https://cdn.jsdelivr.net/gh/ivoryvows/ivoryvows.github.io@main/gate.MP4"
+            type="video/mp4">
+
+    </video>
+
+</div>
+
+
+
+<!-- =====================================================
+     WELCOME
+===================================================== -->
+
+<section id="welcome">
+
+    <video
+        class="welcome-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto">
+
+        <source
+            src="https://cdn.jsdelivr.net/gh/ivoryvows/ivoryvows.github.io@main/welcome.mov">
+
+    </video>
+
+    <div class="welcome-overlay"></div>
+
+    <div class="welcome-content">
+
+        <div class="welcome-small">
+            Together with their families
+        </div>
+
+        <div class="welcome-title">
+            We Invite You
+        </div>
+
+        <div class="welcome-subtitle">
+            TO CELEBRATE OUR SPECIAL DAY
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SCRATCH TO REVEAL
+===================================================== -->
+
+<section class="luxury-section">
+
+    <img
+        class="corner-flower top-left"
+        src="https://files.catbox.moe/rd9anq.png">
+
+    <img
+        class="corner-flower top-right"
+        src="https://files.catbox.moe/rd9anq.png">
+
+    <img
+        class="corner-flower bottom-left"
+        src="https://files.catbox.moe/rd9anq.png">
+
+    <img
+        class="corner-flower bottom-right"
+        src="https://files.catbox.moe/rd9anq.png">
+
+    <div class="section-inner">
+
+        <div class="section-title">
+            A Little Surprise
+        </div>
+
+        <div class="section-subtitle">
+            Scratch to reveal
+        </div>
+
+        <div class="scratch-frame">
+
+            <iframe
+                src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
+                loading="lazy">
+            </iframe>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FAMILY
+===================================================== -->
+
+<section class="family-section">
+
+    <img
+        class="corner-flower top-left"
+        src="https://files.catbox.moe/rd9anq.png">
+
+    <img
+        class="corner-flower top-right"
+        src="https://files.catbox.moe/rd9anq.png">
+
+    <video
+        class="family-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto">
+
+        <source
+            src="https://cdn.jsdelivr.net/gh/ivoryvows/ivoryvows.github.io@main/family.mov">
+
+    </video>
+
+</section>
+
+
+
+<!-- =====================================================
+     COUNTDOWN
+===================================================== -->
+
+<section class="countdown-section">
+
+    <div class="countdown-frame">
+
+        <img
+            class="countdown-flower left"
+            src="https://files.catbox.moe/rd9anq.png">
+
+        <img
+            class="countdown-flower right"
+            src="https://files.catbox.moe/rd9anq.png">
+
+        <img
+            class="countdown-flower bottom-left"
+            src="https://files.catbox.moe/rd9anq.png">
+
+        <img
+            class="countdown-flower bottom-right"
+            src="https://files.catbox.moe/rd9anq.png">
+
+
+        <div class="countdown-title">
+            Until We Say I Do
+        </div>
+
+        <div class="countdown-subtitle">
+            Counting every moment until our special day
+        </div>
+
+
+        <div class="countdown-embed">
+
+            <!-- TICKCOUNTER -->
+
+            <script>
+            (function(d, s, id) {
+                var js, pjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//www.tickcounter.com/static/js/loader.js";
+                pjs.parentNode.insertBefore(js, pjs);
+            }(document, "script", "tickcounter-sdk"));
+            </script>
+
+            <a
+                data-type="countdown"
+                data-id="11415740"
+                class="tickcounter"
+                style="
+                    display:block;
+                    left:0;
+                    width:100%;
+                    height:0;
+                    position:relative;
+                    padding-bottom:25%;
+                    margin:0 auto;
+                "
+                title="Wedding Countdown"
+                href="//www.tickcounter.com/">
+
+                Wedding Countdown
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TIMELINE
+===================================================== -->
+
+<section class="timeline-section">
+
+    <div class="timeline-heading">
+        Our Celebration
+    </div>
+
+
+    <div class="timeline">
+
+
+        <!-- CENTER LINE -->
+
+        <div class="timeline-line"></div>
+
+
+        <!-- MOVING FLOWER -->
+
+        <div
+            class="moving-flower"
+            id="movingFlower">
+
+            <img
+                src="https://files.catbox.moe/rd9anq.png"
+                alt="Flower">
+
+        </div>
+
+
+        <!-- EVENT 1 -->
+
+        <div class="event">
+
+            <div class="event-text">
+
+                <div class="time">
+                    07:00 PM
+                </div>
+
+                <div class="event-name">
+                    Guest Arrival
+                </div>
+
+            </div>
+
+
+            <div class="event-image">
+
+                <img
+                    src="https://files.catbox.moe/zt8kp4.jpeg"
+                    alt="Guest Arrival">
+
+            </div>
+
+        </div>
+
+
+        <!-- EVENT 2 -->
+
+        <div class="event">
+
+            <div class="event-image">
+
+                <img
+                    src="https://files.catbox.moe/kh8bbs.png"
+                    alt="Bride Entry">
+
+            </div>
+
+
+            <div class="event-text">
+
+                <div class="time">
+                    08:00 PM
+                </div>
+
+                <div class="event-name">
+                    Bride Entry
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- EVENT 3 -->
+
+        <div class="event">
+
+            <div class="event-text">
+
+                <div class="time">
+                    08:30 PM
+                </div>
+
+                <div class="event-name">
+                    Nikkah Ceremony
+                </div>
+
+            </div>
+
+
+            <div class="event-image">
+
+                <img
+                    src="https://files.catbox.moe/kph6hd.png"
+                    alt="Nikkah Ceremony">
+
+            </div>
+
+        </div>
+
+
+        <!-- EVENT 4 -->
+
+        <div class="event">
+
+            <div class="event-image">
+
+                <img
+                    src="https://files.catbox.moe/ssoyrc.png"
+                    alt="Buffet">
+
+            </div>
+
+
+            <div class="event-text">
+
+                <div class="time">
+                    09:30 PM
+                </div>
+
+                <div class="event-name">
+                    Buffet Opening
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     VENUE
+===================================================== -->
+
+<section class="map-section">
+
+    <div class="map-content">
+
+        <div class="map-title">
+            Find Us
+        </div>
+
+        <div class="map-subtitle">
+            We can't wait to celebrate with you
+        </div>
+
+
+        <div id="map"></div>
+
+
+        <div class="venue-name">
+            Al Hameed Grand Marquee<br>
+            Islamabad
+        </div>
+
+
+        <a
+            class="map-button"
+            href="https://www.google.com/maps/search/?api=1&query=Al+Hameed+Grand+Marquee+Islamabad"
+            target="_blank">
+
+            VIEW ON GOOGLE MAPS
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     DRESS CODE
+===================================================== -->
+
+<section class="dress-section">
+
+    <img
+        class="corner-flower top-left"
+        src="https://files.catbox.moe/rd9anq.png">
+
+    <img
+        class="corner-flower top-right"
+        src="https://files.catbox.moe/rd9anq.png">
+
+    <video
+        class="dress-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto">
+
+        <source
+            src="https://cdn.jsdelivr.net/gh/ivoryvows/ivoryvows.github.io@main/dress.MP4"
+            type="video/mp4">
+
+    </video>
+
+</section>
+
+
+
+<!-- =====================================================
+     RSVP
+===================================================== -->
+
+<section class="rsvp-section">
+
+    <div class="rsvp-card">
+
+
+        <img
+            class="corner-flower top-left"
+            src="https://files.catbox.moe/rd9anq.png">
+
+        <img
+            class="corner-flower top-right"
+            src="https://files.catbox.moe/rd9anq.png">
+
+
+        <!-- INTRO -->
+
+        <div id="rsvpIntro">
+
+            <div class="rsvp-kindly">
+                Kindly Respond
+            </div>
+
+            <div class="rsvp-title">
+                Confirm Your<br>
+                Attendance
+            </div>
+
+            <div class="rsvp-description">
+                We would be delighted to celebrate
+                this special day with you.
+            </div>
+
+            <button
+                class="rsvp-button"
+                onclick="openRSVP()">
+
+                RSVP
+
+            </button>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div id="rsvpForm">
+
+            <div class="form-title">
+                Kindly Respond
+            </div>
+
+
+            <label for="guestName">
+                Your Name
+            </label>
+
+            <input
+                id="guestName"
+                type="text"
+                placeholder="Enter your name"
+                autocomplete="name">
+
+
+            <div class="question">
+                Will you be joining us?
+            </div>
+
+
+            <div class="choice-row">
+
+                <button
+                    class="choice"
+                    id="accept"
+                    onclick="choose('accept')">
+
+                    Joyfully Accept
+
+                </button>
+
+
+                <button
+                    class="choice"
+                    id="reject"
+                    onclick="choose('reject')">
+
+                    Regretfully Reject
+
+                </button>
+
+            </div>
+
+
+            <label for="guests">
+                Number of Guests
+            </label>
+
+            <input
+                id="guests"
+                type="number"
+                min="1"
+                max="20"
+                value="1">
+
+
+            <button
+                class="confirm-button"
+                onclick="confirmRSVP()">
+
+                CONFIRM RSVP
+
+            </button>
+
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div id="success">
+
+            <div class="success-title">
+                Thank You
+            </div>
+
+            <div class="success-text">
+
+                Your RSVP has been received.
+
+                <br><br>
+
+                We look forward to celebrating
+                with you.
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MUSIC
+===================================================== -->
+
+<audio
+    id="weddingMusic"
+    loop
+    preload="auto">
+
+    <source
+        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Music.mp3"
+        type="audio/mpeg">
+
+</audio>
+
+
+<button
+    class="music-button"
+    id="musicButton"
+    onclick="toggleMusic()">
+
+    ♫
+
 </button>
 
 
-</section>
 
+<!-- =====================================================
+     LEAFLET
+===================================================== -->
 
-
-<!-- =========================
-     SCROLLING INVITATION
-========================= -->
-
-<main>
-
-
-<section
-  class="section"
-  id="scratch">
-
-  <h2 class="section-title">
-    A Little Surprise
-  </h2>
-
-  <div class="divider"></div>
-
-  <div class="placeholder">
-    SCRATCH TO REVEAL
-  </div>
-
-</section>
-
-
-
-<section
-  class="section"
-  id="family">
-
-  <video
-    class="content-video"
-    src="family.mp4"
-    playsinline
-    controls
-    preload="metadata">
-  </video>
-
-</section>
-
-
-
-<section
-  class="section"
-  id="countdown">
-
-  <h2 class="section-title">
-    Countdown
-  </h2>
-
-  <div class="divider"></div>
-
-  <div class="placeholder">
-    COUNTDOWN EMBED
-  </div>
-
-</section>
-
-
-
-<section
-  class="section"
-  id="timeline">
-
-  <h2 class="section-title">
-    Timeline
-  </h2>
-
-  <div class="divider"></div>
-
-  <div class="placeholder">
-    TIMELINE
-  </div>
-
-</section>
-
-
-
-<section
-  class="section"
-  id="venue">
-
-  <h2 class="section-title">
-    The Venue
-  </h2>
-
-  <div class="divider"></div>
-
-  <div class="placeholder">
-    VENUE PICTURE
-  </div>
-
-  <div style="height:40px;"></div>
-
-  <div class="placeholder">
-    MAP
-  </div>
-
-</section>
-
-
-
-<section
-  class="section"
-  id="dress">
-
-  <video
-    class="content-video"
-    src="dress.mp4"
-    playsinline
-    controls
-    preload="metadata">
-  </video>
-
-</section>
-
-
-
-<section
-  class="section"
-  id="rsvp">
-
-  <h2 class="section-title">
-    RSVP
-  </h2>
-
-  <div class="divider"></div>
-
-  <div class="placeholder">
-    RSVP
-  </div>
-
-</section>
-
-
-</main>
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
 
 
 
 <script>
 
+/* =====================================================
+   GATE + MUSIC
+===================================================== */
 
-const tapToOpen =
-  document.getElementById("tapToOpen");
-
-const gatePicture =
-  document.getElementById("gatePicture");
+const gateScreen =
+document.getElementById("gateScreen");
 
 const gateVideo =
-  document.getElementById("gateVideo");
+document.getElementById("gateVideo");
 
-const welcomeVideo =
-  document.getElementById("welcomeVideo");
+const music =
+document.getElementById("weddingMusic");
+
+const musicButton =
+document.getElementById("musicButton");
 
 
-/* =========================
-   TAP
-========================= */
+function openInvitation(){
 
-tapToOpen.addEventListener(
-  "click",
-  async function(){
+    /* Start music after user interaction */
+
+    music.volume = 0.35;
+
+    music.play()
+    .then(function(){
+
+        musicButton.innerHTML = "♫";
+
+    })
+    .catch(function(){
+
+        musicButton.innerHTML = "♪";
+
+    });
+
+
+    /* Play gate video */
+
+    gateScreen.classList.add("video-playing");
+
+    gateVideo.currentTime = 0;
+
+    gateVideo.play()
+    .catch(function(error){
+
+        console.log("Gate video could not autoplay:", error);
+
+    });
+
+
+    /* When gate video finishes */
+
+    gateVideo.addEventListener(
+        "ended",
+        function(){
+
+            gateScreen.classList.add("hide");
+
+        },
+        {once:true}
+    );
+
+}
+
+
+
+/* =====================================================
+   MUSIC BUTTON
+===================================================== */
+
+function toggleMusic(){
+
+    if(music.paused){
+
+        music.play()
+        .then(function(){
+
+            musicButton.innerHTML = "♫";
+
+        });
+
+    }
+    else{
+
+        music.pause();
+
+        musicButton.innerHTML = "♪";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   TIMELINE MOVING FLOWER
+===================================================== */
+
+const flower =
+document.getElementById("movingFlower");
+
+const timeline =
+document.querySelector(".timeline");
+
+
+function moveFlower(){
+
+    if(!timeline || !flower){
+        return;
+    }
+
+
+    const rect =
+    timeline.getBoundingClientRect();
+
+
+    const scrollTop =
+    window.scrollY ||
+    window.pageYOffset;
+
+
+    const timelineTop =
+    rect.top + scrollTop;
+
+
+    const timelineHeight =
+    timeline.offsetHeight;
+
+
+    const flowerTravel =
+    timelineHeight - 108;
+
 
     /*
-      Because this function is triggered
-      directly by the user's tap,
-      Safari allows video playback.
+       Calculate how far the page has
+       moved through the timeline.
     */
 
-    try{
-
-      gateVideo.currentTime = 0;
-
-      await gateVideo.play();
-
-      /*
-        Gate successfully started.
-        Now hide the picture.
-      */
-
-      gatePicture.style.opacity = "0";
-
-      gateVideo.style.opacity = "1";
-
-      tapToOpen.classList.add("hide");
+    const viewportMiddle =
+    scrollTop + (window.innerHeight / 2);
 
 
-      /*
-        Start welcome underneath.
-      */
+    let progress =
+    (viewportMiddle - timelineTop) /
+    timelineHeight;
 
-      welcomeVideo.play().catch(
-        function(){}
-      );
+
+    progress =
+    Math.max(
+        0,
+        Math.min(1,progress)
+    );
+
+
+    const newTop =
+    50 +
+    (flowerTravel * progress);
+
+
+    flower.style.top =
+    newTop + "px";
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    moveFlower,
+    {passive:true}
+);
+
+window.addEventListener(
+    "resize",
+    moveFlower
+);
+
+moveFlower();
+
+
+
+/* =====================================================
+   RSVP
+===================================================== */
+
+let attendance = "";
+
+
+function openRSVP(){
+
+    document
+    .getElementById("rsvpIntro")
+    .style.display = "none";
+
+
+    document
+    .getElementById("rsvpForm")
+    .style.display = "block";
+
+}
+
+
+function choose(type){
+
+    attendance = type;
+
+
+    document
+    .getElementById("accept")
+    .classList.remove("selected");
+
+
+    document
+    .getElementById("reject")
+    .classList.remove("selected");
+
+
+    if(type === "accept"){
+
+        document
+        .getElementById("accept")
+        .classList.add("selected");
 
     }
 
-    catch(error){
+    else{
 
-      /*
-        If Safari doesn't start the video,
-        keep the gate picture visible.
-      */
-
-      console.log(
-        "Gate video could not start:",
-        error
-      );
+        document
+        .getElementById("reject")
+        .classList.add("selected");
 
     }
 
-  }
+}
+
+
+
+/* =====================================================
+   GOOGLE SHEET
+===================================================== */
+
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbwhcI7eEUuhAeb9LDD_iOQV1yOXX-iSxou8kYnM_B9J6Z9Fxjma_F5E0-zGMMi_fKo/exec";
+
+
+function confirmRSVP(){
+
+    const name =
+    document
+    .getElementById("guestName")
+    .value
+    .trim();
+
+
+    const guests =
+    document
+    .getElementById("guests")
+    .value;
+
+
+    if(!name){
+
+        alert("Please enter your name.");
+
+        return;
+
+    }
+
+
+    if(!attendance){
+
+        alert("Please select your RSVP.");
+
+        return;
+
+    }
+
+
+    if(!guests || guests < 1){
+
+        alert("Please enter the number of guests.");
+
+        return;
+
+    }
+
+
+    /*
+       Send information to Google Sheets.
+    */
+
+    const data =
+    new URLSearchParams();
+
+    data.append("name",name);
+
+    data.append(
+        "attendance",
+        attendance === "accept"
+        ? "Joyfully Accept"
+        : "Regretfully Reject"
+    );
+
+    data.append("guests",guests);
+
+    data.append(
+        "timestamp",
+        new Date().toLocaleString()
+    );
+
+
+    fetch(
+        GOOGLE_SCRIPT_URL,
+        {
+            method:"POST",
+            mode:"no-cors",
+            body:data
+        }
+    )
+    .then(function(){
+
+        showRSVPSuccess();
+
+    })
+    .catch(function(error){
+
+        console.log(
+            "RSVP submission error:",
+            error
+        );
+
+        /*
+           Still show confirmation because
+           Apps Script no-cors does not expose
+           the response to the browser.
+        */
+
+        showRSVPSuccess();
+
+    });
+
+}
+
+
+function showRSVPSuccess(){
+
+    document
+    .getElementById("rsvpForm")
+    .style.display = "none";
+
+
+    document
+    .getElementById("success")
+    .style.display = "block";
+
+}
+
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+const venueLat = 33.6390;
+
+const venueLng = 73.1610;
+
+
+const map =
+L.map("map")
+.setView(
+    [venueLat,venueLng],
+    15
 );
 
 
-/* =========================
-   GATE FINISHES
-========================= */
+L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+        maxZoom:19,
+        attribution:
+        "&copy; OpenStreetMap contributors"
+    }
+).addTo(map);
 
-gateVideo.addEventListener(
-  "ended",
-  function(){
 
-    gateVideo.style.opacity = "0";
+const marker =
+L.marker(
+    [venueLat,venueLng]
+)
+.addTo(map);
 
-  }
+
+marker.bindPopup(
+    "<b>Al Hameed Grand Marquee</b><br>" +
+    "Islamabad"
 );
+
+
+marker.openPopup();
+
 
 </script>
 
