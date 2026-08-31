@@ -18,7 +18,8 @@
     }
 
     body {
-      background: #f8f4ed;
+      margin: 0;
+      background: #f7f2e9;
       color: #4b1820;
       font-family: Georgia, "Times New Roman", serif;
       overflow-x: hidden;
@@ -32,11 +33,12 @@
       position: relative;
       width: 100%;
       height: 100vh;
+      height: 100svh;
       overflow: hidden;
-      background: #f8f4ed;
+      background: #f7f2e9;
     }
 
-    /* Welcome stays underneath the door video */
+    /* Welcome video stays underneath */
 
     #welcomeVideo {
       position: absolute;
@@ -47,7 +49,7 @@
       z-index: 1;
     }
 
-    /* Door video is on top */
+    /* Gate video */
 
     #gateVideo {
       position: absolute;
@@ -56,8 +58,9 @@
       height: 100%;
       object-fit: cover;
       z-index: 2;
+
       opacity: 1;
-      transition: opacity 1.2s ease;
+      transition: opacity 1.5s ease;
     }
 
     #gateVideo.fade-out {
@@ -65,92 +68,148 @@
       pointer-events: none;
     }
 
-    /* Tap to open */
+    /* =========================
+       TAP TO OPEN
+       NO BOX
+    ========================= */
 
     #tapToOpen {
       position: absolute;
-      z-index: 5;
+      z-index: 10;
+
       left: 50%;
       top: 50%;
+
       transform: translate(-50%, -50%);
 
-      padding: 15px 32px;
+      background: transparent;
+      border: none;
+      outline: none;
 
-      border: 1px solid rgba(255,255,255,0.8);
-      background: rgba(70, 15, 25, 0.72);
+      padding: 12px 20px;
+
       color: #fff;
 
-      font-size: 15px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
+      font-family:
+        "Snell Roundhand",
+        "Brush Script MT",
+        "Segoe Script",
+        cursive;
+
+      font-size: 34px;
+      font-style: italic;
+      font-weight: 400;
+
+      letter-spacing: 1px;
 
       cursor: pointer;
 
-      transition: opacity 0.6s ease,
-                  transform 0.6s ease;
+      text-shadow:
+        0 2px 5px rgba(0,0,0,0.45),
+        0 0 14px rgba(255,255,255,0.2);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
     }
 
     #tapToOpen.hide {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.95);
+
+      transform:
+        translate(-50%, -50%)
+        scale(0.96);
+
       pointer-events: none;
     }
 
     /* =========================
-       MAIN INVITATION
+       SCROLLING INVITATION
     ========================= */
 
     main {
       position: relative;
-      background: #f8f4ed;
+
+      background:
+        radial-gradient(
+          circle at top,
+          rgba(255,255,255,0.8),
+          transparent 45%
+        ),
+        #f7f2e9;
     }
 
     .section {
       position: relative;
+
       width: 100%;
-      padding: 70px 20px;
+
+      padding: 75px 18px;
+
       text-align: center;
     }
 
     .section-title {
-      margin-bottom: 25px;
+      margin-bottom: 22px;
+
       color: #641c27;
+
       font-size: 28px;
+
       letter-spacing: 2px;
     }
 
+    .divider {
+      width: 80px;
+      height: 1px;
+
+      margin:
+        0 auto
+        35px;
+
+      background: #9b7b48;
+    }
+
+    /* =========================
+       PLACEHOLDERS
+    ========================= */
+
     .placeholder {
-      max-width: 700px;
-      margin: auto;
-      min-height: 150px;
+      width: 100%;
+      max-width: 800px;
+
+      min-height: 180px;
+
+      margin: 0 auto;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      border: 1px dashed rgba(100, 28, 39, 0.35);
+      border: 1px dashed rgba(100, 28, 39, 0.28);
 
-      color: #7b6262;
-      font-size: 14px;
+      color: #8a7474;
+
+      font-size: 13px;
+
+      letter-spacing: 1px;
     }
 
-    /* Video sections */
+    /* =========================
+       VIDEOS
+    ========================= */
 
     .content-video {
       display: block;
+
       width: 100%;
-      max-width: 800px;
+      max-width: 850px;
+
       height: auto;
+
       margin: 0 auto;
-    }
 
-    /* Decorative divider */
-
-    .divider {
-      width: 90px;
-      height: 1px;
-      margin: 0 auto 35px;
-      background: #9a7a45;
+      border-radius: 0;
     }
 
     /* =========================
@@ -159,50 +218,66 @@
 
     @media (max-width: 600px) {
 
+      #tapToOpen {
+        font-size: 30px;
+      }
+
       .section {
-        padding: 60px 16px;
+        padding: 65px 16px;
       }
 
       .section-title {
-        font-size: 24px;
-      }
-
-      #tapToOpen {
-        font-size: 13px;
-        letter-spacing: 3px;
-        padding: 13px 25px;
+        font-size: 25px;
       }
     }
   </style>
 </head>
 
+
 <body>
 
-  <!-- =========================
+
+  <!-- =================================
        OPENING
-  ========================= -->
+  ================================== -->
 
   <section id="opening">
 
-    <!-- Welcome video underneath -->
+    <!--
+      WELCOME VIDEO
+      This stays underneath the gate.
+    -->
+
     <video
       id="welcomeVideo"
       src="welcome.mp4"
       muted
       playsinline
-      loop>
+      loop
+      preload="auto">
     </video>
 
-    <!-- Door video on top -->
+
+    <!--
+      GATE VIDEO
+      gatep.jpg is shown before the tap.
+    -->
+
     <video
       id="gateVideo"
       src="gate.mp4"
+      poster="gatep.jpg"
       muted
       playsinline
       preload="auto">
     </video>
 
-    <!-- Tap to open -->
+
+    <!--
+      TEXT ONLY
+      NO BOX
+    -->
+
     <button id="tapToOpen">
       Tap to Open
     </button>
@@ -210,133 +285,231 @@
   </section>
 
 
-  <!-- =========================
-       INVITATION
-  ========================= -->
+
+  <!-- =================================
+       MAIN SCROLLING INVITATION
+  ================================== -->
 
   <main>
 
-    <!-- Scratch -->
-    <section class="section" id="scratch">
-      <h2 class="section-title">A Little Surprise</h2>
+
+    <!-- SCRATCH -->
+
+    <section
+      class="section"
+      id="scratch">
+
+      <h2 class="section-title">
+        A Little Surprise
+      </h2>
+
       <div class="divider"></div>
 
       <div class="placeholder">
-        SCRATCH-TO-REVEAL WILL GO HERE
+        SCRATCH TO REVEAL
       </div>
+
     </section>
 
 
-    <!-- Family Video -->
-    <section class="section" id="family">
+
+    <!-- FAMILY VIDEO -->
+
+    <section
+      class="section"
+      id="family">
+
       <video
         class="content-video"
         src="family.mp4"
+        playsinline
         controls
-        playsinline>
+        preload="metadata">
       </video>
+
     </section>
 
 
-    <!-- Countdown -->
-    <section class="section" id="countdown">
-      <h2 class="section-title">Counting Down</h2>
+
+    <!-- COUNTDOWN -->
+
+    <section
+      class="section"
+      id="countdown">
+
+      <h2 class="section-title">
+        Countdown
+      </h2>
+
       <div class="divider"></div>
 
       <div class="placeholder">
-        COUNTDOWN EMBED WILL GO HERE
+        COUNTDOWN EMBED
       </div>
+
     </section>
 
 
-    <!-- Timeline -->
-    <section class="section" id="timeline">
-      <h2 class="section-title">Timeline</h2>
+
+    <!-- TIMELINE -->
+
+    <section
+      class="section"
+      id="timeline">
+
+      <h2 class="section-title">
+        Timeline
+      </h2>
+
       <div class="divider"></div>
 
       <div class="placeholder">
-        TIMELINE WILL GO HERE
+        TIMELINE
       </div>
+
     </section>
 
 
-    <!-- Venue -->
-    <section class="section" id="venue">
-      <h2 class="section-title">The Venue</h2>
+
+    <!-- VENUE -->
+
+    <section
+      class="section"
+      id="venue">
+
+      <h2 class="section-title">
+        The Venue
+      </h2>
+
       <div class="divider"></div>
 
       <div class="placeholder">
-        VENUE IMAGE WILL GO HERE
+        VENUE PICTURE
       </div>
 
       <div style="height:40px;"></div>
 
       <div class="placeholder">
-        MAP WILL GO HERE
+        MAP
       </div>
+
     </section>
 
 
-    <!-- Dress Code -->
-    <section class="section" id="dress">
+
+    <!-- DRESS CODE -->
+
+    <section
+      class="section"
+      id="dress">
+
       <video
         class="content-video"
         src="dress.mp4"
         playsinline
-        controls>
+        controls
+        preload="metadata">
       </video>
+
     </section>
+
 
 
     <!-- RSVP -->
-    <section class="section" id="rsvp">
-      <h2 class="section-title">RSVP</h2>
+
+    <section
+      class="section"
+      id="rsvp">
+
+      <h2 class="section-title">
+        RSVP
+      </h2>
+
       <div class="divider"></div>
 
       <div class="placeholder">
-        RSVP WILL GO HERE
+        RSVP
       </div>
+
     </section>
+
 
   </main>
 
 
-  <!-- =========================
+
+  <!-- =================================
        JAVASCRIPT
-  ========================= -->
+  ================================== -->
 
   <script>
 
-    const gateVideo = document.getElementById("gateVideo");
-    const welcomeVideo = document.getElementById("welcomeVideo");
-    const tapToOpen = document.getElementById("tapToOpen");
+    const gateVideo =
+      document.getElementById("gateVideo");
 
-    tapToOpen.addEventListener("click", function () {
+    const welcomeVideo =
+      document.getElementById("welcomeVideo");
 
-      /* Remove the button */
-
-      tapToOpen.classList.add("hide");
-
-      /* Start Welcome video */
-
-      welcomeVideo.play().catch(() => {});
-
-      /* Start Door video */
-
-      gateVideo.play().catch(() => {});
-
-    });
+    const tapToOpen =
+      document.getElementById("tapToOpen");
 
 
-    /* When door video finishes */
+    /*
+      USER TAPS
+    */
 
-    gateVideo.addEventListener("ended", function () {
+    tapToOpen.addEventListener(
+      "click",
+      function () {
 
-      gateVideo.classList.add("fade-out");
+        /* Hide Tap to Open */
 
-    });
+        tapToOpen.classList.add("hide");
+
+
+        /*
+          Start Welcome video
+          underneath the gate
+        */
+
+        welcomeVideo.play().catch(
+          function () {}
+        );
+
+
+        /*
+          Start Gate video
+        */
+
+        gateVideo.play().catch(
+          function () {}
+        );
+
+      }
+    );
+
+
+    /*
+      GATE FINISHES
+    */
+
+    gateVideo.addEventListener(
+      "ended",
+      function () {
+
+        /*
+          Fade gate away
+        */
+
+        gateVideo.classList.add(
+          "fade-out"
+        );
+
+      }
+    );
 
   </script>
+
 
 </body>
 </html>
