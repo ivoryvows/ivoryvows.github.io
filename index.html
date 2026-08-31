@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 
@@ -120,12 +121,15 @@ body{
     align-items:center;
     justify-content:center;
     cursor:pointer;
+    opacity:1;
+    transition:opacity 2.2s ease;
 }
 
 .gate-image{
     width:100%;
     height:100%;
     object-fit:cover;
+    transition:opacity:1.4s ease;
 }
 
 .gate-overlay{
@@ -137,6 +141,7 @@ body{
     color:white;
     text-shadow:0 2px 12px rgba(0,0,0,.5);
     z-index:5;
+    transition:opacity:1.2s ease;
 }
 
 .gate-tap{
@@ -160,13 +165,12 @@ body{
     object-fit:cover;
     opacity:0;
     pointer-events:none;
-    transition:opacity 1.8s ease;
+    transition:opacity:1.8s ease;
 }
 
 #gateScreen.opening .gate-image,
 #gateScreen.opening .gate-overlay{
     opacity:0;
-    transition:opacity 1.2s ease;
 }
 
 #gateScreen.opening #gateVideo{
@@ -198,6 +202,18 @@ body{
     height:100%;
     object-fit:cover;
     display:block;
+
+    /*
+       Slight adjustment so the welcome video
+       blends more naturally with the gate lighting.
+    */
+    filter:
+        brightness(.96)
+        contrast(.98)
+        saturate(.94);
+
+    opacity:1;
+    transition:opacity:2.2s ease;
 }
 
 .welcome-overlay{
@@ -872,9 +888,7 @@ input::placeholder{
 
 </head>
 
-
 <body>
-
 
 <!-- =====================================================
      GATE
@@ -882,37 +896,38 @@ input::placeholder{
 
 <div id="gateScreen">
 
-    <img
-        class="gate-image"
-        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
-        alt="Wedding Gate"
+```
+<img
+    class="gate-image"
+    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
+    alt="Wedding Gate"
+>
+
+<video
+    id="gateVideo"
+    playsinline
+    preload="auto"
+>
+    <source
+        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/gate.MP4"
+        type="video/mp4"
     >
+</video>
 
-    <video
-        id="gateVideo"
-        playsinline
-        preload="auto"
-    >
-        <source
-            src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/gate.MP4"
-            type="video/mp4"
-        >
-    </video>
+<div class="gate-overlay">
 
-    <div class="gate-overlay">
+    <div class="gate-tap">
+        Tap to Open
+    </div>
 
-        <div class="gate-tap">
-            Tap to Open
-        </div>
-
-        <div class="gate-small">
-            A LITTLE SURPRISE AWAITS
-        </div>
-
+    <div class="gate-small">
+        A LITTLE SURPRISE AWAITS
     </div>
 
 </div>
+```
 
+</div>
 
 <!-- =====================================================
      WELCOME VIDEO
@@ -920,29 +935,33 @@ input::placeholder{
 
 <section id="welcomeSection" class="section">
 
-    <div class="welcome-video-frame">
+```
+<div class="welcome-video-frame">
 
-        <video
-            id="welcomeVideo"
-            playsinline
-            muted
-            loop
-            preload="auto"
+    <video
+        id="welcomeVideo"
+        playsinline
+        muted
+        autoplay
+        loop
+        preload="auto"
+    >
+        <source
+            src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/welcome.mov"
+            type="video/quicktime"
         >
-            <source
-                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/welcome.mov"
-                type="video/quicktime"
-            >
-        </video>
+    </video>
 
-        <div class="welcome-overlay">
-            <div class="welcome-frame"></div>
-        </div>
+    <div class="welcome-overlay">
+
+        <div class="welcome-frame"></div>
 
     </div>
 
-</section>
+</div>
+```
 
+</section>
 
 <!-- =====================================================
      SCRATCH
@@ -950,43 +969,44 @@ input::placeholder{
 
 <section id="scratchSection" class="section">
 
-    <img
-        class="corner-flower top-left"
-        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-    >
+```
+<img
+    class="corner-flower top-left"
+    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+>
 
-    <img
-        class="corner-flower top-right"
-        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-    >
+<img
+    class="corner-flower top-right"
+    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+>
 
-    <div class="section-inner">
+<div class="section-inner">
 
-        <div class="section-title">
-            A Little Surprise
-        </div>
+    <div class="section-title">
+        A Little Surprise
+    </div>
 
-        <div class="section-subtitle">
-            A special moment awaits
-        </div>
+    <div class="section-subtitle">
+        A special moment awaits
+    </div>
 
-        <div class="scratch-wrapper">
+    <div class="scratch-wrapper">
 
-            <div class="scratch-frame">
+        <div class="scratch-frame">
 
-                <iframe
-                    src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
-                    loading="lazy">
-                </iframe>
-
-            </div>
+            <iframe
+                src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
+                loading="lazy">
+            </iframe>
 
         </div>
 
     </div>
 
-</section>
+</div>
+```
 
+</section>
 
 <!-- =====================================================
      FAMILY
@@ -994,40 +1014,41 @@ input::placeholder{
 
 <section id="familySection" class="section">
 
-    <img
-        class="corner-flower top-left"
-        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-    >
+```
+<img
+    class="corner-flower top-left"
+    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+>
 
-    <div class="section-inner">
+<div class="section-inner">
 
-        <div class="section-title">
-            Our Families
-        </div>
+    <div class="section-title">
+        Our Families
+    </div>
 
-        <div class="family-video-box">
+    <div class="family-video-box">
 
-            <video
-                playsinline
-                autoplay
-                muted
-                loop
-                preload="auto"
+        <video
+            playsinline
+            autoplay
+            muted
+            loop
+            preload="auto"
+        >
+
+            <source
+                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/family.mov"
+                type="video/quicktime"
             >
 
-                <source
-                    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/family.mov"
-                    type="video/quicktime"
-                >
-
-            </video>
-
-        </div>
+        </video>
 
     </div>
 
-</section>
+</div>
+```
 
+</section>
 
 <!-- =====================================================
      COUNTDOWN
@@ -1035,58 +1056,59 @@ input::placeholder{
 
 <section id="countdownSection" class="section">
 
-    <img
-        class="corner-flower bottom-right"
-        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-    >
+```
+<img
+    class="corner-flower bottom-right"
+    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+>
 
-    <div class="section-inner">
+<div class="section-inner">
 
-        <div class="section-title">
-            Until We Say I Do
-        </div>
+    <div class="section-title">
+        Until We Say I Do
+    </div>
 
-        <div class="countdown-card">
+    <div class="countdown-card">
 
-            <div class="countdown-inner">
+        <div class="countdown-inner">
 
-                <div class="countdown-embed">
+            <div class="countdown-embed">
 
-                    <script>
-                    (function(d, s, id) {
-                        var js, pjs = d.getElementsByTagName(s)[0];
+                <script>
+                (function(d, s, id) {
 
-                        if (d.getElementById(id)) return;
+                    var js,
+                    pjs = d.getElementsByTagName(s)[0];
 
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "//www.tickcounter.com/static/js/loader.js";
+                    if (d.getElementById(id)) return;
 
-                        pjs.parentNode.insertBefore(js, pjs);
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//www.tickcounter.com/static/js/loader.js";
 
-                    }(document, "script", "tickcounter-sdk"));
-                    </script>
+                    pjs.parentNode.insertBefore(js, pjs);
 
-                    <a
-                        data-type="countdown"
-                        data-id="11415740"
-                        class="tickcounter"
-                        style="
-                            display:block;
-                            left:0;
-                            width:100%;
-                            height:0;
-                            position:relative;
-                            padding-bottom:25%;
-                            margin:0 auto;
-                        "
-                        title="Wedding Countdown"
-                        href="//www.tickcounter.com/"
-                    >
-                        Wedding Countdown
-                    </a>
+                }(document, "script", "tickcounter-sdk"));
+                </script>
 
-                </div>
+                <a
+                    data-type="countdown"
+                    data-id="11415740"
+                    class="tickcounter"
+                    style="
+                        display:block;
+                        left:0;
+                        width:100%;
+                        height:0;
+                        position:relative;
+                        padding-bottom:25%;
+                        margin:0 auto;
+                    "
+                    title="Wedding Countdown"
+                    href="//www.tickcounter.com/"
+                >
+                    Wedding Countdown
+                </a>
 
             </div>
 
@@ -1094,8 +1116,10 @@ input::placeholder{
 
     </div>
 
-</section>
+</div>
+```
 
+</section>
 
 <!-- =====================================================
      TIMELINE
@@ -1103,136 +1127,127 @@ input::placeholder{
 
 <section id="timelineSection" class="section">
 
-    <div class="section-inner">
+```
+<div class="section-inner">
 
-        <div class="section-title" style="text-align:center;">
-            Our Celebration
-        </div>
+    <div class="section-title" style="text-align:center;">
+        Our Celebration
+    </div>
 
-        <div class="timeline">
+    <div class="timeline">
 
-            <div class="timeline-line"></div>
+        <div class="timeline-line"></div>
 
-            <div
-                class="moving-flower"
-                id="movingFlower"
+        <div
+            class="moving-flower"
+            id="movingFlower"
+        >
+
+            <img
+                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+                alt="Flower"
             >
 
+        </div>
+
+
+        <div class="event">
+
+            <div class="event-text">
+
+                <div class="time">
+                    07:00 PM
+                </div>
+
+                <div class="event-name">
+                    Guest Arrival
+                </div>
+
+            </div>
+
+            <div class="event-image">
+
                 <img
-                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                    alt="Flower"
+                    src="https://files.catbox.moe/zt8kp4.jpeg"
+                    alt="Guest Arrival"
                 >
 
             </div>
 
+        </div>
 
-            <!-- EVENT 1 -->
 
-            <div class="event">
+        <div class="event">
 
-                <div class="event-text">
+            <div class="event-image">
 
-                    <div class="time">
-                        07:00 PM
-                    </div>
+                <img
+                    src="https://files.catbox.moe/kh8bbs.png"
+                    alt="Bride Entry"
+                >
 
-                    <div class="event-name">
-                        Guest Arrival
-                    </div>
+            </div>
 
+            <div class="event-text">
+
+                <div class="time">
+                    08:00 PM
                 </div>
 
-                <div class="event-image">
-
-                    <img
-                        src="https://files.catbox.moe/zt8kp4.jpeg"
-                        alt="Guest Arrival"
-                    >
-
+                <div class="event-name">
+                    Bride Entry
                 </div>
 
             </div>
 
+        </div>
 
-            <!-- EVENT 2 -->
 
-            <div class="event">
+        <div class="event">
 
-                <div class="event-image">
+            <div class="event-text">
 
-                    <img
-                        src="https://files.catbox.moe/kh8bbs.png"
-                        alt="Bride Entry"
-                    >
-
+                <div class="time">
+                    08:30 PM
                 </div>
 
-                <div class="event-text">
-
-                    <div class="time">
-                        08:00 PM
-                    </div>
-
-                    <div class="event-name">
-                        Bride Entry
-                    </div>
-
+                <div class="event-name">
+                    Nikkah Ceremony
                 </div>
 
             </div>
 
+            <div class="event-image">
 
-            <!-- EVENT 3 -->
-
-            <div class="event">
-
-                <div class="event-text">
-
-                    <div class="time">
-                        08:30 PM
-                    </div>
-
-                    <div class="event-name">
-                        Nikkah Ceremony
-                    </div>
-
-                </div>
-
-                <div class="event-image">
-
-                    <img
-                        src="https://files.catbox.moe/kph6hd.png"
-                        alt="Nikkah Ceremony"
-                    >
-
-                </div>
+                <img
+                    src="https://files.catbox.moe/kph6hd.png"
+                    alt="Nikkah Ceremony"
+                >
 
             </div>
 
+        </div>
 
-            <!-- EVENT 4 -->
 
-            <div class="event">
+        <div class="event">
 
-                <div class="event-image">
+            <div class="event-image">
 
-                    <img
-                        src="https://files.catbox.moe/ssoyrc.png"
-                        alt="Buffet"
-                    >
+                <img
+                    src="https://files.catbox.moe/ssoyrc.png"
+                    alt="Buffet"
+                >
 
+            </div>
+
+            <div class="event-text">
+
+                <div class="time">
+                    09:30 PM
                 </div>
 
-                <div class="event-text">
-
-                    <div class="time">
-                        09:30 PM
-                    </div>
-
-                    <div class="event-name">
-                        Buffet Opening
-                    </div>
-
+                <div class="event-name">
+                    Buffet Opening
                 </div>
 
             </div>
@@ -1241,8 +1256,10 @@ input::placeholder{
 
     </div>
 
-</section>
+</div>
+```
 
+</section>
 
 <!-- =====================================================
      VENUE
@@ -1250,66 +1267,63 @@ input::placeholder{
 
 <section id="venueSection" class="section">
 
-    <img
-        class="corner-flower top-right"
-        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-    >
+```
+<img
+    class="corner-flower top-right"
+    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+>
 
-    <div class="section-inner">
+<div class="section-inner">
 
-        <div class="section-title">
-            Find Us
-        </div>
+    <div class="section-title">
+        Find Us
+    </div>
 
-        <div class="section-subtitle">
-            We can't wait to celebrate with you
-        </div>
-
-
-        <!-- LOCATION PICTURE -->
-
-        <div class="location-picture-frame">
-
-            <img
-                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Location.jpg"
-                alt="Venue Location"
-            >
-
-        </div>
+    <div class="section-subtitle">
+        We can't wait to celebrate with you
+    </div>
 
 
-        <!-- MAP -->
+    <div class="location-picture-frame">
 
-        <div class="map-box">
-
-            <div id="map"></div>
-
-        </div>
-
-
-        <div class="venue-name">
-
-            Al Hameed Grand Marquee
-            <br>
-            Islamabad
-
-        </div>
-
-
-        <a
-            class="map-button"
-            href="https://www.google.com/maps/search/?api=1&query=Al+Hameed+Grand+Marquee+Islamabad"
-            target="_blank"
+        <img
+            src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Location.jpg"
+            alt="Venue Location"
         >
-
-            VIEW ON GOOGLE MAPS
-
-        </a>
 
     </div>
 
-</section>
 
+    <div class="map-box">
+
+        <div id="map"></div>
+
+    </div>
+
+
+    <div class="venue-name">
+
+        Al Hameed Grand Marquee
+        <br>
+        Islamabad
+
+    </div>
+
+
+    <a
+        class="map-button"
+        href="https://www.google.com/maps/search/?api=1&query=Al+Hameed+Grand+Marquee+Islamabad"
+        target="_blank"
+    >
+
+        VIEW ON GOOGLE MAPS
+
+    </a>
+
+</div>
+```
+
+</section>
 
 <!-- =====================================================
      DRESS CODE
@@ -1317,44 +1331,45 @@ input::placeholder{
 
 <section id="dressSection" class="section">
 
-    <img
-        class="corner-flower top-left"
-        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-    >
+```
+<img
+    class="corner-flower top-left"
+    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+>
 
-    <div class="section-inner">
+<div class="section-inner">
 
-        <div class="section-title">
-            Dress Code
-        </div>
+    <div class="section-title">
+        Dress Code
+    </div>
 
-        <div class="section-subtitle">
-            Come dressed in your finest
-        </div>
+    <div class="section-subtitle">
+        Come dressed in your finest
+    </div>
 
-        <div class="dress-video-frame">
+    <div class="dress-video-frame">
 
-            <video
-                playsinline
-                autoplay
-                muted
-                loop
-                preload="auto"
+        <video
+            playsinline
+            autoplay
+            muted
+            loop
+            preload="auto"
+        >
+
+            <source
+                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/dress.MP4"
+                type="video/mp4"
             >
 
-                <source
-                    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/dress.MP4"
-                    type="video/mp4"
-                >
-
-            </video>
-
-        </div>
+        </video>
 
     </div>
 
-</section>
+</div>
+```
 
+</section>
 
 <!-- =====================================================
      RSVP
@@ -1362,161 +1377,165 @@ input::placeholder{
 
 <section id="rsvpSection" class="section">
 
-    <img
-        class="corner-flower bottom-left"
-        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-    >
+```
+<img
+    class="corner-flower bottom-left"
+    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+>
 
-    <div class="rsvp-container">
+<div class="rsvp-container">
 
-        <div id="formContent">
+    <div id="formContent">
 
-            <div class="kindly">
+        <div class="kindly">
+            Kindly Respond
+        </div>
+
+        <div class="attendance">
+            Confirm Your
+            <br>
+            Attendance
+        </div>
+
+        <div class="description">
+            We would be delighted to celebrate
+            this special day with you
+        </div>
+
+        <button
+            class="rsvp-box"
+            onclick="openRSVP()"
+        >
+            RSVP
+        </button>
+
+    </div>
+
+
+    <div id="formPage">
+
+        <div class="form-container">
+
+            <div class="form-title">
                 Kindly Respond
             </div>
 
-            <div class="attendance">
-                Confirm Your
-                <br>
-                Attendance
-            </div>
 
-            <div class="description">
-                We would be delighted to celebrate
-                this special day with you
-            </div>
+            <label for="guestName">
+                Your Name
+            </label>
 
-            <button
-                class="rsvp-box"
-                onclick="openRSVP()"
+            <input
+                id="guestName"
+                type="text"
+                placeholder="Enter your name"
+                autocomplete="name"
             >
-                RSVP
-            </button>
-
-        </div>
 
 
-        <!-- FORM -->
-
-        <div id="formPage">
-
-            <div class="form-container">
-
-                <div class="form-title">
-                    Kindly Respond
-                </div>
+            <div class="question">
+                Will you be joining us?
+            </div>
 
 
-                <label for="guestName">
-                    Your Name
-                </label>
-
-                <input
-                    id="guestName"
-                    type="text"
-                    placeholder="Enter your name"
-                    autocomplete="name"
-                >
-
-
-                <div class="question">
-                    Will you be joining us?
-                </div>
-
-
-                <div class="choice-row">
-
-                    <button
-                        class="choice"
-                        id="accept"
-                        onclick="choose('accept')"
-                    >
-                        Joyfully Accept
-                    </button>
-
-                    <button
-                        class="choice"
-                        id="reject"
-                        onclick="choose('reject')"
-                    >
-                        Regretfully Reject
-                    </button>
-
-                </div>
-
-
-                <label for="guests">
-                    Number of Guests
-                </label>
-
-                <input
-                    id="guests"
-                    type="number"
-                    min="1"
-                    max="20"
-                    value="1"
-                >
-
+            <div class="choice-row">
 
                 <button
-                    class="confirm-button"
-                    onclick="confirmRSVP()"
+                    class="choice"
+                    id="accept"
+                    onclick="choose('accept')"
                 >
-                    CONFIRM RSVP
+                    Joyfully Accept
+                </button>
+
+                <button
+                    class="choice"
+                    id="reject"
+                    onclick="choose('reject')"
+                >
+                    Regretfully Reject
                 </button>
 
             </div>
 
-        </div>
+
+            <label for="guests">
+                Number of Guests
+            </label>
+
+            <input
+                id="guests"
+                type="number"
+                min="1"
+                max="20"
+                value="1"
+            >
 
 
-        <!-- SUCCESS -->
-
-        <div id="success">
-
-            <h2>
-                Thank You
-            </h2>
-
-            <p>
-                Your RSVP has been received.
-                <br><br>
-                We look forward to celebrating
-                with you.
-            </p>
+            <button
+                class="confirm-button"
+                onclick="confirmRSVP()"
+            >
+                CONFIRM RSVP
+            </button>
 
         </div>
 
     </div>
 
-</section>
 
+    <div id="success">
+
+        <h2>
+            Thank You
+        </h2>
+
+        <p>
+            Your RSVP has been received.
+            <br><br>
+            We look forward to celebrating
+            with you.
+        </p>
+
+    </div>
+
+</div>
+```
+
+</section>
 
 <!-- =====================================================
      MUSIC
 ===================================================== -->
 
 <audio
-    id="weddingMusic"
-    loop
-    preload="auto"
+id="weddingMusic"
+loop
+preload="auto"
+
 >
 
-    <source
-        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Music.mp3"
-        type="audio/mpeg"
-    >
+```
+<source
+    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Music.mp3"
+    type="audio/mpeg"
+>
+```
 
 </audio>
 
 <button
-    id="musicButton"
-    onclick="toggleMusic()"
-    aria-label="Music"
->
-    ♫
-</button>
+id="musicButton"
+onclick="toggleMusic()"
+aria-label="Music"
 
+>
+
+```
+♫
+```
+
+</button>
 
 <!-- =====================================================
      LEAFLET
@@ -1524,11 +1543,11 @@ input::placeholder{
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-
 <script>
 
 /* =========================================================
    GATE → WELCOME
+   FIXED FOR SMOOTH TRANSITION
 ========================================================= */
 
 const gateScreen =
@@ -1544,42 +1563,102 @@ const music =
 document.getElementById("weddingMusic");
 
 
+let gateOpened = false;
+
+
+/*
+   PREPARE WELCOME VIDEO
+   It starts underneath the gate so there
+   is never an empty section after the gate.
+*/
+
+welcomeVideo.muted = true;
+
+welcomeVideo.play().catch(function(){
+
+    /*
+       iPhone may wait for the user's first tap.
+       The gate click below will start it again.
+    */
+
+});
+
+
+/*
+   USER TAPS GATE
+*/
+
 gateScreen.addEventListener("click", function(){
 
-    /* Start music after user interaction */
+    if(gateOpened) return;
+
+    gateOpened = true;
+
+
+    /* =========================================
+       MUSIC
+    ========================================= */
 
     music.volume = 0.35;
 
-    music.play().catch(function(){});
+    music.play()
+        .then(function(){
+
+            musicPlaying = true;
+
+        })
+        .catch(function(){
+
+            musicPlaying = false;
+
+        });
 
 
-    /* Gate animation */
+    /* =========================================
+       START WELCOME VIDEO IMMEDIATELY
+       UNDER THE GATE
+    ========================================= */
+
+    welcomeVideo.currentTime = 0;
+
+    welcomeVideo.play().catch(function(){});
+
+
+    /* =========================================
+       START GATE VIDEO
+    ========================================= */
 
     gateScreen.classList.add("opening");
+
+    gateVideo.currentTime = 0;
 
     gateVideo.play().catch(function(){});
 
 
     /*
-       Once gate video is almost finished,
-       begin welcome video underneath.
+       Instead of waiting until the very end,
+       the welcome video is already playing.
+
+       The gate remains visible while opening,
+       then fades away naturally.
     */
 
+
     gateVideo.addEventListener(
-        "timeupdate",
+        "ended",
         function(){
 
-            if(
-                gateVideo.duration &&
-                gateVideo.currentTime >=
-                gateVideo.duration - 2.2
-            ){
+            /*
+               Final cross-fade
+            */
 
-                welcomeVideo.currentTime = 0;
+            gateScreen.style.opacity = "0";
 
-                welcomeVideo.play().catch(function(){});
+            setTimeout(function(){
 
-            }
+                gateScreen.style.display = "none";
+
+            },2200);
 
         },
         {once:true}
@@ -1587,24 +1666,40 @@ gateScreen.addEventListener("click", function(){
 
 
     /*
-       When gate video finishes,
-       smoothly remove gate.
+       FALLBACK
+       If the gate video does not fire "ended"
+       correctly on a particular mobile browser,
+       remove the gate after its actual duration.
     */
 
     gateVideo.addEventListener(
-        "ended",
+        "loadedmetadata",
         function(){
 
-            gateScreen.style.opacity = "0";
+            const duration =
+                gateVideo.duration;
 
-            gateScreen.style.transition =
-                "opacity 1.8s ease";
+            if(duration && isFinite(duration)){
 
-            setTimeout(function(){
+                setTimeout(function(){
 
-                gateScreen.style.display = "none";
+                    if(
+                        gateScreen.style.display !== "none"
+                    ){
 
-            },1800);
+                        gateScreen.style.opacity = "0";
+
+                        setTimeout(function(){
+
+                            gateScreen.style.display = "none";
+
+                        },2200);
+
+                    }
+
+                }, (duration * 1000) + 300);
+
+            }
 
         },
         {once:true}
@@ -1619,13 +1714,22 @@ gateScreen.addEventListener("click", function(){
 
 let musicPlaying = false;
 
+
 function toggleMusic(){
 
     if(music.paused){
 
-        music.play().catch(function(){});
+        music.play()
+        .then(function(){
 
-        musicPlaying = true;
+            musicPlaying = true;
+
+        })
+        .catch(function(){
+
+            console.log("Music could not start.");
+
+        });
 
     }else{
 
@@ -1670,7 +1774,8 @@ function moveFlower(){
         timelineHeight - 120;
 
     const timelineStart =
-        timelineTop - window.innerHeight * 0.35;
+        timelineTop -
+        window.innerHeight * 0.35;
 
     const timelineEnd =
         timelineTop +
@@ -1751,10 +1856,6 @@ marker.bindPopup(
 marker.openPopup();
 
 
-/*
-   Fix map rendering if section becomes visible
-*/
-
 setTimeout(function(){
 
     map.invalidateSize();
@@ -1768,10 +1869,6 @@ setTimeout(function(){
 
 let attendance = "";
 
-
-/*
-   YOUR GOOGLE APPS SCRIPT
-*/
 
 const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbwhcI7eEUuhAeb9LDD_iOQV1yOXX-iSxou8kYnM_B9J6Z9Fxjma_F5E0-zGMMi_fKo/exec";
@@ -1868,10 +1965,6 @@ function confirmRSVP(){
     }
 
 
-    /*
-       SEND TO GOOGLE SHEET
-    */
-
     const data = {
 
         name:name,
@@ -1913,10 +2006,6 @@ function confirmRSVP(){
 
     });
 
-
-    /*
-       SHOW SUCCESS
-    */
 
     document
         .getElementById("formPage")
