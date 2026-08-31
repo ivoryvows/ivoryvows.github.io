@@ -19,15 +19,15 @@
 
     body {
       margin: 0;
+      overflow-x: hidden;
       background: #f7f2e9;
       color: #4b1820;
       font-family: Georgia, "Times New Roman", serif;
-      overflow-x: hidden;
     }
 
-    /* =========================
-       OPENING
-    ========================= */
+    /* ==============================
+       OPENING SCREEN
+    ============================== */
 
     #opening {
       position: relative;
@@ -35,31 +35,51 @@
       height: 100vh;
       height: 100svh;
       overflow: hidden;
-      background: #f7f2e9;
+      background-image: url("Gatep.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
-    /* Welcome video stays underneath */
+    /* ==============================
+       WELCOME VIDEO
+       STAYS UNDER THE GATE
+    ============================== */
 
     #welcomeVideo {
       position: absolute;
       inset: 0;
+
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
       z-index: 1;
     }
 
-    /* Gate video */
+    /* ==============================
+       GATE VIDEO
+    ============================== */
 
     #gateVideo {
       position: absolute;
       inset: 0;
+
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
       z-index: 2;
 
+      background-image: url("Gatep.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
       opacity: 1;
+
       transition: opacity 1.5s ease;
     }
 
@@ -68,27 +88,28 @@
       pointer-events: none;
     }
 
-    /* =========================
+    /* ==============================
        TAP TO OPEN
-       NO BOX
-    ========================= */
+       TEXT ONLY — NO BOX
+    ============================== */
 
     #tapToOpen {
       position: absolute;
-      z-index: 10;
 
       left: 50%;
       top: 50%;
 
       transform: translate(-50%, -50%);
 
+      z-index: 10;
+
       background: transparent;
       border: none;
       outline: none;
 
-      padding: 12px 20px;
+      padding: 15px;
 
-      color: #fff;
+      color: #ffffff;
 
       font-family:
         "Snell Roundhand",
@@ -96,17 +117,17 @@
         "Segoe Script",
         cursive;
 
-      font-size: 34px;
+      font-size: 36px;
+      font-weight: normal;
       font-style: italic;
-      font-weight: 400;
 
       letter-spacing: 1px;
 
-      cursor: pointer;
-
       text-shadow:
-        0 2px 5px rgba(0,0,0,0.45),
-        0 0 14px rgba(255,255,255,0.2);
+        0 2px 6px rgba(0, 0, 0, 0.55),
+        0 0 12px rgba(0, 0, 0, 0.25);
+
+      cursor: pointer;
 
       transition:
         opacity 0.8s ease,
@@ -118,39 +139,37 @@
 
       transform:
         translate(-50%, -50%)
-        scale(0.96);
+        scale(0.95);
 
       pointer-events: none;
     }
 
-    /* =========================
-       SCROLLING INVITATION
-    ========================= */
+    /* ==============================
+       MAIN SCROLLING PAGE
+    ============================== */
 
     main {
-      position: relative;
+      width: 100%;
 
       background:
         radial-gradient(
           circle at top,
-          rgba(255,255,255,0.8),
+          rgba(255,255,255,0.85),
           transparent 45%
         ),
         #f7f2e9;
     }
 
     .section {
-      position: relative;
-
       width: 100%;
 
-      padding: 75px 18px;
+      padding: 80px 18px;
 
       text-align: center;
     }
 
     .section-title {
-      margin-bottom: 22px;
+      margin-bottom: 20px;
 
       color: #641c27;
 
@@ -170,23 +189,19 @@
       background: #9b7b48;
     }
 
-    /* =========================
-       PLACEHOLDERS
-    ========================= */
-
     .placeholder {
       width: 100%;
       max-width: 800px;
 
       min-height: 180px;
 
-      margin: 0 auto;
+      margin: auto;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      border: 1px dashed rgba(100, 28, 39, 0.28);
+      border: 1px dashed rgba(100,28,39,0.25);
 
       color: #8a7474;
 
@@ -195,9 +210,9 @@
       letter-spacing: 1px;
     }
 
-    /* =========================
-       VIDEOS
-    ========================= */
+    /* ==============================
+       FAMILY / DRESS VIDEOS
+    ============================== */
 
     .content-video {
       display: block;
@@ -208,18 +223,16 @@
       height: auto;
 
       margin: 0 auto;
-
-      border-radius: 0;
     }
 
-    /* =========================
+    /* ==============================
        MOBILE
-    ========================= */
+    ============================== */
 
     @media (max-width: 600px) {
 
       #tapToOpen {
-        font-size: 30px;
+        font-size: 31px;
       }
 
       .section {
@@ -237,15 +250,16 @@
 <body>
 
 
-  <!-- =================================
+  <!-- =====================================
        OPENING
-  ================================== -->
+  ====================================== -->
 
   <section id="opening">
 
+
     <!--
       WELCOME VIDEO
-      This stays underneath the gate.
+      It is underneath the gate.
     -->
 
     <video
@@ -260,13 +274,13 @@
 
     <!--
       GATE VIDEO
-      gatep.jpg is shown before the tap.
+      Gatep.jpg is the visible poster.
     -->
 
     <video
       id="gateVideo"
       src="gate.mp4"
-      poster="gatep.jpg"
+      poster="Gatep.jpg"
       muted
       playsinline
       preload="auto">
@@ -282,18 +296,19 @@
       Tap to Open
     </button>
 
+
   </section>
 
 
 
-  <!-- =================================
-       MAIN SCROLLING INVITATION
-  ================================== -->
+  <!-- =====================================
+       SCROLLING INVITATION
+  ====================================== -->
 
   <main>
 
 
-    <!-- SCRATCH -->
+    <!-- SCRATCH TO REVEAL -->
 
     <section
       class="section"
@@ -438,9 +453,9 @@
 
 
 
-  <!-- =================================
+  <!-- =====================================
        JAVASCRIPT
-  ================================== -->
+  ====================================== -->
 
   <script>
 
@@ -454,22 +469,23 @@
       document.getElementById("tapToOpen");
 
 
-    /*
-      USER TAPS
-    */
+    /* ==============================
+       TAP TO OPEN
+    ============================== */
 
     tapToOpen.addEventListener(
       "click",
       function () {
 
-        /* Hide Tap to Open */
+        /*
+          Hide the cursive text
+        */
 
         tapToOpen.classList.add("hide");
 
 
         /*
           Start Welcome video
-          underneath the gate
         */
 
         welcomeVideo.play().catch(
@@ -483,22 +499,23 @@
 
         gateVideo.play().catch(
           function () {}
+
         );
 
       }
     );
 
 
-    /*
-      GATE FINISHES
-    */
+    /* ==============================
+       WHEN GATE FINISHES
+    ============================== */
 
     gateVideo.addEventListener(
       "ended",
       function () {
 
         /*
-          Fade gate away
+          Fade the gate away
         */
 
         gateVideo.classList.add(
