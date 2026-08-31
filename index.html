@@ -1,10 +1,342 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Ivory Vows</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f8f4ed;
+      color: #4b1820;
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+    }
+
+    /* =========================
+       OPENING
+    ========================= */
+
+    #opening {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #f8f4ed;
+    }
+
+    /* Welcome stays underneath the door video */
+
+    #welcomeVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    /* Door video is on top */
+
+    #gateVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 2;
+      opacity: 1;
+      transition: opacity 1.2s ease;
+    }
+
+    #gateVideo.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Tap to open */
+
+    #tapToOpen {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      padding: 15px 32px;
+
+      border: 1px solid rgba(255,255,255,0.8);
+      background: rgba(70, 15, 25, 0.72);
+      color: #fff;
+
+      font-size: 15px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      transition: opacity 0.6s ease,
+                  transform 0.6s ease;
+    }
+
+    #tapToOpen.hide {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.95);
+      pointer-events: none;
+    }
+
+    /* =========================
+       MAIN INVITATION
+    ========================= */
+
+    main {
+      position: relative;
+      background: #f8f4ed;
+    }
+
+    .section {
+      position: relative;
+      width: 100%;
+      padding: 70px 20px;
+      text-align: center;
+    }
+
+    .section-title {
+      margin-bottom: 25px;
+      color: #641c27;
+      font-size: 28px;
+      letter-spacing: 2px;
+    }
+
+    .placeholder {
+      max-width: 700px;
+      margin: auto;
+      min-height: 150px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px dashed rgba(100, 28, 39, 0.35);
+
+      color: #7b6262;
+      font-size: 14px;
+    }
+
+    /* Video sections */
+
+    .content-video {
+      display: block;
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    /* Decorative divider */
+
+    .divider {
+      width: 90px;
+      height: 1px;
+      margin: 0 auto 35px;
+      background: #9a7a45;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .section {
+        padding: 60px 16px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      #tapToOpen {
+        font-size: 13px;
+        letter-spacing: 3px;
+        padding: 13px 25px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Ivory Vows</h1>
-  <p>Our wedding invitation is coming soon ✨</p>
+
+  <!-- =========================
+       OPENING
+  ========================= -->
+
+  <section id="opening">
+
+    <!-- Welcome video underneath -->
+    <video
+      id="welcomeVideo"
+      src="welcome.mp4"
+      muted
+      playsinline
+      loop>
+    </video>
+
+    <!-- Door video on top -->
+    <video
+      id="gateVideo"
+      src="gate.mp4"
+      muted
+      playsinline
+      preload="auto">
+    </video>
+
+    <!-- Tap to open -->
+    <button id="tapToOpen">
+      Tap to Open
+    </button>
+
+  </section>
+
+
+  <!-- =========================
+       INVITATION
+  ========================= -->
+
+  <main>
+
+    <!-- Scratch -->
+    <section class="section" id="scratch">
+      <h2 class="section-title">A Little Surprise</h2>
+      <div class="divider"></div>
+
+      <div class="placeholder">
+        SCRATCH-TO-REVEAL WILL GO HERE
+      </div>
+    </section>
+
+
+    <!-- Family Video -->
+    <section class="section" id="family">
+      <video
+        class="content-video"
+        src="family.mp4"
+        controls
+        playsinline>
+      </video>
+    </section>
+
+
+    <!-- Countdown -->
+    <section class="section" id="countdown">
+      <h2 class="section-title">Counting Down</h2>
+      <div class="divider"></div>
+
+      <div class="placeholder">
+        COUNTDOWN EMBED WILL GO HERE
+      </div>
+    </section>
+
+
+    <!-- Timeline -->
+    <section class="section" id="timeline">
+      <h2 class="section-title">Timeline</h2>
+      <div class="divider"></div>
+
+      <div class="placeholder">
+        TIMELINE WILL GO HERE
+      </div>
+    </section>
+
+
+    <!-- Venue -->
+    <section class="section" id="venue">
+      <h2 class="section-title">The Venue</h2>
+      <div class="divider"></div>
+
+      <div class="placeholder">
+        VENUE IMAGE WILL GO HERE
+      </div>
+
+      <div style="height:40px;"></div>
+
+      <div class="placeholder">
+        MAP WILL GO HERE
+      </div>
+    </section>
+
+
+    <!-- Dress Code -->
+    <section class="section" id="dress">
+      <video
+        class="content-video"
+        src="dress.mp4"
+        playsinline
+        controls>
+      </video>
+    </section>
+
+
+    <!-- RSVP -->
+    <section class="section" id="rsvp">
+      <h2 class="section-title">RSVP</h2>
+      <div class="divider"></div>
+
+      <div class="placeholder">
+        RSVP WILL GO HERE
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+    const gateVideo = document.getElementById("gateVideo");
+    const welcomeVideo = document.getElementById("welcomeVideo");
+    const tapToOpen = document.getElementById("tapToOpen");
+
+    tapToOpen.addEventListener("click", function () {
+
+      /* Remove the button */
+
+      tapToOpen.classList.add("hide");
+
+      /* Start Welcome video */
+
+      welcomeVideo.play().catch(() => {});
+
+      /* Start Door video */
+
+      gateVideo.play().catch(() => {});
+
+    });
+
+
+    /* When door video finishes */
+
+    gateVideo.addEventListener("ended", function () {
+
+      gateVideo.classList.add("fade-out");
+
+    });
+
+  </script>
+
 </body>
 </html>
