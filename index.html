@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Our Wedding</title>
+<title>Ivory Vows</title>
 
-<!-- GOOGLE FONTS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;600&family=Parisienne&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Parisienne&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
-<!-- LEAFLET MAP -->
 <link
 rel="stylesheet"
 href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -20,9 +19,9 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 
 <style>
 
-/* =====================================================
+/* =========================================================
    GLOBAL
-===================================================== */
+========================================================= */
 
 *{
     margin:0;
@@ -36,82 +35,94 @@ html{
 
 body{
     width:100%;
-    overflow-x:hidden;
+    min-height:100vh;
     background:#fffdf8;
     color:#651b27;
+    overflow-x:hidden;
     font-family:"Cormorant Garamond",serif;
 }
 
-section{
-    position:relative;
+:root{
+    --ivory:#fffdf8;
+    --maroon:#651b27;
+    --dark-maroon:#4b111b;
+    --gold:#b18a45;
+    --light-gold:#d8b96a;
+}
+
+
+/* =========================================================
+   GENERAL SECTION
+========================================================= */
+
+.section{
     width:100%;
+    position:relative;
+    background:var(--ivory);
     overflow:hidden;
 }
 
-button,
-a{
-    -webkit-tap-highlight-color:transparent;
+.section-inner{
+    width:100%;
+    max-width:760px;
+    margin:auto;
 }
 
 
-/* =====================================================
-   COMMON FLORAL DECORATION
-===================================================== */
+/* =========================================================
+   DECORATIVE FLOWERS
+========================================================= */
 
 .corner-flower{
     position:absolute;
-    width:115px;
-    height:115px;
+    width:105px;
+    height:105px;
     object-fit:contain;
     opacity:.95;
     pointer-events:none;
-    z-index:2;
+    z-index:3;
 }
 
 .corner-flower.top-left{
-    top:-18px;
-    left:-18px;
+    top:8px;
+    left:0;
 }
 
 .corner-flower.top-right{
-    top:-18px;
-    right:-18px;
+    top:8px;
+    right:0;
     transform:scaleX(-1);
 }
 
 .corner-flower.bottom-left{
-    bottom:-18px;
-    left:-18px;
+    bottom:8px;
+    left:0;
     transform:scaleY(-1);
 }
 
 .corner-flower.bottom-right{
-    bottom:-18px;
-    right:-18px;
+    bottom:8px;
+    right:0;
     transform:scale(-1);
 }
 
 
-/* =====================================================
-   GATE / OPENING
-===================================================== */
+/* =========================================================
+   GATE
+========================================================= */
 
 #gateScreen{
     position:fixed;
     inset:0;
-    width:100%;
-    height:100%;
-    background:#fffdf8;
     z-index:9999;
+    background:var(--ivory);
     display:flex;
-    justify-content:center;
     align-items:center;
-    overflow:hidden;
+    justify-content:center;
+    cursor:pointer;
 }
 
 .gate-image{
-    position:absolute;
-    inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
@@ -119,34 +130,26 @@ a{
 
 .gate-overlay{
     position:absolute;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
-    padding-bottom:80px;
-    background:linear-gradient(
-        to bottom,
-        transparent 55%,
-        rgba(45,5,12,.35)
-    );
+    bottom:9%;
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
+    color:white;
+    text-shadow:0 2px 12px rgba(0,0,0,.5);
+    z-index:5;
 }
 
-.open-button{
-    position:relative;
-    z-index:3;
-    padding:13px 30px;
-    border:1px solid #d8b96a;
-    background:rgba(255,253,248,.88);
-    color:#651b27;
+.gate-tap{
     font-family:"Cormorant Garamond",serif;
     font-size:19px;
-    letter-spacing:2px;
-    cursor:pointer;
-    transition:.4s;
+    letter-spacing:3px;
+    margin-bottom:6px;
 }
 
-.open-button:active{
-    transform:scale(.96);
+.gate-small{
+    font-family:"Montserrat",sans-serif;
+    font-size:9px;
+    letter-spacing:3px;
 }
 
 #gateVideo{
@@ -158,298 +161,280 @@ a{
     opacity:0;
     pointer-events:none;
     transition:opacity 1.8s ease;
-    z-index:4;
 }
 
-#gateScreen.video-playing .gate-image,
-#gateScreen.video-playing .gate-overlay{
+#gateScreen.opening .gate-image,
+#gateScreen.opening .gate-overlay{
     opacity:0;
-    transition:opacity 1.5s ease;
+    transition:opacity 1.2s ease;
 }
 
-#gateScreen.video-playing #gateVideo{
+#gateScreen.opening #gateVideo{
     opacity:1;
 }
 
-#gateScreen.hide{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    transition:opacity 1.5s ease;
-}
 
-
-/* =====================================================
+/* =========================================================
    WELCOME
-===================================================== */
+========================================================= */
 
-#welcome{
+#welcomeSection{
     min-height:100vh;
-    background:#fffdf8;
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+    background:var(--ivory);
 }
 
-.welcome-video{
-    position:absolute;
-    inset:0;
+.welcome-video-frame{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+#welcomeVideo{
     width:100%;
     height:100%;
     object-fit:cover;
-    z-index:0;
+    display:block;
 }
 
 .welcome-overlay{
     position:absolute;
     inset:0;
-    background:rgba(255,253,248,.12);
-    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     pointer-events:none;
 }
 
-.welcome-content{
-    position:relative;
-    z-index:3;
-    text-align:center;
-    padding:30px;
+.welcome-frame{
+    position:absolute;
+    inset:35px 25px;
+    border:1px solid rgba(177,138,69,.65);
 }
 
-.welcome-small{
-    font-size:20px;
-    letter-spacing:3px;
-    margin-bottom:12px;
+.welcome-frame:before,
+.welcome-frame:after{
+    content:"";
+    position:absolute;
+    width:80px;
+    height:80px;
+    background-image:url("https://i.postimg.cc/T347PbNC/IMG-7987.png");
+    background-size:contain;
+    background-repeat:no-repeat;
 }
 
-.welcome-title{
-    font-family:"Parisienne",cursive;
-    font-size:64px;
-    color:#651b27;
+.welcome-frame:before{
+    top:-15px;
+    left:-15px;
 }
 
-.welcome-subtitle{
-    font-size:21px;
-    letter-spacing:2px;
-    margin-top:12px;
+.welcome-frame:after{
+    bottom:-15px;
+    right:-15px;
+    transform:rotate(180deg);
 }
 
 
-/* =====================================================
-   SECTION COMMON
-===================================================== */
+/* =========================================================
+   SCRATCH SECTION
+========================================================= */
 
-.luxury-section{
-    min-height:100vh;
-    padding:80px 20px;
-    background:#fffdf8;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.section-inner{
-    position:relative;
-    width:100%;
-    max-width:850px;
+#scratchSection{
+    padding:55px 18px 45px;
     text-align:center;
 }
 
 .section-title{
     font-family:"Parisienne",cursive;
-    font-size:54px;
-    color:#651b27;
-    margin-bottom:10px;
-}
-
-.section-subtitle{
-    font-size:21px;
-    color:#651b27;
-    margin-bottom:30px;
-}
-
-
-/* =====================================================
-   SCRATCH
-===================================================== */
-
-.scratch-frame{
-    position:relative;
-    max-width:650px;
-    margin:auto;
-    padding:35px;
-    border:1px solid #b18a45;
-    background:#fffdf8;
-    box-shadow:0 8px 30px rgba(101,27,39,.08);
-}
-
-.scratch-frame iframe{
-    display:block;
-    width:100%;
-    height:500px;
-    border:none;
-}
-
-
-/* =====================================================
-   FAMILY
-===================================================== */
-
-.family-section{
-    position:relative;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#fffdf8;
-}
-
-.family-video{
-    width:100%;
-    max-width:850px;
-    max-height:80vh;
-    object-fit:contain;
-    display:block;
-}
-
-
-/* =====================================================
-   COUNTDOWN
-===================================================== */
-
-.countdown-section{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:80px 20px;
-    background:#fffdf8;
-}
-
-.countdown-frame{
-    position:relative;
-    width:100%;
-    max-width:760px;
-    padding:70px 45px;
-    border:1px solid #b18a45;
-    background:#fffdf8;
-    box-shadow:
-        0 12px 35px rgba(101,27,39,.08),
-        inset 0 0 0 7px #fffdf8,
-        inset 0 0 0 8px rgba(177,138,69,.35);
-}
-
-.countdown-frame:before,
-.countdown-frame:after{
-    content:"";
-    position:absolute;
-    left:10%;
-    right:10%;
-    height:1px;
-    background:#b18a45;
-}
-
-.countdown-frame:before{
-    top:35px;
-}
-
-.countdown-frame:after{
-    bottom:35px;
-}
-
-.countdown-title{
-    text-align:center;
-    font-family:"Parisienne",cursive;
-    color:#651b27;
-    font-size:58px;
+    font-size:45px;
+    color:var(--maroon);
     margin-bottom:8px;
 }
 
-.countdown-subtitle{
-    text-align:center;
-    font-size:21px;
-    color:#651b27;
-    margin-bottom:35px;
+.section-subtitle{
+    font-size:18px;
+    color:var(--maroon);
+    margin-bottom:22px;
 }
 
-.countdown-embed{
+.scratch-wrapper{
     position:relative;
     width:100%;
-    min-height:120px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    max-width:600px;
+    margin:auto;
+    padding:18px;
+    border:1px solid var(--gold);
+    background:rgba(255,253,248,.8);
 }
 
-.countdown-embed .tickcounter{
-    width:100% !important;
-}
-
-.countdown-flower{
+.scratch-wrapper:before,
+.scratch-wrapper:after{
+    content:"";
     position:absolute;
-    width:85px;
-    height:85px;
-    object-fit:contain;
-    z-index:5;
+    width:70px;
+    height:70px;
+    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
+        center/contain no-repeat;
+    z-index:2;
     pointer-events:none;
 }
 
-.countdown-flower.left{
-    top:-48px;
-    left:-40px;
+.scratch-wrapper:before{
+    top:-20px;
+    left:-20px;
 }
 
-.countdown-flower.right{
-    top:-48px;
-    right:-40px;
+.scratch-wrapper:after{
+    bottom:-20px;
+    right:-20px;
+    transform:rotate(180deg);
+}
+
+.scratch-frame{
+    width:100%;
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid rgba(101,27,39,.35);
+    background:#fffdf8;
+}
+
+.scratch-frame iframe{
+    width:100%;
+    min-height:350px;
+    border:0;
+}
+
+
+/* =========================================================
+   FAMILY
+========================================================= */
+
+#familySection{
+    padding:40px 18px;
+    text-align:center;
+}
+
+.family-video-box{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+    position:relative;
+    padding:12px;
+    border:1px solid var(--gold);
+}
+
+.family-video-box video{
+    width:100%;
+    display:block;
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+#countdownSection{
+    padding:45px 18px 48px;
+    text-align:center;
+}
+
+.countdown-card{
+    position:relative;
+    width:100%;
+    max-width:650px;
+    margin:25px auto 0;
+    padding:28px 18px;
+    border:1px solid var(--gold);
+    background:var(--ivory);
+}
+
+.countdown-card:before,
+.countdown-card:after{
+    content:"";
+    position:absolute;
+    width:95px;
+    height:95px;
+    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
+        center/contain no-repeat;
+    z-index:2;
+    pointer-events:none;
+}
+
+.countdown-card:before{
+    top:-25px;
+    left:-22px;
+}
+
+.countdown-card:after{
+    bottom:-25px;
+    right:-22px;
+    transform:rotate(180deg);
+}
+
+.countdown-inner{
+    position:relative;
+    border:1px solid rgba(177,138,69,.55);
+    padding:15px;
+    background:#fffdf8;
+}
+
+.countdown-inner:before,
+.countdown-inner:after{
+    content:"";
+    position:absolute;
+    width:65px;
+    height:65px;
+    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
+        center/contain no-repeat;
+    pointer-events:none;
+}
+
+.countdown-inner:before{
+    top:-17px;
+    right:-15px;
     transform:scaleX(-1);
 }
 
-.countdown-flower.bottom-left{
-    bottom:-48px;
-    left:-40px;
-    transform:scaleY(-1);
+.countdown-inner:after{
+    bottom:-17px;
+    left:-15px;
+    transform:rotate(180deg);
 }
 
-.countdown-flower.bottom-right{
-    bottom:-48px;
-    right:-40px;
-    transform:scale(-1);
+.countdown-embed{
+    width:100%;
+    min-height:120px;
 }
 
 
-/* =====================================================
+/* =========================================================
    TIMELINE
-===================================================== */
+========================================================= */
 
-.timeline-section{
-    position:relative;
-    background:#fffdf8;
-    padding:80px 10px 100px;
-}
-
-.timeline-heading{
-    text-align:center;
-    font-family:"Parisienne",cursive;
-    font-size:58px;
-    color:#651b27;
-    margin-bottom:30px;
+#timelineSection{
+    padding:35px 8px 55px;
 }
 
 .timeline{
     position:relative;
     width:100%;
     max-width:760px;
-    margin:0 auto;
-    padding:50px 10px 100px;
+    margin:auto;
+    padding:55px 5px 65px;
 }
 
 .timeline-line{
     position:absolute;
-    top:50px;
-    bottom:100px;
+    top:55px;
+    bottom:65px;
     left:50%;
     width:1.5px;
-    background:#651b27;
+    background:var(--maroon);
     transform:translateX(-50%);
     z-index:1;
 }
@@ -457,7 +442,7 @@ a{
 .moving-flower{
     position:absolute;
     left:50%;
-    top:50px;
+    top:55px;
     width:58px;
     height:58px;
     transform:translate(-50%,0);
@@ -467,8 +452,8 @@ a{
 }
 
 .moving-flower img{
-    width:58px;
-    height:58px;
+    width:100%;
+    height:100%;
     object-fit:contain;
 }
 
@@ -476,36 +461,36 @@ a{
     position:relative;
     display:grid;
     grid-template-columns:1fr 1fr;
-    min-height:250px;
+    min-height:220px;
     align-items:center;
     z-index:2;
 }
 
 .event-text{
     text-align:center;
-    padding:10px 12px;
+    padding:10px 8px;
 }
 
 .time{
     font-family:"Parisienne",cursive;
-    font-size:35px;
+    font-size:34px;
     line-height:1.1;
-    color:#651b27;
-    margin-bottom:8px;
+    color:var(--maroon);
+    margin-bottom:5px;
 }
 
 .event-name{
     font-family:"Parisienne",cursive;
-    font-size:39px;
+    font-size:37px;
     line-height:1.05;
-    color:#651b27;
+    color:var(--maroon);
 }
 
 .event-image{
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:5px;
+    padding:4px;
 }
 
 .event-image img{
@@ -514,8 +499,6 @@ a{
     object-fit:contain;
     display:block;
 }
-
-/* alternating sides */
 
 .event:nth-of-type(1) .event-text{
     grid-column:1;
@@ -558,238 +541,234 @@ a{
 }
 
 
-/* =====================================================
-   VENUE / MAP
-===================================================== */
+/* =========================================================
+   VENUE
+========================================================= */
 
-.map-section{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:70px 18px;
-    background:#fffdf8;
-}
-
-.map-content{
-    width:100%;
-    max-width:760px;
+#venueSection{
+    padding:40px 15px 42px;
     text-align:center;
 }
 
-.map-title{
-    font-family:"Parisienne",cursive;
-    font-size:58px;
-    color:#651b27;
-    margin-bottom:5px;
+.location-picture-frame{
+    position:relative;
+    width:100%;
+    max-width:620px;
+    margin:18px auto 22px;
+    padding:10px;
+    border:1px solid var(--gold);
 }
 
-.map-subtitle{
-    font-size:21px;
-    color:#651b27;
-    margin-bottom:25px;
+.location-picture-frame img{
+    width:100%;
+    display:block;
+}
+
+.map-box{
+    width:100%;
+    max-width:650px;
+    margin:0 auto;
+    border:1px solid var(--gold);
+    overflow:hidden;
 }
 
 #map{
     width:100%;
-    height:410px;
-    border:1px solid #b18a45;
-    overflow:hidden;
+    height:350px;
 }
 
 .venue-name{
     font-family:"Parisienne",cursive;
     font-size:34px;
-    color:#651b27;
-    margin-top:22px;
-    margin-bottom:15px;
+    color:var(--maroon);
+    margin:18px 0 12px;
 }
 
 .map-button{
     display:inline-block;
-    padding:11px 28px;
-    border:1px solid #651b27;
-    color:#651b27;
+    padding:9px 24px;
+    border:1px solid var(--maroon);
+    color:var(--maroon);
     background:transparent;
     text-decoration:none;
     font-family:"Montserrat",sans-serif;
-    font-size:11px;
+    font-size:9px;
     letter-spacing:2px;
-    transition:.3s;
-}
-
-.map-button:active{
-    background:#651b27;
-    color:#fffdf8;
 }
 
 
-/* =====================================================
+/* =========================================================
    DRESS CODE
-===================================================== */
+========================================================= */
 
-.dress-section{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:70px 20px;
-    background:#fffdf8;
-}
-
-.dress-video{
-    width:100%;
-    max-width:850px;
-    max-height:75vh;
-    object-fit:contain;
-}
-
-
-/* =====================================================
-   RSVP
-===================================================== */
-
-.rsvp-section{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:70px 20px;
-    background:#fffdf8;
-}
-
-.rsvp-card{
-    position:relative;
-    width:100%;
-    max-width:600px;
-    padding:65px 35px;
-    border:1px solid #b18a45;
-    background:#fffdf8;
+#dressSection{
+    padding:40px 18px 45px;
     text-align:center;
 }
 
-.rsvp-card:before,
-.rsvp-card:after{
+.dress-video-frame{
+    width:100%;
+    max-width:650px;
+    margin:20px auto 0;
+    padding:10px;
+    border:1px solid var(--gold);
+}
+
+.dress-video-frame video{
+    width:100%;
+    display:block;
+}
+
+
+/* =========================================================
+   RSVP
+========================================================= */
+
+#rsvpSection{
+    position:relative;
+    padding:45px 18px 55px;
+    text-align:center;
+    background:var(--ivory);
+}
+
+.rsvp-container{
+    width:100%;
+    max-width:600px;
+    margin:auto;
+    padding:30px 20px;
+    border:1px solid var(--gold);
+    position:relative;
+}
+
+.rsvp-container:before,
+.rsvp-container:after{
     content:"";
     position:absolute;
-    left:12%;
-    right:12%;
-    height:1px;
-    background:#b18a45;
+    width:85px;
+    height:85px;
+    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
+        center/contain no-repeat;
+    pointer-events:none;
 }
 
-.rsvp-card:before{
-    top:32px;
+.rsvp-container:before{
+    top:-22px;
+    left:-18px;
 }
 
-.rsvp-card:after{
-    bottom:32px;
+.rsvp-container:after{
+    bottom:-22px;
+    right:-18px;
+    transform:rotate(180deg);
 }
 
-.rsvp-kindly{
-    font-size:20px;
-    letter-spacing:2px;
-    margin-bottom:8px;
+.kindly{
+    font-size:19px;
+    letter-spacing:1px;
+    margin-bottom:5px;
 }
 
-.rsvp-title{
+.attendance{
     font-family:"Parisienne",cursive;
-    font-size:55px;
-    color:#651b27;
-    line-height:1.1;
-    margin-bottom:15px;
+    font-size:45px;
+    line-height:1.05;
+    margin-bottom:12px;
 }
 
-.rsvp-description{
-    font-size:20px;
+.description{
+    font-size:18px;
     line-height:1.4;
-    margin-bottom:28px;
+    margin-bottom:20px;
 }
 
-.rsvp-button{
-    padding:12px 32px;
+.rsvp-box{
+    padding:9px 28px;
     background:transparent;
-    border:1px solid #651b27;
-    color:#651b27;
+    border:1px solid var(--maroon);
+    color:var(--maroon);
     font-family:"Montserrat",sans-serif;
-    font-size:11px;
+    font-size:9px;
     letter-spacing:2px;
     cursor:pointer;
 }
 
-#rsvpForm{
+#formPage{
     display:none;
+    margin-top:25px;
 }
 
 .form-title{
     font-family:"Parisienne",cursive;
-    font-size:48px;
-    color:#651b27;
-    margin-bottom:25px;
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.form-container{
+    max-width:400px;
+    margin:auto;
 }
 
 label{
     display:block;
-    font-size:21px;
-    color:#651b27;
-    margin-bottom:5px;
+    font-size:19px;
+    margin-bottom:4px;
 }
 
 input{
     display:block;
-    width:230px;
-    height:35px;
-    margin:0 auto 20px;
+    width:220px;
+    height:32px;
+    margin:0 auto 17px;
     padding:5px;
     background:transparent;
     border:none;
-    border-bottom:1px solid #b18a45;
+    border-bottom:1px solid var(--gold);
     outline:none;
     text-align:center;
     font-family:"Montserrat",sans-serif;
-    font-size:12px;
-    color:#651b27;
+    font-size:11px;
+    color:var(--maroon);
 }
 
 input::placeholder{
-    color:#651b27;
-    opacity:.6;
+    color:#8b6268;
 }
 
 .question{
-    font-size:22px;
-    margin-bottom:10px;
+    font-size:21px;
+    margin-bottom:9px;
 }
 
 .choice-row{
     display:flex;
     justify-content:center;
-    gap:10px;
-    margin-bottom:22px;
+    gap:8px;
+    margin-bottom:17px;
 }
 
 .choice{
-    width:150px;
-    padding:9px 5px;
+    width:135px;
+    padding:8px 5px;
     background:transparent;
-    border:1px solid #b18a45;
-    color:#651b27;
+    border:1px solid var(--gold);
+    color:var(--maroon);
     font-family:"Cormorant Garamond",serif;
-    font-size:17px;
+    font-size:16px;
     cursor:pointer;
 }
 
 .choice.selected{
-    background:rgba(177,138,69,.25);
+    background:rgba(177,138,69,.22);
 }
 
 .confirm-button{
-    padding:10px 25px;
+    width:140px;
+    padding:8px;
     background:transparent;
-    border:1px solid #651b27;
-    color:#651b27;
+    border:1px solid var(--maroon);
+    color:var(--maroon);
     font-family:"Montserrat",sans-serif;
-    font-size:10px;
+    font-size:8px;
     letter-spacing:2px;
     cursor:pointer;
 }
@@ -798,129 +777,72 @@ input::placeholder{
     display:none;
 }
 
-.success-title{
+#success h2{
     font-family:"Parisienne",cursive;
-    font-size:55px;
-    color:#651b27;
-    margin-bottom:10px;
+    font-size:45px;
+    margin-bottom:8px;
 }
 
-.success-text{
-    font-size:22px;
+#success p{
+    font-size:19px;
     line-height:1.5;
 }
 
 
-/* =====================================================
-   MUSIC BUTTON
-===================================================== */
+/* =========================================================
+   MUSIC
+========================================================= */
 
-.music-button{
+#musicButton{
     position:fixed;
-    right:18px;
-    bottom:18px;
-    width:48px;
-    height:48px;
+    right:15px;
+    bottom:15px;
+    width:43px;
+    height:43px;
     border-radius:50%;
-    border:1px solid #b18a45;
+    border:1px solid var(--gold);
     background:rgba(255,253,248,.94);
-    color:#651b27;
+    color:var(--maroon);
     z-index:9000;
-    font-size:19px;
     cursor:pointer;
+    font-size:16px;
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE
-===================================================== */
+========================================================= */
 
 @media(max-width:600px){
 
     .corner-flower{
-        width:80px;
-        height:80px;
+        width:75px;
+        height:75px;
     }
 
-    .welcome-small{
-        font-size:15px;
-    }
-
-    .welcome-title{
-        font-size:52px;
-    }
-
-    .welcome-subtitle{
-        font-size:17px;
-    }
-
-    .luxury-section{
-        padding:65px 12px;
+    .welcome-frame{
+        inset:25px 17px;
     }
 
     .section-title{
-        font-size:45px;
-    }
-
-    .scratch-frame{
-        padding:20px;
-    }
-
-    .scratch-frame iframe{
-        height:460px;
-    }
-
-    .countdown-frame{
-        padding:60px 20px;
-    }
-
-    .countdown-title{
-        font-size:45px;
-    }
-
-    .countdown-subtitle{
-        font-size:18px;
-    }
-
-    .countdown-flower{
-        width:65px;
-        height:65px;
-    }
-
-    .countdown-flower.left,
-    .countdown-flower.bottom-left{
-        left:-25px;
-    }
-
-    .countdown-flower.right,
-    .countdown-flower.bottom-right{
-        right:-25px;
-    }
-
-    .timeline-heading{
-        font-size:48px;
-    }
-
-    .timeline{
-        padding-left:2px;
-        padding-right:2px;
+        font-size:39px;
     }
 
     .event{
-        min-height:230px;
-    }
-
-    .time{
-        font-size:28px;
-    }
-
-    .event-name{
-        font-size:31px;
+        min-height:195px;
     }
 
     .event-image img{
-        width:165px;
-        height:165px;
+        width:155px;
+        height:155px;
+    }
+
+    .time{
+        font-size:27px;
+    }
+
+    .event-name{
+        font-size:30px;
     }
 
     .moving-flower{
@@ -928,43 +850,26 @@ input::placeholder{
         height:46px;
     }
 
-    .moving-flower img{
-        width:46px;
-        height:46px;
-    }
-
     #map{
-        height:330px;
-    }
-
-    .map-title{
-        font-size:48px;
+        height:300px;
     }
 
     .venue-name{
-        font-size:28px;
+        font-size:29px;
     }
 
-    .rsvp-card{
-        padding:60px 18px;
-    }
-
-    .rsvp-title{
-        font-size:45px;
-    }
-
-    .rsvp-description{
-        font-size:18px;
+    .attendance{
+        font-size:39px;
     }
 
     .choice{
-        width:135px;
-        font-size:15px;
+        width:125px;
     }
 
 }
 
 </style>
+
 </head>
 
 
@@ -980,69 +885,58 @@ input::placeholder{
     <img
         class="gate-image"
         src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
-        alt="Wedding Gate">
-
-    <div class="gate-overlay">
-
-        <button
-            class="open-button"
-            onclick="openInvitation()">
-
-            Tap to Open
-
-        </button>
-
-    </div>
-
+        alt="Wedding Gate"
+    >
 
     <video
         id="gateVideo"
         playsinline
-        preload="auto">
-
+        preload="auto"
+    >
         <source
-            src="https://cdn.jsdelivr.net/gh/ivoryvows/ivoryvows.github.io@main/gate.MP4"
-            type="video/mp4">
-
+            src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/gate.MP4"
+            type="video/mp4"
+        >
     </video>
+
+    <div class="gate-overlay">
+
+        <div class="gate-tap">
+            Tap to Open
+        </div>
+
+        <div class="gate-small">
+            A LITTLE SURPRISE AWAITS
+        </div>
+
+    </div>
 
 </div>
 
 
-
 <!-- =====================================================
-     WELCOME
+     WELCOME VIDEO
 ===================================================== -->
 
-<section id="welcome">
+<section id="welcomeSection" class="section">
 
-    <video
-        class="welcome-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto">
+    <div class="welcome-video-frame">
 
-        <source
-            src="https://cdn.jsdelivr.net/gh/ivoryvows/ivoryvows.github.io@main/welcome.mov">
+        <video
+            id="welcomeVideo"
+            playsinline
+            muted
+            loop
+            preload="auto"
+        >
+            <source
+                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/welcome.mov"
+                type="video/quicktime"
+            >
+        </video>
 
-    </video>
-
-    <div class="welcome-overlay"></div>
-
-    <div class="welcome-content">
-
-        <div class="welcome-small">
-            Together with their families
-        </div>
-
-        <div class="welcome-title">
-            We Invite You
-        </div>
-
-        <div class="welcome-subtitle">
-            TO CELEBRATE OUR SPECIAL DAY
+        <div class="welcome-overlay">
+            <div class="welcome-frame"></div>
         </div>
 
     </div>
@@ -1050,28 +944,21 @@ input::placeholder{
 </section>
 
 
-
 <!-- =====================================================
-     SCRATCH TO REVEAL
+     SCRATCH
 ===================================================== -->
 
-<section class="luxury-section">
+<section id="scratchSection" class="section">
 
     <img
         class="corner-flower top-left"
-        src="https://files.catbox.moe/rd9anq.png">
+        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+    >
 
     <img
         class="corner-flower top-right"
-        src="https://files.catbox.moe/rd9anq.png">
-
-    <img
-        class="corner-flower bottom-left"
-        src="https://files.catbox.moe/rd9anq.png">
-
-    <img
-        class="corner-flower bottom-right"
-        src="https://files.catbox.moe/rd9anq.png">
+        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+    >
 
     <div class="section-inner">
 
@@ -1080,312 +967,340 @@ input::placeholder{
         </div>
 
         <div class="section-subtitle">
-            Scratch to reveal
+            A special moment awaits
         </div>
 
-        <div class="scratch-frame">
+        <div class="scratch-wrapper">
 
-            <iframe
-                src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
-                loading="lazy">
-            </iframe>
+            <div class="scratch-frame">
+
+                <iframe
+                    src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
+                    loading="lazy">
+                </iframe>
+
+            </div>
 
         </div>
 
     </div>
 
 </section>
-
 
 
 <!-- =====================================================
      FAMILY
 ===================================================== -->
 
-<section class="family-section">
+<section id="familySection" class="section">
 
     <img
         class="corner-flower top-left"
-        src="https://files.catbox.moe/rd9anq.png">
+        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+    >
 
-    <img
-        class="corner-flower top-right"
-        src="https://files.catbox.moe/rd9anq.png">
+    <div class="section-inner">
 
-    <video
-        class="family-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto">
+        <div class="section-title">
+            Our Families
+        </div>
 
-        <source
-            src="https://cdn.jsdelivr.net/gh/ivoryvows/ivoryvows.github.io@main/family.mov">
+        <div class="family-video-box">
 
-    </video>
+            <video
+                playsinline
+                autoplay
+                muted
+                loop
+                preload="auto"
+            >
+
+                <source
+                    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/family.mov"
+                    type="video/quicktime"
+                >
+
+            </video>
+
+        </div>
+
+    </div>
 
 </section>
-
 
 
 <!-- =====================================================
      COUNTDOWN
 ===================================================== -->
 
-<section class="countdown-section">
+<section id="countdownSection" class="section">
 
-    <div class="countdown-frame">
+    <img
+        class="corner-flower bottom-right"
+        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+    >
 
-        <img
-            class="countdown-flower left"
-            src="https://files.catbox.moe/rd9anq.png">
+    <div class="section-inner">
 
-        <img
-            class="countdown-flower right"
-            src="https://files.catbox.moe/rd9anq.png">
-
-        <img
-            class="countdown-flower bottom-left"
-            src="https://files.catbox.moe/rd9anq.png">
-
-        <img
-            class="countdown-flower bottom-right"
-            src="https://files.catbox.moe/rd9anq.png">
-
-
-        <div class="countdown-title">
+        <div class="section-title">
             Until We Say I Do
         </div>
 
-        <div class="countdown-subtitle">
-            Counting every moment until our special day
-        </div>
+        <div class="countdown-card">
 
+            <div class="countdown-inner">
 
-        <div class="countdown-embed">
+                <div class="countdown-embed">
 
-            <!-- TICKCOUNTER -->
+                    <script>
+                    (function(d, s, id) {
+                        var js, pjs = d.getElementsByTagName(s)[0];
 
-            <script>
-            (function(d, s, id) {
-                var js, pjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "//www.tickcounter.com/static/js/loader.js";
-                pjs.parentNode.insertBefore(js, pjs);
-            }(document, "script", "tickcounter-sdk"));
-            </script>
+                        if (d.getElementById(id)) return;
 
-            <a
-                data-type="countdown"
-                data-id="11415740"
-                class="tickcounter"
-                style="
-                    display:block;
-                    left:0;
-                    width:100%;
-                    height:0;
-                    position:relative;
-                    padding-bottom:25%;
-                    margin:0 auto;
-                "
-                title="Wedding Countdown"
-                href="//www.tickcounter.com/">
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = "//www.tickcounter.com/static/js/loader.js";
 
-                Wedding Countdown
+                        pjs.parentNode.insertBefore(js, pjs);
 
-            </a>
+                    }(document, "script", "tickcounter-sdk"));
+                    </script>
+
+                    <a
+                        data-type="countdown"
+                        data-id="11415740"
+                        class="tickcounter"
+                        style="
+                            display:block;
+                            left:0;
+                            width:100%;
+                            height:0;
+                            position:relative;
+                            padding-bottom:25%;
+                            margin:0 auto;
+                        "
+                        title="Wedding Countdown"
+                        href="//www.tickcounter.com/"
+                    >
+                        Wedding Countdown
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 </section>
-
 
 
 <!-- =====================================================
      TIMELINE
 ===================================================== -->
 
-<section class="timeline-section">
+<section id="timelineSection" class="section">
 
-    <div class="timeline-heading">
-        Our Celebration
-    </div>
+    <div class="section-inner">
 
-
-    <div class="timeline">
-
-
-        <!-- CENTER LINE -->
-
-        <div class="timeline-line"></div>
-
-
-        <!-- MOVING FLOWER -->
-
-        <div
-            class="moving-flower"
-            id="movingFlower">
-
-            <img
-                src="https://files.catbox.moe/rd9anq.png"
-                alt="Flower">
-
+        <div class="section-title" style="text-align:center;">
+            Our Celebration
         </div>
 
+        <div class="timeline">
 
-        <!-- EVENT 1 -->
+            <div class="timeline-line"></div>
 
-        <div class="event">
-
-            <div class="event-text">
-
-                <div class="time">
-                    07:00 PM
-                </div>
-
-                <div class="event-name">
-                    Guest Arrival
-                </div>
-
-            </div>
-
-
-            <div class="event-image">
+            <div
+                class="moving-flower"
+                id="movingFlower"
+            >
 
                 <img
-                    src="https://files.catbox.moe/zt8kp4.jpeg"
-                    alt="Guest Arrival">
+                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+                    alt="Flower"
+                >
+
+            </div>
+
+
+            <!-- EVENT 1 -->
+
+            <div class="event">
+
+                <div class="event-text">
+
+                    <div class="time">
+                        07:00 PM
+                    </div>
+
+                    <div class="event-name">
+                        Guest Arrival
+                    </div>
+
+                </div>
+
+                <div class="event-image">
+
+                    <img
+                        src="https://files.catbox.moe/zt8kp4.jpeg"
+                        alt="Guest Arrival"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 2 -->
+
+            <div class="event">
+
+                <div class="event-image">
+
+                    <img
+                        src="https://files.catbox.moe/kh8bbs.png"
+                        alt="Bride Entry"
+                    >
+
+                </div>
+
+                <div class="event-text">
+
+                    <div class="time">
+                        08:00 PM
+                    </div>
+
+                    <div class="event-name">
+                        Bride Entry
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 3 -->
+
+            <div class="event">
+
+                <div class="event-text">
+
+                    <div class="time">
+                        08:30 PM
+                    </div>
+
+                    <div class="event-name">
+                        Nikkah Ceremony
+                    </div>
+
+                </div>
+
+                <div class="event-image">
+
+                    <img
+                        src="https://files.catbox.moe/kph6hd.png"
+                        alt="Nikkah Ceremony"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 4 -->
+
+            <div class="event">
+
+                <div class="event-image">
+
+                    <img
+                        src="https://files.catbox.moe/ssoyrc.png"
+                        alt="Buffet"
+                    >
+
+                </div>
+
+                <div class="event-text">
+
+                    <div class="time">
+                        09:30 PM
+                    </div>
+
+                    <div class="event-name">
+                        Buffet Opening
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
-
-
-        <!-- EVENT 2 -->
-
-        <div class="event">
-
-            <div class="event-image">
-
-                <img
-                    src="https://files.catbox.moe/kh8bbs.png"
-                    alt="Bride Entry">
-
-            </div>
-
-
-            <div class="event-text">
-
-                <div class="time">
-                    08:00 PM
-                </div>
-
-                <div class="event-name">
-                    Bride Entry
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- EVENT 3 -->
-
-        <div class="event">
-
-            <div class="event-text">
-
-                <div class="time">
-                    08:30 PM
-                </div>
-
-                <div class="event-name">
-                    Nikkah Ceremony
-                </div>
-
-            </div>
-
-
-            <div class="event-image">
-
-                <img
-                    src="https://files.catbox.moe/kph6hd.png"
-                    alt="Nikkah Ceremony">
-
-            </div>
-
-        </div>
-
-
-        <!-- EVENT 4 -->
-
-        <div class="event">
-
-            <div class="event-image">
-
-                <img
-                    src="https://files.catbox.moe/ssoyrc.png"
-                    alt="Buffet">
-
-            </div>
-
-
-            <div class="event-text">
-
-                <div class="time">
-                    09:30 PM
-                </div>
-
-                <div class="event-name">
-                    Buffet Opening
-                </div>
-
-            </div>
-
-        </div>
-
 
     </div>
 
 </section>
 
 
-
 <!-- =====================================================
      VENUE
 ===================================================== -->
 
-<section class="map-section">
+<section id="venueSection" class="section">
 
-    <div class="map-content">
+    <img
+        class="corner-flower top-right"
+        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+    >
 
-        <div class="map-title">
+    <div class="section-inner">
+
+        <div class="section-title">
             Find Us
         </div>
 
-        <div class="map-subtitle">
+        <div class="section-subtitle">
             We can't wait to celebrate with you
         </div>
 
 
-        <div id="map"></div>
+        <!-- LOCATION PICTURE -->
+
+        <div class="location-picture-frame">
+
+            <img
+                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Location.jpg"
+                alt="Venue Location"
+            >
+
+        </div>
+
+
+        <!-- MAP -->
+
+        <div class="map-box">
+
+            <div id="map"></div>
+
+        </div>
 
 
         <div class="venue-name">
-            Al Hameed Grand Marquee<br>
+
+            Al Hameed Grand Marquee
+            <br>
             Islamabad
+
         </div>
 
 
         <a
             class="map-button"
             href="https://www.google.com/maps/search/?api=1&query=Al+Hameed+Grand+Marquee+Islamabad"
-            target="_blank">
+            target="_blank"
+        >
 
             VIEW ON GOOGLE MAPS
 
@@ -1396,81 +1311,86 @@ input::placeholder{
 </section>
 
 
-
 <!-- =====================================================
      DRESS CODE
 ===================================================== -->
 
-<section class="dress-section">
+<section id="dressSection" class="section">
 
     <img
         class="corner-flower top-left"
-        src="https://files.catbox.moe/rd9anq.png">
+        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+    >
 
-    <img
-        class="corner-flower top-right"
-        src="https://files.catbox.moe/rd9anq.png">
+    <div class="section-inner">
 
-    <video
-        class="dress-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto">
+        <div class="section-title">
+            Dress Code
+        </div>
 
-        <source
-            src="https://cdn.jsdelivr.net/gh/ivoryvows/ivoryvows.github.io@main/dress.MP4"
-            type="video/mp4">
+        <div class="section-subtitle">
+            Come dressed in your finest
+        </div>
 
-    </video>
+        <div class="dress-video-frame">
+
+            <video
+                playsinline
+                autoplay
+                muted
+                loop
+                preload="auto"
+            >
+
+                <source
+                    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/dress.MP4"
+                    type="video/mp4"
+                >
+
+            </video>
+
+        </div>
+
+    </div>
 
 </section>
-
 
 
 <!-- =====================================================
      RSVP
 ===================================================== -->
 
-<section class="rsvp-section">
+<section id="rsvpSection" class="section">
 
-    <div class="rsvp-card">
+    <img
+        class="corner-flower bottom-left"
+        src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+    >
 
+    <div class="rsvp-container">
 
-        <img
-            class="corner-flower top-left"
-            src="https://files.catbox.moe/rd9anq.png">
+        <div id="formContent">
 
-        <img
-            class="corner-flower top-right"
-            src="https://files.catbox.moe/rd9anq.png">
-
-
-        <!-- INTRO -->
-
-        <div id="rsvpIntro">
-
-            <div class="rsvp-kindly">
+            <div class="kindly">
                 Kindly Respond
             </div>
 
-            <div class="rsvp-title">
-                Confirm Your<br>
+            <div class="attendance">
+                Confirm Your
+                <br>
                 Attendance
             </div>
 
-            <div class="rsvp-description">
+            <div class="description">
                 We would be delighted to celebrate
-                this special day with you.
+                this special day with you
             </div>
 
             <button
-                class="rsvp-button"
-                onclick="openRSVP()">
-
+                class="rsvp-box"
+                onclick="openRSVP()"
+            >
                 RSVP
-
             </button>
 
         </div>
@@ -1478,72 +1398,74 @@ input::placeholder{
 
         <!-- FORM -->
 
-        <div id="rsvpForm">
+        <div id="formPage">
 
-            <div class="form-title">
-                Kindly Respond
-            </div>
+            <div class="form-container">
 
-
-            <label for="guestName">
-                Your Name
-            </label>
-
-            <input
-                id="guestName"
-                type="text"
-                placeholder="Enter your name"
-                autocomplete="name">
+                <div class="form-title">
+                    Kindly Respond
+                </div>
 
 
-            <div class="question">
-                Will you be joining us?
-            </div>
+                <label for="guestName">
+                    Your Name
+                </label>
+
+                <input
+                    id="guestName"
+                    type="text"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                >
 
 
-            <div class="choice-row">
+                <div class="question">
+                    Will you be joining us?
+                </div>
+
+
+                <div class="choice-row">
+
+                    <button
+                        class="choice"
+                        id="accept"
+                        onclick="choose('accept')"
+                    >
+                        Joyfully Accept
+                    </button>
+
+                    <button
+                        class="choice"
+                        id="reject"
+                        onclick="choose('reject')"
+                    >
+                        Regretfully Reject
+                    </button>
+
+                </div>
+
+
+                <label for="guests">
+                    Number of Guests
+                </label>
+
+                <input
+                    id="guests"
+                    type="number"
+                    min="1"
+                    max="20"
+                    value="1"
+                >
+
 
                 <button
-                    class="choice"
-                    id="accept"
-                    onclick="choose('accept')">
-
-                    Joyfully Accept
-
-                </button>
-
-
-                <button
-                    class="choice"
-                    id="reject"
-                    onclick="choose('reject')">
-
-                    Regretfully Reject
-
+                    class="confirm-button"
+                    onclick="confirmRSVP()"
+                >
+                    CONFIRM RSVP
                 </button>
 
             </div>
-
-
-            <label for="guests">
-                Number of Guests
-            </label>
-
-            <input
-                id="guests"
-                type="number"
-                min="1"
-                max="20"
-                value="1">
-
-
-            <button
-                class="confirm-button"
-                onclick="confirmRSVP()">
-
-                CONFIRM RSVP
-
-            </button>
 
         </div>
 
@@ -1552,28 +1474,22 @@ input::placeholder{
 
         <div id="success">
 
-            <div class="success-title">
+            <h2>
                 Thank You
-            </div>
+            </h2>
 
-            <div class="success-text">
-
+            <p>
                 Your RSVP has been received.
-
                 <br><br>
-
                 We look forward to celebrating
                 with you.
-
-            </div>
+            </p>
 
         </div>
-
 
     </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -1583,41 +1499,37 @@ input::placeholder{
 <audio
     id="weddingMusic"
     loop
-    preload="auto">
+    preload="auto"
+>
 
     <source
         src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Music.mp3"
-        type="audio/mpeg">
+        type="audio/mpeg"
+    >
 
 </audio>
 
-
 <button
-    class="music-button"
     id="musicButton"
-    onclick="toggleMusic()">
-
+    onclick="toggleMusic()"
+    aria-label="Music"
+>
     ♫
-
 </button>
-
 
 
 <!-- =====================================================
      LEAFLET
 ===================================================== -->
 
-<script
-src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
-
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
 <script>
 
-/* =====================================================
-   GATE + MUSIC
-===================================================== */
+/* =========================================================
+   GATE → WELCOME
+========================================================= */
 
 const gateScreen =
 document.getElementById("gateScreen");
@@ -1625,93 +1537,110 @@ document.getElementById("gateScreen");
 const gateVideo =
 document.getElementById("gateVideo");
 
+const welcomeVideo =
+document.getElementById("welcomeVideo");
+
 const music =
 document.getElementById("weddingMusic");
 
-const musicButton =
-document.getElementById("musicButton");
 
-
-function openInvitation(){
+gateScreen.addEventListener("click", function(){
 
     /* Start music after user interaction */
 
     music.volume = 0.35;
 
-    music.play()
-    .then(function(){
-
-        musicButton.innerHTML = "♫";
-
-    })
-    .catch(function(){
-
-        musicButton.innerHTML = "♪";
-
-    });
+    music.play().catch(function(){});
 
 
-    /* Play gate video */
+    /* Gate animation */
 
-    gateScreen.classList.add("video-playing");
+    gateScreen.classList.add("opening");
 
-    gateVideo.currentTime = 0;
-
-    gateVideo.play()
-    .catch(function(error){
-
-        console.log("Gate video could not autoplay:", error);
-
-    });
+    gateVideo.play().catch(function(){});
 
 
-    /* When gate video finishes */
+    /*
+       Once gate video is almost finished,
+       begin welcome video underneath.
+    */
 
     gateVideo.addEventListener(
-        "ended",
+        "timeupdate",
         function(){
 
-            gateScreen.classList.add("hide");
+            if(
+                gateVideo.duration &&
+                gateVideo.currentTime >=
+                gateVideo.duration - 2.2
+            ){
+
+                welcomeVideo.currentTime = 0;
+
+                welcomeVideo.play().catch(function(){});
+
+            }
 
         },
         {once:true}
     );
 
-}
+
+    /*
+       When gate video finishes,
+       smoothly remove gate.
+    */
+
+    gateVideo.addEventListener(
+        "ended",
+        function(){
+
+            gateScreen.style.opacity = "0";
+
+            gateScreen.style.transition =
+                "opacity 1.8s ease";
+
+            setTimeout(function(){
+
+                gateScreen.style.display = "none";
+
+            },1800);
+
+        },
+        {once:true}
+    );
+
+});
 
 
+/* =========================================================
+   MUSIC
+========================================================= */
 
-/* =====================================================
-   MUSIC BUTTON
-===================================================== */
+let musicPlaying = false;
 
 function toggleMusic(){
 
     if(music.paused){
 
-        music.play()
-        .then(function(){
+        music.play().catch(function(){});
 
-            musicButton.innerHTML = "♫";
+        musicPlaying = true;
 
-        });
-
-    }
-    else{
+    }else{
 
         music.pause();
 
-        musicButton.innerHTML = "♪";
+        musicPlaying = false;
 
     }
 
 }
 
 
-
-/* =====================================================
-   TIMELINE MOVING FLOWER
-===================================================== */
+/* =========================================================
+   TIMELINE FLOWER
+========================================================= */
 
 const flower =
 document.getElementById("movingFlower");
@@ -1722,60 +1651,48 @@ document.querySelector(".timeline");
 
 function moveFlower(){
 
-    if(!timeline || !flower){
-        return;
-    }
-
+    if(!timeline || !flower) return;
 
     const rect =
-    timeline.getBoundingClientRect();
-
+        timeline.getBoundingClientRect();
 
     const scrollTop =
-    window.scrollY ||
-    window.pageYOffset;
-
+        window.scrollY ||
+        window.pageYOffset;
 
     const timelineTop =
-    rect.top + scrollTop;
-
+        rect.top + scrollTop;
 
     const timelineHeight =
-    timeline.offsetHeight;
-
+        timeline.offsetHeight;
 
     const flowerTravel =
-    timelineHeight - 108;
+        timelineHeight - 120;
 
+    const timelineStart =
+        timelineTop - window.innerHeight * 0.35;
 
-    /*
-       Calculate how far the page has
-       moved through the timeline.
-    */
-
-    const viewportMiddle =
-    scrollTop + (window.innerHeight / 2);
-
+    const timelineEnd =
+        timelineTop +
+        timelineHeight -
+        window.innerHeight * 0.65;
 
     let progress =
-    (viewportMiddle - timelineTop) /
-    timelineHeight;
-
+        (scrollTop - timelineStart) /
+        (timelineEnd - timelineStart);
 
     progress =
-    Math.max(
-        0,
-        Math.min(1,progress)
-    );
-
+        Math.max(
+            0,
+            Math.min(1,progress)
+        );
 
     const newTop =
-    50 +
-    (flowerTravel * progress);
-
+        55 +
+        (flowerTravel * progress);
 
     flower.style.top =
-    newTop + "px";
+        newTop + "px";
 
 }
 
@@ -1794,197 +1711,16 @@ window.addEventListener(
 moveFlower();
 
 
-
-/* =====================================================
-   RSVP
-===================================================== */
-
-let attendance = "";
-
-
-function openRSVP(){
-
-    document
-    .getElementById("rsvpIntro")
-    .style.display = "none";
-
-
-    document
-    .getElementById("rsvpForm")
-    .style.display = "block";
-
-}
-
-
-function choose(type){
-
-    attendance = type;
-
-
-    document
-    .getElementById("accept")
-    .classList.remove("selected");
-
-
-    document
-    .getElementById("reject")
-    .classList.remove("selected");
-
-
-    if(type === "accept"){
-
-        document
-        .getElementById("accept")
-        .classList.add("selected");
-
-    }
-
-    else{
-
-        document
-        .getElementById("reject")
-        .classList.add("selected");
-
-    }
-
-}
-
-
-
-/* =====================================================
-   GOOGLE SHEET
-===================================================== */
-
-const GOOGLE_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbwhcI7eEUuhAeb9LDD_iOQV1yOXX-iSxou8kYnM_B9J6Z9Fxjma_F5E0-zGMMi_fKo/exec";
-
-
-function confirmRSVP(){
-
-    const name =
-    document
-    .getElementById("guestName")
-    .value
-    .trim();
-
-
-    const guests =
-    document
-    .getElementById("guests")
-    .value;
-
-
-    if(!name){
-
-        alert("Please enter your name.");
-
-        return;
-
-    }
-
-
-    if(!attendance){
-
-        alert("Please select your RSVP.");
-
-        return;
-
-    }
-
-
-    if(!guests || guests < 1){
-
-        alert("Please enter the number of guests.");
-
-        return;
-
-    }
-
-
-    /*
-       Send information to Google Sheets.
-    */
-
-    const data =
-    new URLSearchParams();
-
-    data.append("name",name);
-
-    data.append(
-        "attendance",
-        attendance === "accept"
-        ? "Joyfully Accept"
-        : "Regretfully Reject"
-    );
-
-    data.append("guests",guests);
-
-    data.append(
-        "timestamp",
-        new Date().toLocaleString()
-    );
-
-
-    fetch(
-        GOOGLE_SCRIPT_URL,
-        {
-            method:"POST",
-            mode:"no-cors",
-            body:data
-        }
-    )
-    .then(function(){
-
-        showRSVPSuccess();
-
-    })
-    .catch(function(error){
-
-        console.log(
-            "RSVP submission error:",
-            error
-        );
-
-        /*
-           Still show confirmation because
-           Apps Script no-cors does not expose
-           the response to the browser.
-        */
-
-        showRSVPSuccess();
-
-    });
-
-}
-
-
-function showRSVPSuccess(){
-
-    document
-    .getElementById("rsvpForm")
-    .style.display = "none";
-
-
-    document
-    .getElementById("success")
-    .style.display = "block";
-
-}
-
-
-
-/* =====================================================
+/* =========================================================
    MAP
-===================================================== */
+========================================================= */
 
 const venueLat = 33.6390;
-
 const venueLng = 73.1610;
 
 
 const map =
-L.map("map")
-.setView(
+L.map("map").setView(
     [venueLat,venueLng],
     15
 );
@@ -1995,7 +1731,7 @@ L.tileLayer(
     {
         maxZoom:19,
         attribution:
-        "&copy; OpenStreetMap contributors"
+        '&copy; OpenStreetMap contributors'
     }
 ).addTo(map);
 
@@ -2003,8 +1739,7 @@ L.tileLayer(
 const marker =
 L.marker(
     [venueLat,venueLng]
-)
-.addTo(map);
+).addTo(map);
 
 
 marker.bindPopup(
@@ -2016,8 +1751,185 @@ marker.bindPopup(
 marker.openPopup();
 
 
-</script>
+/*
+   Fix map rendering if section becomes visible
+*/
 
+setTimeout(function(){
+
+    map.invalidateSize();
+
+},500);
+
+
+/* =========================================================
+   RSVP
+========================================================= */
+
+let attendance = "";
+
+
+/*
+   YOUR GOOGLE APPS SCRIPT
+*/
+
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbwhcI7eEUuhAeb9LDD_iOQV1yOXX-iSxou8kYnM_B9J6Z9Fxjma_F5E0-zGMMi_fKo/exec";
+
+
+function openRSVP(){
+
+    document
+        .getElementById("formContent")
+        .style.display = "none";
+
+    document
+        .getElementById("formPage")
+        .style.display = "block";
+
+}
+
+
+function choose(type){
+
+    attendance = type;
+
+    document
+        .getElementById("accept")
+        .classList.remove("selected");
+
+    document
+        .getElementById("reject")
+        .classList.remove("selected");
+
+
+    if(type === "accept"){
+
+        document
+            .getElementById("accept")
+            .classList.add("selected");
+
+    }else{
+
+        document
+            .getElementById("reject")
+            .classList.add("selected");
+
+    }
+
+}
+
+
+function confirmRSVP(){
+
+    const name =
+        document
+        .getElementById("guestName")
+        .value
+        .trim();
+
+
+    const guests =
+        document
+        .getElementById("guests")
+        .value;
+
+
+    if(!name){
+
+        alert(
+            "Please enter your name."
+        );
+
+        return;
+
+    }
+
+
+    if(!attendance){
+
+        alert(
+            "Please select your RSVP."
+        );
+
+        return;
+
+    }
+
+
+    if(!guests || guests < 1){
+
+        alert(
+            "Please enter the number of guests."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       SEND TO GOOGLE SHEET
+    */
+
+    const data = {
+
+        name:name,
+
+        attendance:attendance,
+
+        guests:guests,
+
+        timestamp:
+        new Date().toISOString()
+
+    };
+
+
+    fetch(
+        GOOGLE_SCRIPT_URL,
+        {
+
+            method:"POST",
+
+            mode:"no-cors",
+
+            headers:{
+                "Content-Type":
+                "application/json"
+            },
+
+            body:
+            JSON.stringify(data)
+
+        }
+    )
+    .catch(function(error){
+
+        console.log(
+            "RSVP connection:",
+            error
+        );
+
+    });
+
+
+    /*
+       SHOW SUCCESS
+    */
+
+    document
+        .getElementById("formPage")
+        .style.display = "none";
+
+
+    document
+        .getElementById("success")
+        .style.display = "block";
+
+}
+
+</script>
 
 </body>
 </html>
