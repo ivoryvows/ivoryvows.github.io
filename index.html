@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,9 +28,22 @@ body{
         radial-gradient(circle at 15% 15%, rgba(255,255,255,.95), transparent 34%),
         radial-gradient(circle at 85% 85%, rgba(246,238,229,.55), transparent 38%),
         #fffdf8;
-
     color:#651b27;
     overflow-x:hidden;
+}
+
+
+/* =========================
+   TINY GOLD SPARKLES
+========================= */
+
+#sparkleCanvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:40;
 }
 
 
@@ -41,7 +55,6 @@ body{
     position:relative;
     min-height:100vh;
     padding:70px 20px;
-
     display:flex;
     align-items:center;
     justify-content:center;
@@ -63,25 +76,19 @@ body{
 
 .section-title{
     text-align:center;
-
     font-family:"Parisienne",cursive;
     font-size:clamp(48px,9vw,90px);
-
     color:#651b27;
-
     line-height:1;
     margin-bottom:12px;
 }
 
 .section-subtitle{
     text-align:center;
-
     font-family:"Cormorant Garamond",serif;
     font-size:20px;
     letter-spacing:2px;
-
     color:#8b5960;
-
     margin-bottom:35px;
 }
 
@@ -93,87 +100,61 @@ body{
 #gate{
     position:fixed;
     inset:0;
-
     z-index:9999;
-
     background:#fffdf8;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     overflow:hidden;
 }
 
 #gateVideo{
     position:absolute;
     inset:0;
-
     width:100%;
     height:100%;
-
     object-fit:cover;
-
     display:none;
 }
 
 #gatePoster{
     position:absolute;
     inset:0;
-
     width:100%;
     height:100%;
-
     object-fit:cover;
 }
 
 #tapOverlay{
     position:absolute;
     inset:0;
-
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:flex-end;
-
     padding-bottom:12vh;
-
     text-align:center;
-
     z-index:10;
     cursor:pointer;
 }
 
 #tapOverlay h1{
     font-family:"Parisienne",cursive;
-
     font-size:clamp(45px,10vw,85px);
-
     color:#651b27;
-
-    text-shadow:
-        0 2px 8px rgba(255,255,255,.9);
-
-    animation:
-        tapPulse
-        2s
-        ease-in-out
-        infinite;
+    text-shadow:0 2px 8px rgba(255,255,255,.9);
+    animation:tapPulse 2s ease-in-out infinite;
 }
 
 #tapOverlay p{
     margin-top:5px;
-
     font-family:"Montserrat",sans-serif;
-
     font-size:10px;
     letter-spacing:4px;
-
     color:#651b27;
 }
 
 @keyframes tapPulse{
-
     0%,100%{
         transform:scale(1);
         opacity:.85;
@@ -183,7 +164,6 @@ body{
         transform:scale(1.06);
         opacity:1;
     }
-
 }
 
 
@@ -199,20 +179,15 @@ body{
 .welcome-video-frame{
     width:100%;
     height:100vh;
-
     position:relative;
-
     overflow:hidden;
-
     background:#fffdf8;
 }
 
 #welcomeVideo{
     width:100%;
     height:100%;
-
     object-fit:cover;
-
     display:block;
 }
 
@@ -229,18 +204,14 @@ body{
 .family-video-frame{
     width:100%;
     height:100vh;
-
     position:relative;
-
     overflow:hidden;
 }
 
 #familyVideo{
     width:100%;
     height:100%;
-
     object-fit:cover;
-
     display:block;
 }
 
@@ -255,19 +226,14 @@ body{
 
 .scratch-wrapper{
     width:min(92vw,700px);
-
     margin:auto;
-
     position:relative;
-
     padding:0;
 }
 
 .scratch-frame{
     position:relative;
-
     width:100%;
-
     min-height:500px;
 
     border:1px solid rgba(101,27,39,.25);
@@ -277,13 +243,13 @@ body{
         inset 0 0 0 6px rgba(255,255,255,.75);
 
     background:#fffdf8;
-
     overflow:hidden;
 }
 
 
 /* =========================
-   ONLY FRAME FLOWERS
+   FRAME FLOWERS
+   ONLY:
    SCRATCH
    COUNTDOWN
    DRESS CODE
@@ -298,24 +264,18 @@ body{
     object-fit:contain;
 
     z-index:100;
-
     pointer-events:none;
 
     filter:
-        drop-shadow(
-            0 3px 5px rgba(101,27,39,.14)
-        );
+        drop-shadow(0 3px 5px rgba(101,27,39,.14));
 }
 
 
-/* =========================
-   TOP LEFT FLOWER
-========================= */
+/* TOP LEFT */
 
 .frame-flower-tl{
-
-    top:1px;
-    left:1px;
+    top:2px;
+    left:2px;
 
     animation:
         flowerFloatTL
@@ -325,14 +285,11 @@ body{
 }
 
 
-/* =========================
-   BOTTOM RIGHT FLOWER
-========================= */
+/* BOTTOM RIGHT */
 
 .frame-flower-br{
-
-    bottom:1px;
-    right:1px;
+    bottom:2px;
+    right:2px;
 
     transform:rotate(180deg);
 
@@ -348,13 +305,13 @@ body{
 
     0%,100%{
         transform:
-            translate(0,0)
+            translateY(0)
             rotate(0deg);
     }
 
     50%{
         transform:
-            translate(0,-4px)
+            translateY(-5px)
             rotate(3deg);
     }
 
@@ -366,13 +323,14 @@ body{
     0%,100%{
         transform:
             rotate(180deg)
-            translate(0,0);
+            translateY(0);
     }
 
     50%{
         transform:
             rotate(180deg)
-            translate(0,-4px);
+            translateY(-5px)
+            rotate(3deg);
     }
 
 }
@@ -380,12 +338,8 @@ body{
 
 .cn-frame{
     width:100%;
-
     min-height:500px;
-
     display:block;
-
-    border:0;
 }
 
 
@@ -398,7 +352,6 @@ body{
 }
 
 .countdown-card{
-
     position:relative;
 
     width:min(92vw,800px);
@@ -419,10 +372,9 @@ body{
 }
 
 
-/* Countdown flowers */
+/* Countdown flowers stay close to frame */
 
 .countdown-card .frame-flower{
-
     width:78px;
     height:78px;
 }
@@ -433,50 +385,33 @@ body{
 ========================= */
 
 #timeline{
-
     min-height:auto;
-
     padding-top:90px;
     padding-bottom:100px;
 }
 
 .timeline{
-
     position:relative;
-
     width:min(95vw,900px);
-
     margin:auto;
 }
 
 .timeline-line{
-
     position:absolute;
-
     top:0;
     bottom:0;
-
     left:50%;
-
     width:1px;
-
     background:rgba(101,27,39,.25);
-
     transform:translateX(-50%);
 }
 
 .timeline-item{
-
     position:relative;
-
     width:100%;
-
     min-height:230px;
-
     display:flex;
-
     align-items:center;
-
     margin-bottom:30px;
 }
 
@@ -489,61 +424,41 @@ body{
 }
 
 .timeline-content{
-
     width:44%;
-
     position:relative;
-
     z-index:4;
 }
 
 .timeline-item:nth-child(odd) .timeline-content{
-
     text-align:right;
-
     padding-right:45px;
 }
 
 .timeline-item:nth-child(even) .timeline-content{
-
     text-align:left;
-
     padding-left:45px;
 }
 
 .timeline-time{
-
     font-family:"Montserrat",sans-serif;
-
     font-size:14px;
-
     letter-spacing:3px;
-
     color:#8b5960;
-
     margin-bottom:6px;
 }
 
 .timeline-event{
-
     font-family:"Parisienne",cursive;
-
     font-size:clamp(35px,6vw,55px);
-
     color:#651b27;
-
     line-height:1;
 }
 
 .timeline-image{
-
     position:absolute;
-
     width:150px;
     height:150px;
-
     object-fit:contain;
-
     z-index:3;
 }
 
@@ -556,6 +471,52 @@ body{
 }
 
 
+/* CENTER MOVING FLOWER ONLY */
+
+.timeline-flower{
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:75px;
+    height:75px;
+
+    object-fit:contain;
+
+    transform:translate(-50%,-50%);
+
+    z-index:8;
+
+    animation:
+        timelineFlower
+        4s
+        ease-in-out
+        infinite;
+
+    filter:
+        drop-shadow(0 4px 5px rgba(101,27,39,.15));
+}
+
+@keyframes timelineFlower{
+
+    0%,100%{
+        transform:
+            translate(-50%,-50%)
+            rotate(-3deg)
+            translateY(0);
+    }
+
+    50%{
+        transform:
+            translate(-50%,-50%)
+            rotate(4deg)
+            translateY(-7px);
+    }
+
+}
+
+
 /* =========================
    VENUE
 ========================= */
@@ -565,24 +526,16 @@ body{
 }
 
 .venue-card{
-
     width:min(94vw,900px);
-
     margin:auto;
-
     text-align:center;
 }
 
 .venue-image{
-
     width:min(100%,700px);
-
     max-height:500px;
-
     object-fit:cover;
-
     display:block;
-
     margin:0 auto 35px;
 
     border:1px solid rgba(101,27,39,.2);
@@ -592,31 +545,21 @@ body{
 }
 
 .venue-name{
-
     font-family:"Parisienne",cursive;
-
     font-size:clamp(42px,8vw,70px);
-
     color:#651b27;
-
     margin-bottom:10px;
 }
 
 .venue-address{
-
     font-family:"Cormorant Garamond",serif;
-
     font-size:22px;
-
     color:#76545a;
-
     margin-bottom:30px;
 }
 
 #map{
-
     width:100%;
-
     height:350px;
 
     border:1px solid rgba(101,27,39,.2);
@@ -635,7 +578,6 @@ body{
 }
 
 .dress-video-frame{
-
     width:min(92vw,750px);
 
     margin:auto;
@@ -659,21 +601,16 @@ body{
 /* Dress flowers */
 
 .dress-video-frame .frame-flower{
-
     width:78px;
     height:78px;
 }
 
 
 #dressVideo{
-
     display:block;
-
     width:100%;
     height:auto;
-
     max-height:75vh;
-
     object-fit:cover;
 }
 
@@ -683,7 +620,6 @@ body{
 ========================= */
 
 #musicToggle{
-
     position:fixed;
 
     right:18px;
@@ -703,7 +639,6 @@ body{
     z-index:9000;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
@@ -722,9 +657,7 @@ body{
 }
 
 #musicToggle.show{
-
     opacity:1;
-
     pointer-events:auto;
 }
 
@@ -736,7 +669,6 @@ body{
 @media(max-width:700px){
 
     .section{
-
         padding-left:14px;
         padding-right:14px;
     }
@@ -748,31 +680,22 @@ body{
 
     .scratch-frame,
     .cn-frame{
-
         min-height:430px;
     }
 
 
     .frame-flower{
-
         width:62px;
         height:62px;
     }
 
 
-    /* FLOWER HUGS TOP LEFT CORNER */
-
     .frame-flower-tl{
-
         top:1px;
         left:1px;
     }
 
-
-    /* FLOWER HUGS BOTTOM RIGHT CORNER */
-
     .frame-flower-br{
-
         bottom:1px;
         right:1px;
     }
@@ -780,79 +703,77 @@ body{
 
     .countdown-card .frame-flower,
     .dress-video-frame .frame-flower{
-
         width:64px;
         height:64px;
     }
 
 
     .timeline-line{
-
         left:28px;
     }
 
     .timeline-item{
-
         min-height:190px;
-
         justify-content:flex-start !important;
-
         padding-left:0;
     }
 
     .timeline-content{
-
         width:100%;
-
         padding-left:75px !important;
-
         padding-right:0 !important;
-
         text-align:left !important;
     }
 
     .timeline-image{
-
         width:105px;
         height:105px;
-
         right:0 !important;
         left:auto !important;
-
         opacity:.95;
     }
 
     .timeline-item .timeline-content{
-
         position:relative;
-
         z-index:5;
     }
 
     .timeline-time{
-
         font-size:11px;
     }
 
     .timeline-event{
-
         font-size:35px;
-
         max-width:230px;
     }
 
-
-    /* NO TIMELINE FLOWERS */
-
     .timeline-flower{
-
-        display:none !important;
+        left:28px;
+        width:58px;
+        height:58px;
     }
 
-
     #map{
-
         height:300px;
+    }
+
+}
+
+
+/* =========================
+   EXTRA SMALL SPARKLE GLOW
+========================= */
+
+@keyframes sparkleGlow{
+
+    0%,100%{
+        opacity:.35;
+        transform:scale(.7);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1);
     }
 
 }
@@ -861,6 +782,13 @@ body{
 </head>
 
 <body>
+
+
+<!-- =========================
+     TINY GOLD SPARKLES
+========================= -->
+
+<canvas id="sparkleCanvas"></canvas>
 
 
 <!-- =========================
@@ -1050,7 +978,8 @@ body{
             <div class="scratch-frame">
 
 
-                <!-- ONLY TWO FLOWERS -->
+                <!-- ONLY TWO FLOWERS
+                     ON SCRATCH FRAME -->
 
                 <img
                     class="frame-flower frame-flower-tl"
@@ -1144,7 +1073,8 @@ body{
         <div class="countdown-card">
 
 
-            <!-- ONLY TWO FLOWERS -->
+            <!-- ONLY TWO FLOWERS
+                 ON COUNTDOWN FRAME -->
 
             <img
                 class="frame-flower frame-flower-tl"
@@ -1278,6 +1208,13 @@ body{
                     alt=""
                 >
 
+
+                <img
+                    class="timeline-flower"
+                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+                    alt=""
+                >
+
             </div>
 
 
@@ -1301,6 +1238,13 @@ body{
                 <img
                     class="timeline-image"
                     src="https://files.catbox.moe/kh8bbs.png"
+                    alt=""
+                >
+
+
+                <img
+                    class="timeline-flower"
+                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
                     alt=""
                 >
 
@@ -1330,6 +1274,13 @@ body{
                     alt=""
                 >
 
+
+                <img
+                    class="timeline-flower"
+                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+                    alt=""
+                >
+
             </div>
 
 
@@ -1353,6 +1304,13 @@ body{
                 <img
                     class="timeline-image"
                     src="https://files.catbox.moe/ssoyrc.png"
+                    alt=""
+                >
+
+
+                <img
+                    class="timeline-flower"
+                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
                     alt=""
                 >
 
@@ -1434,7 +1392,8 @@ body{
         <div class="dress-video-frame">
 
 
-            <!-- ONLY TWO FLOWERS -->
+            <!-- ONLY TWO FLOWERS
+                 ON DRESS FRAME -->
 
             <img
                 class="frame-flower frame-flower-tl"
@@ -1722,7 +1681,294 @@ L.marker(
 )
 .openPopup();
 
+
+/* =========================
+   TINY GOLD SPARKLES
+========================= */
+
+const canvas =
+    document.getElementById(
+        "sparkleCanvas"
+    );
+
+const ctx =
+    canvas.getContext("2d");
+
+
+let sparkles = [];
+
+
+function resizeSparkleCanvas(){
+
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
+
+}
+
+
+resizeSparkleCanvas();
+
+
+window.addEventListener(
+    "resize",
+    resizeSparkleCanvas
+);
+
+
+/*
+   VERY SMALL GOLD SPARKLES
+*/
+
+function createSparkle(){
+
+    return {
+
+        x:
+            Math.random() *
+            canvas.width,
+
+        y:
+            -10 -
+            Math.random() *
+            canvas.height,
+
+        size:
+            0.7 +
+            Math.random() *
+            1.4,
+
+        speed:
+            0.25 +
+            Math.random() *
+            0.65,
+
+        drift:
+            (Math.random() - 0.5) *
+            0.25,
+
+        opacity:
+            0.35 +
+            Math.random() *
+            0.5,
+
+        twinkle:
+            Math.random() *
+            Math.PI *
+            2,
+
+        twinkleSpeed:
+            0.025 +
+            Math.random() *
+            0.035
+
+    };
+
+}
+
+
+/* small quantity */
+
+for(
+    let i = 0;
+    i < 70;
+    i++
+){
+
+    sparkles.push(
+        createSparkle()
+    );
+
+}
+
+
+/* =========================
+   DRAW GOLD SPARKLE
+========================= */
+
+function drawSparkle(s){
+
+    ctx.save();
+
+    ctx.translate(
+        s.x,
+        s.y
+    );
+
+
+    const glow =
+        0.55 +
+        Math.sin(s.twinkle) *
+        0.35;
+
+
+    ctx.globalAlpha =
+        Math.max(
+            0.15,
+            s.opacity * glow
+        );
+
+
+    /*
+       SOFT ANTIQUE GOLD
+    */
+
+    ctx.fillStyle =
+        "#b99755";
+
+
+    /*
+       Tiny 4-point sparkle
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -s.size * 2.2
+    );
+
+    ctx.lineTo(
+        s.size * .55,
+        -s.size * .55
+    );
+
+    ctx.lineTo(
+        s.size * 2.2,
+        0
+    );
+
+    ctx.lineTo(
+        s.size * .55,
+        s.size * .55
+    );
+
+    ctx.lineTo(
+        0,
+        s.size * 2.2
+    );
+
+    ctx.lineTo(
+        -s.size * .55,
+        s.size * .55
+    );
+
+    ctx.lineTo(
+        -s.size * 2.2,
+        0
+    );
+
+    ctx.lineTo(
+        -s.size * .55,
+        -s.size * .55
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+       Tiny center glow
+    */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        s.size * .55,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================
+   ANIMATE SPARKLES
+========================= */
+
+function animateSparkles(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    sparkles.forEach(
+        function(s){
+
+            s.y += s.speed;
+
+            s.x +=
+                s.drift +
+                Math.sin(
+                    s.y * 0.01
+                ) * 0.12;
+
+
+            s.twinkle +=
+                s.twinkleSpeed;
+
+
+            drawSparkle(s);
+
+
+            /*
+               Reset after falling
+            */
+
+            if(
+                s.y >
+                    canvas.height + 15
+                ||
+                s.x <
+                    -15
+                ||
+                s.x >
+                    canvas.width + 15
+            ){
+
+                s.x =
+                    Math.random() *
+                    canvas.width;
+
+                s.y =
+                    -10;
+
+                s.speed =
+                    0.25 +
+                    Math.random() *
+                    0.65;
+
+            }
+
+        }
+    );
+
+
+    requestAnimationFrame(
+        animateSparkles
+    );
+
+}
+
+
+animateSparkles();
+
 </script>
 
 </body>
 </html>
+```
