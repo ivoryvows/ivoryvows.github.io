@@ -203,10 +203,6 @@ body{
     object-fit:cover;
     display:block;
 
-    /*
-       Slight adjustment so the welcome video
-       blends more naturally with the gate lighting.
-    */
     filter:
         brightness(.96)
         contrast(.98)
@@ -637,175 +633,6 @@ body{
 
 
 /* =========================================================
-   RSVP
-========================================================= */
-
-#rsvpSection{
-    position:relative;
-    padding:45px 18px 55px;
-    text-align:center;
-    background:var(--ivory);
-}
-
-.rsvp-container{
-    width:100%;
-    max-width:600px;
-    margin:auto;
-    padding:30px 20px;
-    border:1px solid var(--gold);
-    position:relative;
-}
-
-.rsvp-container:before,
-.rsvp-container:after{
-    content:"";
-    position:absolute;
-    width:85px;
-    height:85px;
-    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
-        center/contain no-repeat;
-    pointer-events:none;
-}
-
-.rsvp-container:before{
-    top:-22px;
-    left:-18px;
-}
-
-.rsvp-container:after{
-    bottom:-22px;
-    right:-18px;
-    transform:rotate(180deg);
-}
-
-.kindly{
-    font-size:19px;
-    letter-spacing:1px;
-    margin-bottom:5px;
-}
-
-.attendance{
-    font-family:"Parisienne",cursive;
-    font-size:45px;
-    line-height:1.05;
-    margin-bottom:12px;
-}
-
-.description{
-    font-size:18px;
-    line-height:1.4;
-    margin-bottom:20px;
-}
-
-.rsvp-box{
-    padding:9px 28px;
-    background:transparent;
-    border:1px solid var(--maroon);
-    color:var(--maroon);
-    font-family:"Montserrat",sans-serif;
-    font-size:9px;
-    letter-spacing:2px;
-    cursor:pointer;
-}
-
-#formPage{
-    display:none;
-    margin-top:25px;
-}
-
-.form-title{
-    font-family:"Parisienne",cursive;
-    font-size:40px;
-    margin-bottom:20px;
-}
-
-.form-container{
-    max-width:400px;
-    margin:auto;
-}
-
-label{
-    display:block;
-    font-size:19px;
-    margin-bottom:4px;
-}
-
-input{
-    display:block;
-    width:220px;
-    height:32px;
-    margin:0 auto 17px;
-    padding:5px;
-    background:transparent;
-    border:none;
-    border-bottom:1px solid var(--gold);
-    outline:none;
-    text-align:center;
-    font-family:"Montserrat",sans-serif;
-    font-size:11px;
-    color:var(--maroon);
-}
-
-input::placeholder{
-    color:#8b6268;
-}
-
-.question{
-    font-size:21px;
-    margin-bottom:9px;
-}
-
-.choice-row{
-    display:flex;
-    justify-content:center;
-    gap:8px;
-    margin-bottom:17px;
-}
-
-.choice{
-    width:135px;
-    padding:8px 5px;
-    background:transparent;
-    border:1px solid var(--gold);
-    color:var(--maroon);
-    font-family:"Cormorant Garamond",serif;
-    font-size:16px;
-    cursor:pointer;
-}
-
-.choice.selected{
-    background:rgba(177,138,69,.22);
-}
-
-.confirm-button{
-    width:140px;
-    padding:8px;
-    background:transparent;
-    border:1px solid var(--maroon);
-    color:var(--maroon);
-    font-family:"Montserrat",sans-serif;
-    font-size:8px;
-    letter-spacing:2px;
-    cursor:pointer;
-}
-
-#success{
-    display:none;
-}
-
-#success h2{
-    font-family:"Parisienne",cursive;
-    font-size:45px;
-    margin-bottom:8px;
-}
-
-#success p{
-    font-size:19px;
-    line-height:1.5;
-}
-
-
-/* =========================================================
    MUSIC
 ========================================================= */
 
@@ -874,14 +701,6 @@ input::placeholder{
         font-size:29px;
     }
 
-    .attendance{
-        font-size:39px;
-    }
-
-    .choice{
-        width:125px;
-    }
-
 }
 
 </style>
@@ -896,7 +715,6 @@ input::placeholder{
 
 <div id="gateScreen">
 
-```
 <img
     class="gate-image"
     src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
@@ -906,6 +724,7 @@ input::placeholder{
 <video
     id="gateVideo"
     playsinline
+    muted
     preload="auto"
 >
     <source
@@ -925,9 +744,9 @@ input::placeholder{
     </div>
 
 </div>
-```
 
 </div>
+
 
 <!-- =====================================================
      WELCOME VIDEO
@@ -935,7 +754,6 @@ input::placeholder{
 
 <section id="welcomeSection" class="section">
 
-```
 <div class="welcome-video-frame">
 
     <video
@@ -946,10 +764,12 @@ input::placeholder{
         loop
         preload="auto"
     >
+
         <source
             src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/welcome.mov"
             type="video/quicktime"
         >
+
     </video>
 
     <div class="welcome-overlay">
@@ -959,9 +779,9 @@ input::placeholder{
     </div>
 
 </div>
-```
 
 </section>
+
 
 <!-- =====================================================
      SCRATCH
@@ -969,7 +789,6 @@ input::placeholder{
 
 <section id="scratchSection" class="section">
 
-```
 <img
     class="corner-flower top-left"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -1004,9 +823,9 @@ input::placeholder{
     </div>
 
 </div>
-```
 
 </section>
+
 
 <!-- =====================================================
      FAMILY
@@ -1014,7 +833,6 @@ input::placeholder{
 
 <section id="familySection" class="section">
 
-```
 <img
     class="corner-flower top-left"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -1046,9 +864,9 @@ input::placeholder{
     </div>
 
 </div>
-```
 
 </section>
+
 
 <!-- =====================================================
      COUNTDOWN
@@ -1056,7 +874,6 @@ input::placeholder{
 
 <section id="countdownSection" class="section">
 
-```
 <img
     class="corner-flower bottom-right"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -1117,9 +934,9 @@ input::placeholder{
     </div>
 
 </div>
-```
 
 </section>
+
 
 <!-- =====================================================
      TIMELINE
@@ -1127,7 +944,6 @@ input::placeholder{
 
 <section id="timelineSection" class="section">
 
-```
 <div class="section-inner">
 
     <div class="section-title" style="text-align:center;">
@@ -1257,9 +1073,9 @@ input::placeholder{
     </div>
 
 </div>
-```
 
 </section>
+
 
 <!-- =====================================================
      VENUE
@@ -1267,7 +1083,6 @@ input::placeholder{
 
 <section id="venueSection" class="section">
 
-```
 <img
     class="corner-flower top-right"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -1321,9 +1136,9 @@ input::placeholder{
     </a>
 
 </div>
-```
 
 </section>
+
 
 <!-- =====================================================
      DRESS CODE
@@ -1331,7 +1146,6 @@ input::placeholder{
 
 <section id="dressSection" class="section">
 
-```
 <img
     class="corner-flower top-left"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -1367,175 +1181,30 @@ input::placeholder{
     </div>
 
 </div>
-```
 
 </section>
 
-<!-- =====================================================
-     RSVP
-===================================================== -->
-
-<section id="rsvpSection" class="section">
-
-```
-<img
-    class="corner-flower bottom-left"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
-
-<div class="rsvp-container">
-
-    <div id="formContent">
-
-        <div class="kindly">
-            Kindly Respond
-        </div>
-
-        <div class="attendance">
-            Confirm Your
-            <br>
-            Attendance
-        </div>
-
-        <div class="description">
-            We would be delighted to celebrate
-            this special day with you
-        </div>
-
-        <button
-            class="rsvp-box"
-            onclick="openRSVP()"
-        >
-            RSVP
-        </button>
-
-    </div>
-
-
-    <div id="formPage">
-
-        <div class="form-container">
-
-            <div class="form-title">
-                Kindly Respond
-            </div>
-
-
-            <label for="guestName">
-                Your Name
-            </label>
-
-            <input
-                id="guestName"
-                type="text"
-                placeholder="Enter your name"
-                autocomplete="name"
-            >
-
-
-            <div class="question">
-                Will you be joining us?
-            </div>
-
-
-            <div class="choice-row">
-
-                <button
-                    class="choice"
-                    id="accept"
-                    onclick="choose('accept')"
-                >
-                    Joyfully Accept
-                </button>
-
-                <button
-                    class="choice"
-                    id="reject"
-                    onclick="choose('reject')"
-                >
-                    Regretfully Reject
-                </button>
-
-            </div>
-
-
-            <label for="guests">
-                Number of Guests
-            </label>
-
-            <input
-                id="guests"
-                type="number"
-                min="1"
-                max="20"
-                value="1"
-            >
-
-
-            <button
-                class="confirm-button"
-                onclick="confirmRSVP()"
-            >
-                CONFIRM RSVP
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div id="success">
-
-        <h2>
-            Thank You
-        </h2>
-
-        <p>
-            Your RSVP has been received.
-            <br><br>
-            We look forward to celebrating
-            with you.
-        </p>
-
-    </div>
-
-</div>
-```
-
-</section>
 
 <!-- =====================================================
      MUSIC
 ===================================================== -->
 
 <audio
-id="weddingMusic"
-loop
-preload="auto"
-
->
-
-```
-<source
+    id="weddingMusic"
     src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Music.mp3"
-    type="audio/mpeg"
->
-```
+    preload="auto"
+    loop
+></audio>
 
-</audio>
 
 <button
-id="musicButton"
-onclick="toggleMusic()"
-aria-label="Music"
-
+    id="musicButton"
+    onclick="toggleMusic()"
+    aria-label="Music"
 >
-
-```
-♫
-```
-
+    ♫
 </button>
+
 
 <!-- =====================================================
      LEAFLET
@@ -1547,7 +1216,7 @@ aria-label="Music"
 
 /* =========================================================
    GATE → WELCOME
-   FIXED FOR SMOOTH TRANSITION
+   MUSIC STARTS ON SAME TAP
 ========================================================= */
 
 const gateScreen =
@@ -1564,42 +1233,37 @@ document.getElementById("weddingMusic");
 
 
 let gateOpened = false;
+let musicPlaying = false;
 
 
-/*
+/* =========================================================
    PREPARE WELCOME VIDEO
-   It starts underneath the gate so there
-   is never an empty section after the gate.
-*/
+========================================================= */
 
 welcomeVideo.muted = true;
 
 welcomeVideo.play().catch(function(){
-
-    /*
-       iPhone may wait for the user's first tap.
-       The gate click below will start it again.
-    */
-
 });
 
 
-/*
-   USER TAPS GATE
-*/
+/* =========================================================
+   OPEN GATE
+========================================================= */
 
-gateScreen.addEventListener("click", function(){
+function openGate(){
 
     if(gateOpened) return;
 
     gateOpened = true;
 
 
-    /* =========================================
+    /* =====================================================
        MUSIC
-    ========================================= */
+       Start directly from the user's tap
+    ===================================================== */
 
     music.volume = 0.35;
+    music.muted = false;
 
     music.play()
         .then(function(){
@@ -1607,50 +1271,45 @@ gateScreen.addEventListener("click", function(){
             musicPlaying = true;
 
         })
-        .catch(function(){
+        .catch(function(error){
 
-            musicPlaying = false;
+            console.log(
+                "Music could not start:",
+                error
+            );
 
         });
 
 
-    /* =========================================
-       START WELCOME VIDEO IMMEDIATELY
-       UNDER THE GATE
-    ========================================= */
+    /* =====================================================
+       WELCOME VIDEO
+    ===================================================== */
 
     welcomeVideo.currentTime = 0;
 
     welcomeVideo.play().catch(function(){});
 
 
-    /* =========================================
-       START GATE VIDEO
-    ========================================= */
+    /* =====================================================
+       GATE VIDEO
+    ===================================================== */
 
     gateScreen.classList.add("opening");
 
     gateVideo.currentTime = 0;
 
+    gateVideo.muted = true;
+
     gateVideo.play().catch(function(){});
 
 
-    /*
-       Instead of waiting until the very end,
-       the welcome video is already playing.
-
-       The gate remains visible while opening,
-       then fades away naturally.
-    */
-
+    /* =====================================================
+       REMOVE GATE WHEN VIDEO ENDS
+    ===================================================== */
 
     gateVideo.addEventListener(
         "ended",
         function(){
-
-            /*
-               Final cross-fade
-            */
 
             gateScreen.style.opacity = "0";
 
@@ -1665,12 +1324,9 @@ gateScreen.addEventListener("click", function(){
     );
 
 
-    /*
-       FALLBACK
-       If the gate video does not fire "ended"
-       correctly on a particular mobile browser,
-       remove the gate after its actual duration.
-    */
+    /* =====================================================
+       FALLBACK FOR MOBILE
+    ===================================================== */
 
     gateVideo.addEventListener(
         "loadedmetadata",
@@ -1705,31 +1361,63 @@ gateScreen.addEventListener("click", function(){
         {once:true}
     );
 
-});
+}
 
 
 /* =========================================================
-   MUSIC
+   iPHONE / TOUCH
 ========================================================= */
 
-let musicPlaying = false;
+gateScreen.addEventListener(
+    "touchend",
+    function(event){
 
+        event.preventDefault();
+
+        openGate();
+
+    },
+    {passive:false}
+);
+
+
+/* =========================================================
+   NORMAL CLICK
+========================================================= */
+
+gateScreen.addEventListener(
+    "click",
+    function(){
+
+        openGate();
+
+    }
+);
+
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
 
 function toggleMusic(){
 
     if(music.paused){
 
+        music.muted = false;
+
         music.play()
-        .then(function(){
+            .then(function(){
 
-            musicPlaying = true;
+                musicPlaying = true;
 
-        })
-        .catch(function(){
+            })
+            .catch(function(){
 
-            console.log("Music could not start.");
+                console.log(
+                    "Music could not start."
+                );
 
-        });
+            });
 
     }else{
 
@@ -1757,34 +1445,43 @@ function moveFlower(){
 
     if(!timeline || !flower) return;
 
+
     const rect =
         timeline.getBoundingClientRect();
+
 
     const scrollTop =
         window.scrollY ||
         window.pageYOffset;
 
+
     const timelineTop =
         rect.top + scrollTop;
+
 
     const timelineHeight =
         timeline.offsetHeight;
 
+
     const flowerTravel =
         timelineHeight - 120;
+
 
     const timelineStart =
         timelineTop -
         window.innerHeight * 0.35;
+
 
     const timelineEnd =
         timelineTop +
         timelineHeight -
         window.innerHeight * 0.65;
 
+
     let progress =
         (scrollTop - timelineStart) /
         (timelineEnd - timelineStart);
+
 
     progress =
         Math.max(
@@ -1792,9 +1489,11 @@ function moveFlower(){
             Math.min(1,progress)
         );
 
+
     const newTop =
         55 +
         (flowerTravel * progress);
+
 
     flower.style.top =
         newTop + "px";
@@ -1808,10 +1507,12 @@ window.addEventListener(
     {passive:true}
 );
 
+
 window.addEventListener(
     "resize",
     moveFlower
 );
+
 
 moveFlower();
 
@@ -1862,161 +1563,6 @@ setTimeout(function(){
 
 },500);
 
-
-/* =========================================================
-   RSVP
-========================================================= */
-
-let attendance = "";
-
-
-const GOOGLE_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbwhcI7eEUuhAeb9LDD_iOQV1yOXX-iSxou8kYnM_B9J6Z9Fxjma_F5E0-zGMMi_fKo/exec";
-
-
-function openRSVP(){
-
-    document
-        .getElementById("formContent")
-        .style.display = "none";
-
-    document
-        .getElementById("formPage")
-        .style.display = "block";
-
-}
-
-
-function choose(type){
-
-    attendance = type;
-
-    document
-        .getElementById("accept")
-        .classList.remove("selected");
-
-    document
-        .getElementById("reject")
-        .classList.remove("selected");
-
-
-    if(type === "accept"){
-
-        document
-            .getElementById("accept")
-            .classList.add("selected");
-
-    }else{
-
-        document
-            .getElementById("reject")
-            .classList.add("selected");
-
-    }
-
-}
-
-
-function confirmRSVP(){
-
-    const name =
-        document
-        .getElementById("guestName")
-        .value
-        .trim();
-
-
-    const guests =
-        document
-        .getElementById("guests")
-        .value;
-
-
-    if(!name){
-
-        alert(
-            "Please enter your name."
-        );
-
-        return;
-
-    }
-
-
-    if(!attendance){
-
-        alert(
-            "Please select your RSVP."
-        );
-
-        return;
-
-    }
-
-
-    if(!guests || guests < 1){
-
-        alert(
-            "Please enter the number of guests."
-        );
-
-        return;
-
-    }
-
-
-    const data = {
-
-        name:name,
-
-        attendance:attendance,
-
-        guests:guests,
-
-        timestamp:
-        new Date().toISOString()
-
-    };
-
-
-    fetch(
-        GOOGLE_SCRIPT_URL,
-        {
-
-            method:"POST",
-
-            mode:"no-cors",
-
-            headers:{
-                "Content-Type":
-                "application/json"
-            },
-
-            body:
-            JSON.stringify(data)
-
-        }
-    )
-    .catch(function(error){
-
-        console.log(
-            "RSVP connection:",
-            error
-        );
-
-    });
-
-
-    document
-        .getElementById("formPage")
-        .style.display = "none";
-
-
-    document
-        .getElementById("success")
-        .style.display = "block";
-
-}
 
 </script>
 
