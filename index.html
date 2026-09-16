@@ -1,15 +1,720 @@
 <!DOCTYPE html>
-<html lang="en"> <head>
-<meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Ivory Vows</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Parisienne&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style> /* ========================================================= GLOBAL ========================================================= */ *{ margin:0; padding:0; box-sizing:border-box; } html{ scroll-behavior:smooth; } body{ width:100%; min-height:100vh; background:#fffdf8; color:#651b27; overflow-x:hidden; font-family:"Cormorant Garamond",serif; } :root{ --ivory:#fffdf8; --maroon:#651b27; --dark-maroon:#4b111b; --gold:#b18a45; --light-gold:#d8b96a; } /* ========================================================= GENERAL SECTION ========================================================= */ .section{ width:100%; position:relative; background:var(--ivory); overflow:hidden; } .section-inner{ width:100%; max-width:760px; margin:auto; } /* ========================================================= DECORATIVE FLOWERS ========================================================= */ .corner-flower{ position:absolute; width:105px; height:105px; object-fit:contain; opacity:.95; pointer-events:none; z-index:3; } .corner-flower.top-left{ top:8px; left:0; } .corner-flower.top-right{ top:8px; right:0; transform:scaleX(-1); } .corner-flower.bottom-left{ bottom:8px; left:0; transform:scaleY(-1); } .corner-flower.bottom-right{ bottom:8px; right:0; transform:scale(-1); } /* ========================================================= GATE ========================================================= */ #gateScreen{ position:fixed; inset:0; z-index:9999; background:var(--ivory); display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:1; transition:opacity 2.2s ease; } .gate-image{ width:100%; height:100%; object-fit:cover; transition:opacity:1.4s ease; } .gate-overlay{ position:absolute; bottom:9%; left:50%; transform:translateX(-50%); text-align:center; color:white; text-shadow:0 2px 12px rgba(0,0,0,.5); z-index:5; transition:opacity:1.2s ease; } .gate-tap{ font-family:"Cormorant Garamond",serif; font-size:19px; letter-spacing:3px; margin-bottom:6px; } .gate-small{ font-family:"Montserrat",sans-serif; font-size:9px; letter-spacing:3px; } #gateVideo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; pointer-events:none; transition:opacity:1.8s ease; } #gateScreen.opening .gate-image, #gateScreen.opening .gate-overlay{ opacity:0; } #gateScreen.opening #gateVideo{ opacity:1; } /* ========================================================= WELCOME ========================================================= */ #welcomeSection{ min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--ivory); } .welcome-video-frame{ position:relative; width:100%; height:100vh; overflow:hidden; } #welcomeVideo{ width:100%; height:100%; object-fit:cover; display:block; /* Slight adjustment so the welcome video blends more naturally with the gate lighting. */ filter: brightness(.96) contrast(.98) saturate(.94); opacity:1; transition:opacity:2.2s ease; } .welcome-overlay{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; } .welcome-frame{ position:absolute; inset:35px 25px; border:1px solid rgba(177,138,69,.65); } .welcome-frame:before, .welcome-frame:after{ content:""; position:absolute; width:80px; height:80px; background-image:url("https://i.postimg.cc/T347PbNC/IMG-7987.png"); background-size:contain; background-repeat:no-repeat; } .welcome-frame:before{ top:-15px; left:-15px; } .welcome-frame:after{ bottom:-15px; right:-15px; transform:rotate(180deg); } /* ========================================================= SCRATCH SECTION ========================================================= */ #scratchSection{ padding:55px 18px 45px; text-align:center; } .section-title{ font-family:"Parisienne",cursive; font-size:45px; color:var(--maroon); margin-bottom:8px; } .section-subtitle{ font-size:18px; color:var(--maroon); margin-bottom:22px; } .scratch-wrapper{ position:relative; width:100%; max-width:600px; margin:auto; padding:18px; border:1px solid var(--gold); background:rgba(255,253,248,.8); } .scratch-wrapper:before, .scratch-wrapper:after{ content:""; position:absolute; width:70px; height:70px; background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png") center/contain no-repeat; z-index:2; pointer-events:none; } .scratch-wrapper:before{ top:-20px; left:-20px; } .scratch-wrapper:after{ bottom:-20px; right:-20px; transform:rotate(180deg); } .scratch-frame{ width:100%; min-height:180px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(101,27,39,.35); background:#fffdf8; } .scratch-frame iframe{ width:100%; min-height:350px; border:0; } /* ========================================================= FAMILY ========================================================= */ #familySection{ padding:40px 18px; text-align:center; } .family-video-box{ width:100%; max-width:650px; margin:auto; position:relative; padding:12px; border:1px solid var(--gold); } .family-video-box video{ width:100%; display:block; } /* ========================================================= COUNTDOWN ========================================================= */ #countdownSection{ padding:45px 18px 48px; text-align:center; } .countdown-card{ position:relative; width:100%; max-width:650px; margin:25px auto 0; padding:28px 18px; border:1px solid var(--gold); background:var(--ivory); } .countdown-card:before, .countdown-card:after{ content:""; position:absolute; width:95px; height:95px; background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png") center/contain no-repeat; z-index:2; pointer-events:none; } .countdown-card:before{ top:-25px; left:-22px; } .countdown-card:after{ bottom:-25px; right:-22px; transform:rotate(180deg); } .countdown-inner{ position:relative; border:1px solid rgba(177,138,69,.55); padding:15px; background:#fffdf8; } .countdown-inner:before, .countdown-inner:after{ content:""; position:absolute; width:65px; height:65px; background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png") center/contain no-repeat; pointer-events:none; } .countdown-inner:before{ top:-17px; right:-15px; transform:scaleX(-1); } .countdown-inner:after{ bottom:-17px; left:-15px; transform:rotate(180deg); } .countdown-embed{ width:100%; min-height:120px; } /* ========================================================= TIMELINE ========================================================= */ #timelineSection{ padding:35px 8px 55px; } .timeline{ position:relative; width:100%; max-width:760px; margin:auto; padding:55px 5px 65px; } .timeline-line{ position:absolute; top:55px; bottom:65px; left:50%; width:1.5px; background:var(--maroon); transform:translateX(-50%); z-index:1; } .moving-flower{ position:absolute; left:50%; top:55px; width:58px; height:58px; transform:translate(-50%,0); z-index:10; pointer-events:none; transition:top .12s linear; } .moving-flower img{ width:100%; height:100%; object-fit:contain; } .event{ position:relative; display:grid; grid-template-columns:1fr 1fr; min-height:220px; align-items:center; z-index:2; } .event-text{ text-align:center; padding:10px 8px; } .time{ font-family:"Parisienne",cursive; font-size:34px; line-height:1.1; color:var(--maroon); margin-bottom:5px; } .event-name{ font-family:"Parisienne",cursive; font-size:37px; line-height:1.05; color:var(--maroon); } .event-image{ display:flex; align-items:center; justify-content:center; padding:4px; } .event-image img{ width:190px; height:190px; object-fit:contain; display:block; } .event:nth-of-type(1) .event-text{ grid-column:1; grid-row:1; } .event:nth-of-type(1) .event-image{ grid-column:2; grid-row:1; } .event:nth-of-type(2) .event-image{ grid-column:1; grid-row:1; } .event:nth-of-type(2) .event-text{ grid-column:2; grid-row:1; } .event:nth-of-type(3) .event-text{ grid-column:1; grid-row:1; } .event:nth-of-type(3) .event-image{ grid-column:2; grid-row:1; } .event:nth-of-type(4) .event-image{ grid-column:1; grid-row:1; } .event:nth-of-type(4) .event-text{ grid-column:2; grid-row:1; } /* ========================================================= VENUE ========================================================= */ #venueSection{ padding:40px 15px 42px; text-align:center; } .location-picture-frame{ position:relative; width:100%; max-width:620px; margin:18px auto 22px; padding:10px; border:1px solid var(--gold); } .location-picture-frame img{ width:100%; display:block; } .map-box{ width:100%; max-width:650px; margin:0 auto; border:1px solid var(--gold); overflow:hidden; } #map{ width:100%; height:350px; } .venue-name{ font-family:"Parisienne",cursive; font-size:34px; color:var(--maroon); margin:18px 0 12px; } .map-button{ display:inline-block; padding:9px 24px; border:1px solid var(--maroon); color:var(--maroon); background:transparent; text-decoration:none; font-family:"Montserrat",sans-serif; font-size:9px; letter-spacing:2px; } /* ========================================================= DRESS CODE ========================================================= */ #dressSection{ padding:40px 18px 45px; text-align:center; } .dress-video-frame{ width:100%; max-width:650px; margin:20px auto 0; padding:10px; border:1px solid var(--gold); } .dress-video-frame video{ width:100%; display:block; } /* ========================================================= RSVP ========================================================= */ #rsvpSection{ position:relative; padding:45px 18px 55px; text-align:center; background:var(--ivory); } .rsvp-container{ width:100%; max-width:600px; margin:auto; padding:30px 20px; border:1px solid var(--gold); position:relative; } .rsvp-container:before, .rsvp-container:after{ content:""; position:absolute; width:85px; height:85px; background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png") center/contain no-repeat; pointer-events:none; } .rsvp-container:before{ top:-22px; left:-18px; } .rsvp-container:after{ bottom:-22px; right:-18px; transform:rotate(180deg); } .kindly{ font-size:19px; letter-spacing:1px; margin-bottom:5px; } .attendance{ font-family:"Parisienne",cursive; font-size:45px; line-height:1.05; margin-bottom:12px; } .description{ font-size:18px; line-height:1.4; margin-bottom:20px; } .rsvp-box{ padding:9px 28px; background:transparent; border:1px solid var(--maroon); color:var(--maroon); font-family:"Montserrat",sans-serif; font-size:9px; letter-spacing:2px; cursor:pointer; } #formPage{ display:none; margin-top:25px; } .form-title{ font-family:"Parisienne",cursive; font-size:40px; margin-bottom:20px; } .form-container{ max-width:400px; margin:auto; } label{ display:block; font-size:19px; margin-bottom:4px; } input{ display:block; width:220px; height:32px; margin:0 auto 17px; padding:5px; background:transparent; border:none; border-bottom:1px solid var(--gold); outline:none; text-align:center; font-family:"Montserrat",sans-serif; font-size:11px; color:var(--maroon); } input::placeholder{ color:#8b6268; } .question{ font-size:21px; margin-bottom:9px; } .choice-row{ display:flex; justify-content:center; gap:8px; margin-bottom:17px; } .choice{ width:135px; padding:8px 5px; background:transparent; border:1px solid var(--gold); color:var(--maroon); font-family:"Cormorant Garamond",serif; font-size:16px; cursor:pointer; } .choice.selected{ background:rgba(177,138,69,.22); } .confirm-button{ width:140px; padding:8px; background:transparent; border:1px solid var(--maroon); color:var(--maroon); font-family:"Montserrat",sans-serif; font-size:8px; letter-spacing:2px; cursor:pointer; } #success{ display:none; } #success h2{ font-family:"Parisienne",cursive; font-size:45px; margin-bottom:8px; } #success p{ font-size:19px; line-height:1.5; } /* ========================================================= MUSIC ========================================================= */ #musicButton{ position:fixed; right:15px; bottom:15px; width:43px; height:43px; border-radius:50%; border:1px solid var(--gold); background:rgba(255,253,248,.94); color:var(--maroon); z-index:9000; cursor:pointer; font-size:16px; } /* ========================================================= MOBILE ========================================================= */ @media(max-width:600px){ .corner-flower{ width:75px; height:75px; } .welcome-frame{ inset:25px 17px; } .section-title{ font-size:39px; } .event{ min-height:195px; } .event-image img{ width:155px; height:155px; } .time{ font-size:27px; } .event-name{ font-size:30px; } .moving-flower{ width:46px; height:46px; } #map{ height:300px; } .venue-name{ font-size:29px; } .attendance{ font-size:39px; } .choice{ width:125px; } } </style>
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    width:100%;
+    min-height:100vh;
+    background:#fffdf8;
+    color:#651b27;
+    overflow-x:hidden;
+    font-family:"Cormorant Garamond",serif;
+}
+
+:root{
+    --ivory:#fffdf8;
+    --maroon:#651b27;
+    --dark-maroon:#4b111b;
+    --gold:#b18a45;
+    --light-gold:#d8b96a;
+}
+
+
+/* =========================================================
+   GENERAL SECTION
+========================================================= */
+
+.section{
+    width:100%;
+    position:relative;
+    background:var(--ivory);
+    overflow:hidden;
+}
+
+.section-inner{
+    width:100%;
+    max-width:760px;
+    margin:auto;
+}
+
+
+/* =========================================================
+   DECORATIVE FLOWERS
+========================================================= */
+
+.corner-flower{
+    position:absolute;
+    width:105px;
+    height:105px;
+    object-fit:contain;
+    opacity:.95;
+    pointer-events:none;
+    z-index:3;
+}
+
+.corner-flower.top-left{
+    top:8px;
+    left:0;
+}
+
+.corner-flower.top-right{
+    top:8px;
+    right:0;
+    transform:scaleX(-1);
+}
+
+.corner-flower.bottom-left{
+    bottom:8px;
+    left:0;
+    transform:scaleY(-1);
+}
+
+.corner-flower.bottom-right{
+    bottom:8px;
+    right:0;
+    transform:scale(-1);
+}
+
+
+/* =========================================================
+   GATE
+========================================================= */
+
+#gateScreen{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:var(--ivory);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    opacity:1;
+    transition:opacity 2.2s ease;
+}
+
+.gate-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:opacity:1.4s ease;
+}
+
+.gate-overlay{
+    position:absolute;
+    bottom:9%;
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
+    color:white;
+    text-shadow:0 2px 12px rgba(0,0,0,.5);
+    z-index:5;
+    transition:opacity:1.2s ease;
+}
+
+.gate-tap{
+    font-family:"Cormorant Garamond",serif;
+    font-size:19px;
+    letter-spacing:3px;
+    margin-bottom:6px;
+}
+
+.gate-small{
+    font-family:"Montserrat",sans-serif;
+    font-size:9px;
+    letter-spacing:3px;
+}
+
+#gateVideo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity:1.8s ease;
+}
+
+#gateScreen.opening .gate-image,
+#gateScreen.opening .gate-overlay{
+    opacity:0;
+}
+
+#gateScreen.opening #gateVideo{
+    opacity:1;
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+#welcomeSection{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--ivory);
+}
+
+.welcome-video-frame{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+#welcomeVideo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+
+    filter:
+        brightness(.96)
+        contrast(.98)
+        saturate(.94);
+
+    opacity:1;
+    transition:opacity:2.2s ease;
+}
+
+.welcome-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+}
+
+.welcome-frame{
+    position:absolute;
+    inset:35px 25px;
+    border:1px solid rgba(177,138,69,.65);
+}
+
+.welcome-frame:before,
+.welcome-frame:after{
+    content:"";
+    position:absolute;
+    width:80px;
+    height:80px;
+    background-image:url("https://i.postimg.cc/T347PbNC/IMG-7987.png");
+    background-size:contain;
+    background-repeat:no-repeat;
+}
+
+.welcome-frame:before{
+    top:-15px;
+    left:-15px;
+}
+
+.welcome-frame:after{
+    bottom:-15px;
+    right:-15px;
+    transform:rotate(180deg);
+}
+
+
+/* =========================================================
+   SCRATCH SECTION
+========================================================= */
+
+#scratchSection{
+    padding:55px 18px 45px;
+    text-align:center;
+}
+
+.section-title{
+    font-family:"Parisienne",cursive;
+    font-size:45px;
+    color:var(--maroon);
+    margin-bottom:8px;
+}
+
+.section-subtitle{
+    font-size:18px;
+    color:var(--maroon);
+    margin-bottom:22px;
+}
+
+.scratch-wrapper{
+    position:relative;
+    width:100%;
+    max-width:600px;
+    margin:auto;
+    padding:18px;
+    border:1px solid var(--gold);
+    background:rgba(255,253,248,.8);
+}
+
+.scratch-wrapper:before,
+.scratch-wrapper:after{
+    content:"";
+    position:absolute;
+    width:70px;
+    height:70px;
+    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
+        center/contain no-repeat;
+    z-index:2;
+    pointer-events:none;
+}
+
+.scratch-wrapper:before{
+    top:-20px;
+    left:-20px;
+}
+
+.scratch-wrapper:after{
+    bottom:-20px;
+    right:-20px;
+    transform:rotate(180deg);
+}
+
+.scratch-frame{
+    width:100%;
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid rgba(101,27,39,.35);
+    background:#fffdf8;
+}
+
+.scratch-frame iframe{
+    width:100%;
+    min-height:350px;
+    border:0;
+}
+
+
+/* =========================================================
+   FAMILY
+========================================================= */
+
+#familySection{
+    padding:40px 18px;
+    text-align:center;
+}
+
+.family-video-box{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+    position:relative;
+    padding:12px;
+    border:1px solid var(--gold);
+}
+
+.family-video-box video{
+    width:100%;
+    display:block;
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+#countdownSection{
+    padding:45px 18px 48px;
+    text-align:center;
+}
+
+.countdown-card{
+    position:relative;
+    width:100%;
+    max-width:650px;
+    margin:25px auto 0;
+    padding:28px 18px;
+    border:1px solid var(--gold);
+    background:var(--ivory);
+}
+
+.countdown-card:before,
+.countdown-card:after{
+    content:"";
+    position:absolute;
+    width:95px;
+    height:95px;
+    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
+        center/contain no-repeat;
+    z-index:2;
+    pointer-events:none;
+}
+
+.countdown-card:before{
+    top:-25px;
+    left:-22px;
+}
+
+.countdown-card:after{
+    bottom:-25px;
+    right:-22px;
+    transform:rotate(180deg);
+}
+
+.countdown-inner{
+    position:relative;
+    border:1px solid rgba(177,138,69,.55);
+    padding:15px;
+    background:#fffdf8;
+}
+
+.countdown-inner:before,
+.countdown-inner:after{
+    content:"";
+    position:absolute;
+    width:65px;
+    height:65px;
+    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
+        center/contain no-repeat;
+    pointer-events:none;
+}
+
+.countdown-inner:before{
+    top:-17px;
+    right:-15px;
+    transform:scaleX(-1);
+}
+
+.countdown-inner:after{
+    bottom:-17px;
+    left:-15px;
+    transform:rotate(180deg);
+}
+
+.countdown-embed{
+    width:100%;
+    min-height:120px;
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+#timelineSection{
+    padding:35px 8px 55px;
+}
+
+.timeline{
+    position:relative;
+    width:100%;
+    max-width:760px;
+    margin:auto;
+    padding:55px 5px 65px;
+}
+
+.timeline-line{
+    position:absolute;
+    top:55px;
+    bottom:65px;
+    left:50%;
+    width:1.5px;
+    background:var(--maroon);
+    transform:translateX(-50%);
+    z-index:1;
+}
+
+.moving-flower{
+    position:absolute;
+    left:50%;
+    top:55px;
+    width:58px;
+    height:58px;
+    transform:translate(-50%,0);
+    z-index:10;
+    pointer-events:none;
+    transition:top .12s linear;
+}
+
+.moving-flower img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.event{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:220px;
+    align-items:center;
+    z-index:2;
+}
+
+.event-text{
+    text-align:center;
+    padding:10px 8px;
+}
+
+.time{
+    font-family:"Parisienne",cursive;
+    font-size:34px;
+    line-height:1.1;
+    color:var(--maroon);
+    margin-bottom:5px;
+}
+
+.event-name{
+    font-family:"Parisienne",cursive;
+    font-size:37px;
+    line-height:1.05;
+    color:var(--maroon);
+}
+
+.event-image{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:4px;
+}
+
+.event-image img{
+    width:190px;
+    height:190px;
+    object-fit:contain;
+    display:block;
+}
+
+.event:nth-of-type(1) .event-text{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(1) .event-image{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(2) .event-image{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(2) .event-text{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(3) .event-text{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(3) .event-image{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(4) .event-image{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(4) .event-text{
+    grid-column:2;
+    grid-row:1;
+}
+
+
+/* =========================================================
+   VENUE
+========================================================= */
+
+#venueSection{
+    padding:40px 15px 42px;
+    text-align:center;
+}
+
+.location-picture-frame{
+    position:relative;
+    width:100%;
+    max-width:620px;
+    margin:18px auto 22px;
+    padding:10px;
+    border:1px solid var(--gold);
+}
+
+.location-picture-frame img{
+    width:100%;
+    display:block;
+}
+
+.map-box{
+    width:100%;
+    max-width:650px;
+    margin:0 auto;
+    border:1px solid var(--gold);
+    overflow:hidden;
+}
+
+#map{
+    width:100%;
+    height:350px;
+}
+
+.venue-name{
+    font-family:"Parisienne",cursive;
+    font-size:34px;
+    color:var(--maroon);
+    margin:18px 0 12px;
+}
+
+.map-button{
+    display:inline-block;
+    padding:9px 24px;
+    border:1px solid var(--maroon);
+    color:var(--maroon);
+    background:transparent;
+    text-decoration:none;
+    font-family:"Montserrat",sans-serif;
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+
+/* =========================================================
+   DRESS CODE
+========================================================= */
+
+#dressSection{
+    padding:40px 18px 45px;
+    text-align:center;
+}
+
+.dress-video-frame{
+    width:100%;
+    max-width:650px;
+    margin:20px auto 0;
+    padding:10px;
+    border:1px solid var(--gold);
+}
+
+.dress-video-frame video{
+    width:100%;
+    display:block;
+}
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+#musicButton{
+    position:fixed;
+    right:15px;
+    bottom:15px;
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    background:rgba(255,253,248,.94);
+    color:var(--maroon);
+    z-index:9000;
+    cursor:pointer;
+    font-size:16px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    .corner-flower{
+        width:75px;
+        height:75px;
+    }
+
+    .welcome-frame{
+        inset:25px 17px;
+    }
+
+    .section-title{
+        font-size:39px;
+    }
+
+    .event{
+        min-height:195px;
+    }
+
+    .event-image img{
+        width:155px;
+        height:155px;
+    }
+
+    .time{
+        font-size:27px;
+    }
+
+    .event-name{
+        font-size:30px;
+    }
+
+    .moving-flower{
+        width:46px;
+        height:46px;
+    }
+
+    #map{
+        height:300px;
+    }
+
+    .venue-name{
+        font-size:29px;
+    }
+
+}
+
+</style>
+
 </head>
+
 <body>
-<!-- ===================================================== GATE ===================================================== -->
+
+<!-- =====================================================
+     GATE
+===================================================== -->
+
 <div id="gateScreen">
+
 <img
     class="gate-image"
     src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
@@ -19,6 +724,7 @@
 <video
     id="gateVideo"
     playsinline
+    muted
     preload="auto"
 >
     <source
@@ -38,9 +744,16 @@
     </div>
 
 </div>
+
 </div>
-<!-- ===================================================== WELCOME VIDEO ===================================================== -->
+
+
+<!-- =====================================================
+     WELCOME VIDEO
+===================================================== -->
+
 <section id="welcomeSection" class="section">
+
 <div class="welcome-video-frame">
 
     <video
@@ -51,10 +764,12 @@
         loop
         preload="auto"
     >
+
         <source
             src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/welcome.mov"
             type="video/quicktime"
         >
+
     </video>
 
     <div class="welcome-overlay">
@@ -64,9 +779,16 @@
     </div>
 
 </div>
+
 </section>
-<!-- ===================================================== SCRATCH ===================================================== -->
+
+
+<!-- =====================================================
+     SCRATCH
+===================================================== -->
+
 <section id="scratchSection" class="section">
+
 <img
     class="corner-flower top-left"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -101,9 +823,16 @@
     </div>
 
 </div>
+
 </section>
-<!-- ===================================================== FAMILY ===================================================== -->
+
+
+<!-- =====================================================
+     FAMILY
+===================================================== -->
+
 <section id="familySection" class="section">
+
 <img
     class="corner-flower top-left"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -135,9 +864,16 @@
     </div>
 
 </div>
+
 </section>
-<!-- ===================================================== COUNTDOWN ===================================================== -->
+
+
+<!-- =====================================================
+     COUNTDOWN
+===================================================== -->
+
 <section id="countdownSection" class="section">
+
 <img
     class="corner-flower bottom-right"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -198,9 +934,16 @@
     </div>
 
 </div>
+
 </section>
-<!-- ===================================================== TIMELINE ===================================================== -->
+
+
+<!-- =====================================================
+     TIMELINE
+===================================================== -->
+
 <section id="timelineSection" class="section">
+
 <div class="section-inner">
 
     <div class="section-title" style="text-align:center;">
@@ -330,9 +1073,16 @@
     </div>
 
 </div>
+
 </section>
-<!-- ===================================================== VENUE ===================================================== -->
+
+
+<!-- =====================================================
+     VENUE
+===================================================== -->
+
 <section id="venueSection" class="section">
+
 <img
     class="corner-flower top-right"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -386,9 +1136,16 @@
     </a>
 
 </div>
+
 </section>
-<!-- ===================================================== DRESS CODE ===================================================== -->
+
+
+<!-- =====================================================
+     DRESS CODE
+===================================================== -->
+
 <section id="dressSection" class="section">
+
 <img
     class="corner-flower top-left"
     src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
@@ -424,143 +1181,390 @@
     </div>
 
 </div>
+
 </section>
-<!-- ===================================================== RSVP ===================================================== -->
-<section id="rsvpSection" class="section">
-<img
-    class="corner-flower bottom-left"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
-
-<div class="rsvp-container">
-
-    <div id="formContent">
-
-        <div class="kindly">
-            Kindly Respond
-        </div>
-
-        <div class="attendance">
-            Confirm Your
-            <br>
-            Attendance
-        </div>
-
-        <div class="description">
-            We would be delighted to celebrate
-            this special day with you
-        </div>
-
-        <button
-            class="rsvp-box"
-            onclick="openRSVP()"
-        >
-            RSVP
-        </button>
-
-    </div>
 
 
-    <div id="formPage">
+<!-- =====================================================
+     MUSIC
+===================================================== -->
 
-        <div class="form-container">
-
-            <div class="form-title">
-                Kindly Respond
-            </div>
-
-
-            <label for="guestName">
-                Your Name
-            </label>
-
-            <input
-                id="guestName"
-                type="text"
-                placeholder="Enter your name"
-                autocomplete="name"
-            >
-
-
-            <div class="question">
-                Will you be joining us?
-            </div>
-
-
-            <div class="choice-row">
-
-                <button
-                    class="choice"
-                    id="accept"
-                    onclick="choose('accept')"
-                >
-                    Joyfully Accept
-                </button>
-
-                <button
-                    class="choice"
-                    id="reject"
-                    onclick="choose('reject')"
-                >
-                    Regretfully Reject
-                </button>
-
-            </div>
-
-
-            <label for="guests">
-                Number of Guests
-            </label>
-
-            <input
-                id="guests"
-                type="number"
-                min="1"
-                max="20"
-                value="1"
-            >
-
-
-            <button
-                class="confirm-button"
-                onclick="confirmRSVP()"
-            >
-                CONFIRM RSVP
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div id="success">
-
-        <h2>
-            Thank You
-        </h2>
-
-        <p>
-            Your RSVP has been received.
-            <br><br>
-            We look forward to celebrating
-            with you.
-        </p>
-
-    </div>
-
-</div>
-</section>
-<!-- ===================================================== MUSIC ===================================================== -->
-<audio id="weddingMusic" loop preload="auto">
-<source
+<audio
+    id="weddingMusic"
     src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Music.mp3"
-    type="audio/mpeg"
+    preload="auto"
+    loop
+></audio>
+
+
+<button
+    id="musicButton"
+    onclick="toggleMusic()"
+    aria-label="Music"
 >
-</audio>
-<button id="musicButton" onclick="toggleMusic()" aria-label="Music">
-♫
+    ♫
 </button>
-<!-- ===================================================== LEAFLET ===================================================== -->
+
+
+<!-- =====================================================
+     LEAFLET
+===================================================== -->
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script> /* ========================================================= GATE → WELCOME FIXED FOR SMOOTH TRANSITION ========================================================= */ const gateScreen = document.getElementById("gateScreen"); const gateVideo = document.getElementById("gateVideo"); const welcomeVideo = document.getElementById("welcomeVideo"); const music = document.getElementById("weddingMusic"); let gateOpened = false; /* PREPARE WELCOME VIDEO It starts underneath the gate so there is never an empty section after the gate. */ welcomeVideo.muted = true; welcomeVideo.play().catch(function(){ /* iPhone may wait for the user's first tap. The gate click below will start it again. */ }); /* USER TAPS GATE */ gateScreen.addEventListener("click", function(){ if(gateOpened) return; gateOpened = true; /* ========================================= MUSIC ========================================= */ music.volume = 0.35; music.play() .then(function(){ musicPlaying = true; }) .catch(function(){ musicPlaying = false; }); /* ========================================= START WELCOME VIDEO IMMEDIATELY UNDER THE GATE ========================================= */ welcomeVideo.currentTime = 0; welcomeVideo.play().catch(function(){}); /* ========================================= START GATE VIDEO ========================================= */ gateScreen.classList.add("opening"); gateVideo.currentTime = 0; gateVideo.play().catch(function(){}); /* Instead of waiting until the very end, the welcome video is already playing. The gate remains visible while opening, then fades away normally. */ gateVideo.addEventListener( "ended", function(){ /* Final cross-fade */ gateScreen.style.opacity = "0"; setTimeout(function(){ gateScreen.style.display = "none"; },2200); }, {once:true} ); /* FALLBACK If the gate video does not fire "ended" correctly on a particular mobile browser, remove the gate after its actual duration. */ gateVideo.addEventListener( "loadedmetadata", function(){ const duration = gateVideo.duration; if(duration && isFinite(duration)){ setTimeout(function(){ if( gateScreen.style.display !== "none" ){ gateScreen.style.opacity = "0"; setTimeout(function(){ gateScreen.style.display = "none"; },2200); } }, (duration * 1000) + 300); } }, {once:true} ); }); /* ========================================================= MUSIC ========================================================= */ let musicPlaying = false; function toggleMusic(){ if(music.paused){ music.play() .then(function(){ musicPlaying = true; }) .catch(function(){ console.log("Music could not start."); }); }else{ music.pause(); musicPlaying = false; } } /* ========================================================= TIMELINE FLOWER ========================================================= */ const flower = document.getElementById("movingFlower"); const timeline = document.querySelector(".timeline"); function moveFlower(){ if(!timeline || !flower) return; const rect = timeline.getBoundingClientRect(); const scrollTop = window.scrollY || window.pageYOffset; const timelineTop = rect.top + scrollTop; const timelineHeight = timeline.offsetHeight; const flowerTravel = timelineHeight - 120; const timelineStart = timelineTop - window.innerHeight * 0.35; const timelineEnd = timelineTop + timelineHeight - window.innerHeight * 0.65; let progress = (scrollTop - timelineStart) / (timelineEnd - timelineStart); progress = Math.max( 0, Math.min(1,progress) ); const newTop = 55 + (flowerTravel * progress); flower.style.top = newTop + "px"; } window.addEventListener( "scroll", moveFlower, {passive:true} ); window.addEventListener( "resize", moveFlower ); moveFlower(); /* ========================================================= MAP ========================================================= */ const venueLat = 33.6390; const venueLng = 73.1610; const map = L.map("map").setView( [venueLat,venueLng], 15 ); L.tileLayer( "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom:19, attribution: '&copy; OpenStreetMap contributors' } ).addTo(map); const marker = L.marker( [venueLat,venueLng] ).addTo(map); marker.bindPopup( "<b>Al Hameed Grand Marquee</b><br>" + "Islamabad" ); marker.openPopup(); setTimeout(function(){ map.invalidateSize(); },500); /* ========================================================= RSVP ========================================================= */ let attendance = ""; const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhcI7eEUuhAeb9LDD_iOQV1yOXX-iSxou8kYnM_B9J6Z9Fxjma_F5E0-zGMMi_fKo/exec"; function openRSVP(){ document .getElementById("formContent") .style.display = "none"; document .getElementById("formPage") .style.display = "block"; } function choose(type){ attendance = type; document .getElementById("accept") .classList.remove("selected"); document .getElementById("reject") .classList.remove("selected"); if(type === "accept"){ document .getElementById("accept") .classList.add("selected"); }else{ document .getElementById("reject") .classList.add("selected"); } } function confirmRSVP(){ const name = document .getElementById("guestName") .value .trim(); const guests = document .getElementById("guests") .value; if(!name){ alert( "Please enter your name." ); return; } if(!attendance){ alert( "Please select your RSVP." ); return; } if(!guests || guests < 1){ alert( "Please enter the number of guests." ); return; } const data = { name:name, attendance:attendance, guests:guests, timestamp: new Date().toISOString() }; fetch( GOOGLE_SCRIPT_URL, { method:"POST", mode:"no-cors", headers:{ "Content-Type": "application/json" }, body: JSON.stringify(data) } ) .catch(function(error){ console.log( "RSVP connection:", error ); }); document .getElementById("formPage") .style.display = "none"; document .getElementById("success") .style.display = "block"; } </script>
-</body> </html>
+
+<script>
+
+/* =========================================================
+   GATE → WELCOME
+   MUSIC STARTS ON SAME TAP
+========================================================= */
+
+const gateScreen =
+document.getElementById("gateScreen");
+
+const gateVideo =
+document.getElementById("gateVideo");
+
+const welcomeVideo =
+document.getElementById("welcomeVideo");
+
+const music =
+document.getElementById("weddingMusic");
+
+
+let gateOpened = false;
+let musicPlaying = false;
+
+
+/* =========================================================
+   PREPARE WELCOME VIDEO
+========================================================= */
+
+welcomeVideo.muted = true;
+
+welcomeVideo.play().catch(function(){
+});
+
+
+/* =========================================================
+   OPEN GATE
+========================================================= */
+
+function openGate(){
+
+    if(gateOpened) return;
+
+    gateOpened = true;
+
+
+    /* =====================================================
+       MUSIC
+       Start directly from the user's tap
+    ===================================================== */
+
+    music.volume = 0.35;
+    music.muted = false;
+
+    music.play()
+        .then(function(){
+
+            musicPlaying = true;
+
+        })
+        .catch(function(error){
+
+            console.log(
+                "Music could not start:",
+                error
+            );
+
+        });
+
+
+    /* =====================================================
+       WELCOME VIDEO
+    ===================================================== */
+
+    welcomeVideo.currentTime = 0;
+
+    welcomeVideo.play().catch(function(){});
+
+
+    /* =====================================================
+       GATE VIDEO
+    ===================================================== */
+
+    gateScreen.classList.add("opening");
+
+    gateVideo.currentTime = 0;
+
+    gateVideo.muted = true;
+
+    gateVideo.play().catch(function(){});
+
+
+    /* =====================================================
+       REMOVE GATE WHEN VIDEO ENDS
+    ===================================================== */
+
+    gateVideo.addEventListener(
+        "ended",
+        function(){
+
+            gateScreen.style.opacity = "0";
+
+            setTimeout(function(){
+
+                gateScreen.style.display = "none";
+
+            },2200);
+
+        },
+        {once:true}
+    );
+
+
+    /* =====================================================
+       FALLBACK FOR MOBILE
+    ===================================================== */
+
+    gateVideo.addEventListener(
+        "loadedmetadata",
+        function(){
+
+            const duration =
+                gateVideo.duration;
+
+            if(duration && isFinite(duration)){
+
+                setTimeout(function(){
+
+                    if(
+                        gateScreen.style.display !== "none"
+                    ){
+
+                        gateScreen.style.opacity = "0";
+
+                        setTimeout(function(){
+
+                            gateScreen.style.display = "none";
+
+                        },2200);
+
+                    }
+
+                }, (duration * 1000) + 300);
+
+            }
+
+        },
+        {once:true}
+    );
+
+}
+
+
+/* =========================================================
+   iPHONE / TOUCH
+========================================================= */
+
+gateScreen.addEventListener(
+    "touchend",
+    function(event){
+
+        event.preventDefault();
+
+        openGate();
+
+    },
+    {passive:false}
+);
+
+
+/* =========================================================
+   NORMAL CLICK
+========================================================= */
+
+gateScreen.addEventListener(
+    "click",
+    function(){
+
+        openGate();
+
+    }
+);
+
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+function toggleMusic(){
+
+    if(music.paused){
+
+        music.muted = false;
+
+        music.play()
+            .then(function(){
+
+                musicPlaying = true;
+
+            })
+            .catch(function(){
+
+                console.log(
+                    "Music could not start."
+                );
+
+            });
+
+    }else{
+
+        music.pause();
+
+        musicPlaying = false;
+
+    }
+
+}
+
+
+/* =========================================================
+   TIMELINE FLOWER
+========================================================= */
+
+const flower =
+document.getElementById("movingFlower");
+
+const timeline =
+document.querySelector(".timeline");
+
+
+function moveFlower(){
+
+    if(!timeline || !flower) return;
+
+
+    const rect =
+        timeline.getBoundingClientRect();
+
+
+    const scrollTop =
+        window.scrollY ||
+        window.pageYOffset;
+
+
+    const timelineTop =
+        rect.top + scrollTop;
+
+
+    const timelineHeight =
+        timeline.offsetHeight;
+
+
+    const flowerTravel =
+        timelineHeight - 120;
+
+
+    const timelineStart =
+        timelineTop -
+        window.innerHeight * 0.35;
+
+
+    const timelineEnd =
+        timelineTop +
+        timelineHeight -
+        window.innerHeight * 0.65;
+
+
+    let progress =
+        (scrollTop - timelineStart) /
+        (timelineEnd - timelineStart);
+
+
+    progress =
+        Math.max(
+            0,
+            Math.min(1,progress)
+        );
+
+
+    const newTop =
+        55 +
+        (flowerTravel * progress);
+
+
+    flower.style.top =
+        newTop + "px";
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    moveFlower,
+    {passive:true}
+);
+
+
+window.addEventListener(
+    "resize",
+    moveFlower
+);
+
+
+moveFlower();
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+const venueLat = 33.6390;
+const venueLng = 73.1610;
+
+
+const map =
+L.map("map").setView(
+    [venueLat,venueLng],
+    15
+);
+
+
+L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+        maxZoom:19,
+        attribution:
+        '&copy; OpenStreetMap contributors'
+    }
+).addTo(map);
+
+
+const marker =
+L.marker(
+    [venueLat,venueLng]
+).addTo(map);
+
+
+marker.bindPopup(
+    "<b>Al Hameed Grand Marquee</b><br>" +
+    "Islamabad"
+);
+
+
+marker.openPopup();
+
+
+setTimeout(function(){
+
+    map.invalidateSize();
+
+},500);
+
+
+</script>
+
+</body>
+</html>
