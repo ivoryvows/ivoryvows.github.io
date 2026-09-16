@@ -1,28 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ivory Vows</title>
+<title>Qabool Hai — Ali & Fatema</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Parisienne&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-
-<link
-rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;600&family=Playfair+Display:ital,wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
 
 *{
     margin:0;
@@ -35,1533 +21,1609 @@ html{
 }
 
 body{
-    width:100%;
-    min-height:100vh;
-    background:#fffdf8;
-    color:#651b27;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(239,225,213,.45), transparent 28%),
+        radial-gradient(circle at 85% 35%, rgba(226,236,221,.38), transparent 30%),
+        radial-gradient(circle at 50% 90%, rgba(244,220,220,.35), transparent 32%),
+        linear-gradient(135deg,#fbf8f1,#f7f3eb,#faf7f0);
+    color:#661f2d;
     overflow-x:hidden;
-    font-family:"Cormorant Garamond",serif;
 }
 
-:root{
-    --ivory:#fffdf8;
-    --maroon:#651b27;
-    --dark-maroon:#4b111b;
-    --gold:#b18a45;
-    --light-gold:#d8b96a;
-}
+/* =========================================
+   OPENING
+========================================= */
 
-
-/* =========================================================
-   GENERAL SECTION
-========================================================= */
-
-.section{
-    width:100%;
-    position:relative;
-    background:var(--ivory);
-    overflow:hidden;
-}
-
-.section-inner{
-    width:100%;
-    max-width:760px;
-    margin:auto;
-}
-
-
-/* =========================================================
-   DECORATIVE FLOWERS
-========================================================= */
-
-.corner-flower{
-    position:absolute;
-    width:105px;
-    height:105px;
-    object-fit:contain;
-    opacity:.95;
-    pointer-events:none;
-    z-index:3;
-}
-
-.corner-flower.top-left{
-    top:8px;
-    left:0;
-}
-
-.corner-flower.top-right{
-    top:8px;
-    right:0;
-    transform:scaleX(-1);
-}
-
-.corner-flower.bottom-left{
-    bottom:8px;
-    left:0;
-    transform:scaleY(-1);
-}
-
-.corner-flower.bottom-right{
-    bottom:8px;
-    right:0;
-    transform:scale(-1);
-}
-
-
-/* =========================================================
-   GATE
-========================================================= */
-
-#gateScreen{
+#opening{
     position:fixed;
     inset:0;
     z-index:9999;
-    background:var(--ivory);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    opacity:1;
-    transition:opacity 2.2s ease;
-}
-
-.gate-image{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:opacity:1.4s ease;
-}
-
-.gate-overlay{
-    position:absolute;
-    bottom:9%;
-    left:50%;
-    transform:translateX(-50%);
-    text-align:center;
-    color:white;
-    text-shadow:0 2px 12px rgba(0,0,0,.5);
-    z-index:5;
-    transition:opacity:1.2s ease;
-}
-
-.gate-tap{
-    font-family:"Cormorant Garamond",serif;
-    font-size:19px;
-    letter-spacing:3px;
-    margin-bottom:6px;
-}
-
-.gate-small{
-    font-family:"Montserrat",sans-serif;
-    font-size:9px;
-    letter-spacing:3px;
+    background:#f8f3ea;
+    overflow:hidden;
 }
 
 #gateVideo{
     position:absolute;
-    inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
+    top:0;
+    left:0;
+}
+
+#gateFinalFrame{
+    position:absolute;
+    inset:0;
+    background:url("pic.jpg") center/cover no-repeat;
+    z-index:2;
+}
+
+#tapOverlay{
+    position:absolute;
+    inset:0;
+    z-index:5;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    padding-bottom:12vh;
+    cursor:pointer;
+}
+
+#tapOverlay span{
+    font-family:"Great Vibes",cursive;
+    font-size:42px;
+    color:#fff;
+    text-shadow:
+        0 2px 8px rgba(70,20,30,.55),
+        0 0 15px rgba(255,255,255,.45);
+    animation:tapGlow 2s infinite ease-in-out;
+}
+
+@keyframes tapGlow{
+    0%,100%{
+        opacity:.65;
+        transform:translateY(0);
+    }
+    50%{
+        opacity:1;
+        transform:translateY(-5px);
+    }
+}
+
+#opening.hide{
     opacity:0;
+    visibility:hidden;
     pointer-events:none;
-    transition:opacity:1.8s ease;
+    transition:opacity 1.2s ease,visibility 1.2s ease;
 }
 
-#gateScreen.opening .gate-image,
-#gateScreen.opening .gate-overlay{
-    opacity:0;
+/* =========================================
+   MUSIC
+========================================= */
+
+#bgMusic{
+    display:none;
 }
 
-#gateScreen.opening #gateVideo{
-    opacity:1;
+#musicToggle{
+    position:fixed;
+    right:18px;
+    bottom:20px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:1px solid rgba(102,31,45,.35);
+    background:rgba(255,250,242,.88);
+    backdrop-filter:blur(8px);
+    z-index:9000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    color:#661f2d;
+    font-size:20px;
+    box-shadow:0 4px 20px rgba(80,40,40,.15);
 }
 
+#musicToggle.show{
+    display:flex;
+}
 
-/* =========================================================
-   WELCOME
-========================================================= */
+/* =========================================
+   GENERAL
+========================================= */
 
-#welcomeSection{
+section{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+}
+
+.section-inner{
+    width:min(92%,900px);
+    margin:auto;
+}
+
+.script{
+    font-family:"Great Vibes",cursive;
+}
+
+.heading{
+    font-family:"Cinzel",serif;
+    letter-spacing:3px;
+}
+
+.body-text{
+    font-family:"Playfair Display",serif;
+}
+
+/* =========================================
+   VIDEO SECTIONS
+========================================= */
+
+.full-video{
+    width:100%;
+    display:block;
+    height:auto;
+    object-fit:cover;
+}
+
+.video-section{
+    position:relative;
+    background:#f9f5ed;
+}
+
+.video-section video{
+    width:100%;
+    display:block;
+}
+
+/* =========================================
+   BEAUTIFUL BEGINNING
+========================================= */
+
+#beautiful{
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:var(--ivory);
+    padding:90px 25px;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(239,219,215,.38),transparent 30%),
+        radial-gradient(circle at 90% 80%,rgba(220,231,216,.38),transparent 30%),
+        #faf7f0;
 }
 
-.welcome-video-frame{
+.beautiful-frame{
     position:relative;
-    width:100%;
-    height:100vh;
-    overflow:hidden;
+    width:min(92%,700px);
+    padding:80px 35px;
+    border:1px solid rgba(117,63,66,.22);
+    background:rgba(255,253,248,.48);
+    box-shadow:0 15px 50px rgba(75,45,45,.08);
 }
 
-#welcomeVideo{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
+/* =========================================
+   CORNER FLOWERS
+   ONLY OPPOSITE CORNERS
+========================================= */
 
-    filter:
-        brightness(.96)
-        contrast(.98)
-        saturate(.94);
-
-    opacity:1;
-    transition:opacity:2.2s ease;
-}
-
-.welcome-overlay{
+.corner-flower{
     position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    width:125px;
+    height:125px;
+    object-fit:contain;
     pointer-events:none;
+    z-index:3;
+    opacity:.95;
+    animation:flowerFloat 5s ease-in-out infinite;
 }
 
-.welcome-frame{
-    position:absolute;
-    inset:35px 25px;
-    border:1px solid rgba(177,138,69,.65);
+.corner-flower.top-left{
+    top:-18px;
+    left:-20px;
+    transform-origin:top left;
 }
 
-.welcome-frame:before,
-.welcome-frame:after{
-    content:"";
-    position:absolute;
-    width:80px;
-    height:80px;
-    background-image:url("https://i.postimg.cc/T347PbNC/IMG-7987.png");
-    background-size:contain;
-    background-repeat:no-repeat;
+.corner-flower.bottom-right{
+    bottom:-18px;
+    right:-20px;
+    transform-origin:bottom right;
+    animation-delay:1.5s;
 }
 
-.welcome-frame:before{
-    top:-15px;
-    left:-15px;
+@keyframes flowerFloat{
+
+    0%,100%{
+        transform:translateY(0) rotate(0deg);
+    }
+
+    50%{
+        transform:translateY(-7px) rotate(1.5deg);
+    }
 }
 
-.welcome-frame:after{
-    bottom:-15px;
-    right:-15px;
-    transform:rotate(180deg);
+.beautiful-frame .top-left{
+    transform-origin:top left;
 }
 
-
-/* =========================================================
-   SCRATCH SECTION
-========================================================= */
-
-#scratchSection{
-    padding:55px 18px 45px;
-    text-align:center;
+.beautiful-frame .bottom-right{
+    transform-origin:bottom right;
 }
 
-.section-title{
-    font-family:"Parisienne",cursive;
-    font-size:45px;
-    color:var(--maroon);
-    margin-bottom:8px;
-}
-
-.section-subtitle{
-    font-size:18px;
-    color:var(--maroon);
+.begin-small{
+    font-family:"Montserrat",sans-serif;
+    font-size:11px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:#96736d;
     margin-bottom:22px;
 }
 
-.scratch-wrapper{
-    position:relative;
-    width:100%;
-    max-width:600px;
+.begin-title{
+    font-family:"Great Vibes",cursive;
+    font-size:64px;
+    line-height:1;
+    color:#681f2d;
+    margin-bottom:25px;
+}
+
+.begin-text{
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    line-height:2;
+    color:#704c4b;
+    max-width:570px;
     margin:auto;
-    padding:18px;
-    border:1px solid var(--gold);
-    background:rgba(255,253,248,.8);
 }
 
-.scratch-wrapper:before,
-.scratch-wrapper:after{
-    content:"";
-    position:absolute;
-    width:70px;
-    height:70px;
-    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
-        center/contain no-repeat;
-    z-index:2;
-    pointer-events:none;
+.couple-name{
+    font-family:"Great Vibes",cursive;
+    font-size:53px;
+    color:#661f2d;
+    margin-top:30px;
 }
 
-.scratch-wrapper:before{
-    top:-20px;
-    left:-20px;
+/* =========================================
+   FAMILY
+========================================= */
+
+#family{
+    padding:0;
+    background:#f9f5ed;
 }
 
-.scratch-wrapper:after{
-    bottom:-20px;
-    right:-20px;
-    transform:rotate(180deg);
+#family video{
+    width:100%;
+    display:block;
+}
+
+/* =========================================
+   SCRATCH SAVE THE DATE
+========================================= */
+
+#saveDate{
+    min-height:100vh;
+    padding:80px 15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(241,220,215,.4),transparent 28%),
+        radial-gradient(circle at 80% 80%,rgba(218,232,214,.4),transparent 28%),
+        #faf7f0;
 }
 
 .scratch-frame{
-    width:100%;
-    min-height:180px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid rgba(101,27,39,.35);
-    background:#fffdf8;
-}
-
-.scratch-frame iframe{
-    width:100%;
-    min-height:350px;
-    border:0;
-}
-
-
-/* =========================================================
-   FAMILY
-========================================================= */
-
-#familySection{
-    padding:40px 18px;
-    text-align:center;
-}
-
-.family-video-box{
-    width:100%;
-    max-width:650px;
-    margin:auto;
     position:relative;
-    padding:12px;
-    border:1px solid var(--gold);
+    width:min(94%,760px);
+    padding:18px;
+    background:rgba(255,253,248,.6);
+    border:1px solid rgba(102,31,45,.16);
+    box-shadow:0 15px 55px rgba(80,50,40,.1);
 }
 
-.family-video-box video{
+.scratch-frame img{
     width:100%;
     display:block;
 }
 
-
-/* =========================================================
-   COUNTDOWN
-========================================================= */
-
-#countdownSection{
-    padding:45px 18px 48px;
-    text-align:center;
-}
-
-.countdown-card{
-    position:relative;
-    width:100%;
-    max-width:650px;
-    margin:25px auto 0;
-    padding:28px 18px;
-    border:1px solid var(--gold);
-    background:var(--ivory);
-}
-
-.countdown-card:before,
-.countdown-card:after{
-    content:"";
+#scratchCanvas{
     position:absolute;
-    width:95px;
-    height:95px;
-    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
-        center/contain no-repeat;
-    z-index:2;
-    pointer-events:none;
+    inset:18px;
+    width:calc(100% - 36px);
+    height:calc(100% - 36px);
+    cursor:crosshair;
+    touch-action:none;
 }
 
-.countdown-card:before{
-    top:-25px;
-    left:-22px;
-}
-
-.countdown-card:after{
-    bottom:-25px;
-    right:-22px;
-    transform:rotate(180deg);
-}
-
-.countdown-inner{
-    position:relative;
-    border:1px solid rgba(177,138,69,.55);
-    padding:15px;
-    background:#fffdf8;
-}
-
-.countdown-inner:before,
-.countdown-inner:after{
-    content:"";
-    position:absolute;
-    width:65px;
-    height:65px;
-    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
-        center/contain no-repeat;
-    pointer-events:none;
-}
-
-.countdown-inner:before{
-    top:-17px;
-    right:-15px;
-    transform:scaleX(-1);
-}
-
-.countdown-inner:after{
-    bottom:-17px;
-    left:-15px;
-    transform:rotate(180deg);
-}
-
-.countdown-embed{
-    width:100%;
-    min-height:120px;
-}
-
-
-/* =========================================================
+/* =========================================
    TIMELINE
-========================================================= */
+========================================= */
 
-#timelineSection{
-    padding:35px 8px 55px;
+#timeline{
+    padding:100px 15px;
+    background:
+        radial-gradient(circle at 15% 20%,rgba(240,221,216,.35),transparent 28%),
+        radial-gradient(circle at 85% 70%,rgba(220,232,216,.35),transparent 30%),
+        #faf7f0;
 }
 
-.timeline{
-    position:relative;
-    width:100%;
-    max-width:760px;
-    margin:auto;
-    padding:55px 5px 65px;
+.timeline-title{
+    text-align:center;
+    margin-bottom:80px;
+}
+
+.timeline-small{
+    font-family:"Montserrat",sans-serif;
+    letter-spacing:5px;
+    font-size:11px;
+    text-transform:uppercase;
+    color:#95736d;
+    margin-bottom:15px;
+}
+
+.timeline-heading{
+    font-family:"Great Vibes",cursive;
+    font-size:65px;
+    color:#661f2d;
 }
 
 .timeline-line{
+    position:relative;
+    width:min(94%,900px);
+    margin:auto;
+}
+
+.timeline-line::before{
+    content:"";
     position:absolute;
-    top:55px;
-    bottom:65px;
     left:50%;
-    width:1.5px;
-    background:var(--maroon);
+    top:0;
+    bottom:0;
+    width:1px;
+    background:rgba(102,31,45,.25);
     transform:translateX(-50%);
-    z-index:1;
 }
 
-.moving-flower{
+.timeline-item{
+    position:relative;
+    display:flex;
+    width:100%;
+    margin-bottom:95px;
+    min-height:180px;
+    align-items:center;
+}
+
+.timeline-item:nth-child(odd){
+    justify-content:flex-start;
+}
+
+.timeline-item:nth-child(even){
+    justify-content:flex-end;
+}
+
+.timeline-content{
+    width:43%;
+    text-align:center;
+}
+
+.timeline-image{
+    width:43%;
+}
+
+.timeline-image img{
+    width:100%;
+    max-width:310px;
+    display:block;
+    margin:auto;
+    border-radius:2px;
+    box-shadow:0 12px 35px rgba(70,40,40,.13);
+}
+
+.timeline-time{
+    font-family:"Cinzel",serif;
+    letter-spacing:3px;
+    font-size:13px;
+    color:#99716c;
+    margin-bottom:10px;
+}
+
+.timeline-event{
+    font-family:"Great Vibes",cursive;
+    font-size:43px;
+    line-height:1.1;
+    color:#661f2d;
+}
+
+.timeline-flower{
     position:absolute;
     left:50%;
-    top:55px;
-    width:58px;
-    height:58px;
-    transform:translate(-50%,0);
-    z-index:10;
-    pointer-events:none;
-    transition:top .12s linear;
-}
-
-.moving-flower img{
-    width:100%;
-    height:100%;
+    top:50%;
+    width:72px;
+    height:72px;
     object-fit:contain;
+    transform:translate(-50%,-50%);
+    z-index:5;
+    animation:centerFlower 4s ease-in-out infinite;
 }
 
-.event{
-    position:relative;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    min-height:220px;
-    align-items:center;
-    z-index:2;
+@keyframes centerFlower{
+    0%,100%{
+        transform:translate(-50%,-50%) rotate(-3deg) scale(1);
+    }
+    50%{
+        transform:translate(-50%,-50%) rotate(4deg) scale(1.08);
+    }
 }
 
-.event-text{
-    text-align:center;
-    padding:10px 8px;
-}
-
-.time{
-    font-family:"Parisienne",cursive;
-    font-size:34px;
-    line-height:1.1;
-    color:var(--maroon);
-    margin-bottom:5px;
-}
-
-.event-name{
-    font-family:"Parisienne",cursive;
-    font-size:37px;
-    line-height:1.05;
-    color:var(--maroon);
-}
-
-.event-image{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:4px;
-}
-
-.event-image img{
-    width:190px;
-    height:190px;
-    object-fit:contain;
-    display:block;
-}
-
-.event:nth-of-type(1) .event-text{
-    grid-column:1;
-    grid-row:1;
-}
-
-.event:nth-of-type(1) .event-image{
-    grid-column:2;
-    grid-row:1;
-}
-
-.event:nth-of-type(2) .event-image{
-    grid-column:1;
-    grid-row:1;
-}
-
-.event:nth-of-type(2) .event-text{
-    grid-column:2;
-    grid-row:1;
-}
-
-.event:nth-of-type(3) .event-text{
-    grid-column:1;
-    grid-row:1;
-}
-
-.event:nth-of-type(3) .event-image{
-    grid-column:2;
-    grid-row:1;
-}
-
-.event:nth-of-type(4) .event-image{
-    grid-column:1;
-    grid-row:1;
-}
-
-.event:nth-of-type(4) .event-text{
-    grid-column:2;
-    grid-row:1;
-}
-
-
-/* =========================================================
+/* =========================================
    VENUE
-========================================================= */
+========================================= */
 
-#venueSection{
-    padding:40px 15px 42px;
+#venue{
+    padding:100px 20px;
+    background:#f9f5ed;
+}
+
+.venue-title{
     text-align:center;
+    margin-bottom:60px;
 }
 
-.location-picture-frame{
+.venue-title h2{
+    font-family:"Great Vibes",cursive;
+    font-size:65px;
+    color:#661f2d;
+}
+
+.venue-grid{
+    width:min(92%,900px);
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.venue-card{
     position:relative;
-    width:100%;
-    max-width:620px;
-    margin:18px auto 22px;
-    padding:10px;
-    border:1px solid var(--gold);
-}
-
-.location-picture-frame img{
-    width:100%;
-    display:block;
-}
-
-.map-box{
-    width:100%;
-    max-width:650px;
-    margin:0 auto;
-    border:1px solid var(--gold);
+    padding:45px 25px;
+    text-align:center;
+    background:rgba(255,253,248,.62);
+    border:1px solid rgba(102,31,45,.15);
+    box-shadow:0 10px 35px rgba(70,40,40,.07);
     overflow:hidden;
 }
 
-#map{
-    width:100%;
-    height:350px;
+.venue-card .corner-flower{
+    width:95px;
+    height:95px;
 }
 
-.venue-name{
-    font-family:"Parisienne",cursive;
-    font-size:34px;
-    color:var(--maroon);
-    margin:18px 0 12px;
+.venue-card h3{
+    font-family:"Cinzel",serif;
+    font-size:17px;
+    letter-spacing:2px;
+    margin-bottom:18px;
+    color:#661f2d;
 }
 
-.map-button{
+.venue-card p{
+    font-family:"Playfair Display",serif;
+    font-size:15px;
+    line-height:1.8;
+    color:#765454;
+}
+
+.map-btn{
     display:inline-block;
-    padding:9px 24px;
-    border:1px solid var(--maroon);
-    color:var(--maroon);
-    background:transparent;
+    margin-top:20px;
+    padding:10px 22px;
+    border:1px solid rgba(102,31,45,.35);
+    color:#661f2d;
     text-decoration:none;
     font-family:"Montserrat",sans-serif;
-    font-size:9px;
+    font-size:11px;
     letter-spacing:2px;
 }
 
-
-/* =========================================================
+/* =========================================
    DRESS CODE
-========================================================= */
+========================================= */
 
-#dressSection{
-    padding:40px 18px 45px;
+#dress{
+    min-height:100vh;
+    padding:100px 20px;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(240,219,214,.38),transparent 28%),
+        radial-gradient(circle at 90% 80%,rgba(218,231,216,.4),transparent 30%),
+        #faf7f0;
+}
+
+.dress-frame{
+    position:relative;
+    width:min(94%,850px);
+    margin:auto;
+    padding:45px;
+    background:rgba(255,253,248,.5);
+    border:1px solid rgba(102,31,45,.18);
+    box-shadow:0 15px 55px rgba(70,40,40,.08);
+}
+
+.dress-title{
+    text-align:center;
+    margin-bottom:45px;
+}
+
+.dress-title h2{
+    font-family:"Great Vibes",cursive;
+    font-size:68px;
+    color:#661f2d;
+}
+
+.dress-title p{
+    font-family:"Montserrat",sans-serif;
+    font-size:11px;
+    letter-spacing:4px;
+    color:#99736c;
+    text-transform:uppercase;
+    margin-top:8px;
+}
+
+.dress-image{
+    width:100%;
+    display:block;
+    margin:auto;
+}
+
+.dress-couples{
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    margin-top:35px;
+    flex-wrap:wrap;
+}
+
+.dress-couple{
     text-align:center;
 }
 
-.dress-video-frame{
-    width:100%;
-    max-width:650px;
-    margin:20px auto 0;
-    padding:10px;
-    border:1px solid var(--gold);
+.dress-couple h3{
+    font-family:"Great Vibes",cursive;
+    font-size:40px;
+    color:#661f2d;
 }
 
-.dress-video-frame video{
-    width:100%;
-    display:block;
+.dress-couple p{
+    font-family:"Montserrat",sans-serif;
+    font-size:11px;
+    letter-spacing:2px;
+    color:#795856;
 }
 
+/* =========================================
+   PETALS
+========================================= */
 
-/* =========================================================
-   MUSIC
-========================================================= */
-
-#musicButton{
+#petalCanvas,
+#sparkCanvas{
     position:fixed;
-    right:15px;
-    bottom:15px;
-    width:43px;
-    height:43px;
-    border-radius:50%;
-    border:1px solid var(--gold);
-    background:rgba(255,253,248,.94);
-    color:var(--maroon);
-    z-index:9000;
-    cursor:pointer;
-    font-size:16px;
+    inset:0;
+    pointer-events:none;
+    z-index:8000;
 }
 
+#petalCanvas{
+    opacity:.45;
+}
 
-/* =========================================================
+#sparkCanvas{
+    opacity:.5;
+}
+
+/* =========================================
    MOBILE
-========================================================= */
+========================================= */
 
-@media(max-width:600px){
+@media(max-width:700px){
+
+    #tapOverlay span{
+        font-size:35px;
+    }
+
+    .beautiful-frame{
+        padding:65px 22px;
+    }
 
     .corner-flower{
-        width:75px;
-        height:75px;
+        width:95px;
+        height:95px;
     }
 
-    .welcome-frame{
-        inset:25px 17px;
+    .begin-title{
+        font-size:53px;
     }
 
-    .section-title{
-        font-size:39px;
+    .couple-name{
+        font-size:45px;
     }
 
-    .event{
-        min-height:195px;
+    .begin-text{
+        font-size:15px;
+        line-height:1.9;
     }
 
-    .event-image img{
-        width:155px;
-        height:155px;
+    .timeline-heading{
+        font-size:54px;
     }
 
-    .time{
+    .timeline-item{
+        min-height:140px;
+        margin-bottom:75px;
+    }
+
+    .timeline-content,
+    .timeline-image{
+        width:42%;
+    }
+
+    .timeline-event{
+        font-size:32px;
+    }
+
+    .timeline-time{
+        font-size:10px;
+        letter-spacing:1.5px;
+    }
+
+    .timeline-flower{
+        width:58px;
+        height:58px;
+    }
+
+    .venue-grid{
+        grid-template-columns:1fr;
+    }
+
+    .venue-title h2{
+        font-size:55px;
+    }
+
+    .dress-frame{
+        padding:25px 18px;
+    }
+
+    .dress-title h2{
+        font-size:55px;
+    }
+
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media(max-width:430px){
+
+    .timeline-item{
+        margin-bottom:65px;
+    }
+
+    .timeline-event{
         font-size:27px;
     }
 
-    .event-name{
-        font-size:30px;
+    .timeline-flower{
+        width:52px;
+        height:52px;
     }
 
-    .moving-flower{
-        width:46px;
-        height:46px;
+    .timeline-time{
+        font-size:9px;
     }
 
-    #map{
-        height:300px;
-    }
-
-    .venue-name{
-        font-size:29px;
+    .corner-flower{
+        width:82px;
+        height:82px;
     }
 
 }
 
 </style>
-
 </head>
+
 
 <body>
 
-<!-- =====================================================
-     GATE
-===================================================== -->
 
-<div id="gateScreen">
+<!-- =========================================
+     OPENING
+========================================= -->
 
-<img
-    class="gate-image"
-    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
-    alt="Wedding Gate"
->
-
-<video
-    id="gateVideo"
-    playsinline
-    muted
-    preload="auto"
->
-    <source
-        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/gate.MP4"
-        type="video/mp4"
-    >
-</video>
-
-<div class="gate-overlay">
-
-    <div class="gate-tap">
-        Tap to Open
-    </div>
-
-    <div class="gate-small">
-        A LITTLE SURPRISE AWAITS
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     WELCOME VIDEO
-===================================================== -->
-
-<section id="welcomeSection" class="section">
-
-<div class="welcome-video-frame">
+<div id="opening">
 
     <video
-        id="welcomeVideo"
-        playsinline
+        id="gateVideo"
+        src="envelope.mp4"
         muted
-        autoplay
-        loop
-        preload="auto"
-    >
-
-        <source
-            src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/welcome.mov"
-            type="video/quicktime"
-        >
-
+        playsinline
+        preload="auto">
     </video>
 
-    <div class="welcome-overlay">
+    <div id="gateFinalFrame"></div>
 
-        <div class="welcome-frame"></div>
-
+    <div id="tapOverlay">
+        <span>Tap to Open</span>
     </div>
 
 </div>
 
+
+<!-- =========================================
+     MUSIC
+========================================= -->
+
+<audio id="bgMusic" loop>
+    <source src="alikesath.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicToggle" aria-label="Music">
+    ♫
+</button>
+
+
+<!-- =========================================
+     WELCOME VIDEO
+========================================= -->
+
+<section class="video-section" id="welcome">
+
+    <video
+        class="full-video"
+        src="welcome.mp4"
+        autoplay
+        muted
+        loop
+        playsinline>
+    </video>
+
 </section>
 
 
-<!-- =====================================================
-     SCRATCH
-===================================================== -->
+<!-- =========================================
+     BEAUTIFUL BEGINNING
+========================================= -->
 
-<section id="scratchSection" class="section">
+<section id="beautiful">
 
-<img
-    class="corner-flower top-left"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
+    <div class="beautiful-frame">
 
-<img
-    class="corner-flower top-right"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
+        <!-- OPPOSITE CORNERS ONLY -->
 
-<div class="section-inner">
+        <img
+            class="corner-flower top-left"
+            src="https://files.catbox.moe/kgdqjb.png"
+            alt="">
 
-    <div class="section-title">
-        A Little Surprise
-    </div>
+        <img
+            class="corner-flower bottom-right"
+            src="https://files.catbox.moe/kgdqjb.png"
+            alt="">
 
-    <div class="section-subtitle">
-        A special moment awaits
-    </div>
 
-    <div class="scratch-wrapper">
+        <div class="begin-small">
+            A New Chapter
+        </div>
 
-        <div class="scratch-frame">
+        <div class="begin-title">
+            Beautiful Beginning
+        </div>
 
-            <iframe
-                src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
-                loading="lazy">
-            </iframe>
+        <div class="begin-text">
 
+            With hearts full of joy,
+            we invite you to celebrate
+            the beginning of our forever.
+
+        </div>
+
+        <div class="couple-name">
+            Ali &amp; Fatema
         </div>
 
     </div>
 
-</div>
+</section>
+
+
+<!-- =========================================
+     FAMILY VIDEO
+========================================= -->
+
+<section class="video-section" id="family">
+
+    <video
+        src="family.mp4"
+        autoplay
+        muted
+        loop
+        playsinline>
+    </video>
 
 </section>
 
 
-<!-- =====================================================
-     FAMILY
-===================================================== -->
+<!-- =========================================
+     SCRATCH SAVE THE DATE
+========================================= -->
 
-<section id="familySection" class="section">
+<section id="saveDate">
 
-<img
-    class="corner-flower top-left"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
+    <div class="scratch-frame">
 
-<div class="section-inner">
+        <!-- REVEALED DATE IMAGE -->
 
-    <div class="section-title">
-        Our Families
-    </div>
+        <img
+            src="https://i.ibb.co/FkkwYxQC/IMG-8219.png"
+            alt="Save the Date">
 
-    <div class="family-video-box">
-
-        <video
-            playsinline
-            autoplay
-            muted
-            loop
-            preload="auto"
-        >
-
-            <source
-                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/family.mov"
-                type="video/quicktime"
-            >
-
-        </video>
+        <canvas id="scratchCanvas"></canvas>
 
     </div>
-
-</div>
 
 </section>
 
 
-<!-- =====================================================
-     COUNTDOWN
-===================================================== -->
-
-<section id="countdownSection" class="section">
-
-<img
-    class="corner-flower bottom-right"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
-
-<div class="section-inner">
-
-    <div class="section-title">
-        Until We Say I Do
-    </div>
-
-    <div class="countdown-card">
-
-        <div class="countdown-inner">
-
-            <div class="countdown-embed">
-
-                <script>
-                (function(d, s, id) {
-
-                    var js,
-                    pjs = d.getElementsByTagName(s)[0];
-
-                    if (d.getElementById(id)) return;
-
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = "//www.tickcounter.com/static/js/loader.js";
-
-                    pjs.parentNode.insertBefore(js, pjs);
-
-                }(document, "script", "tickcounter-sdk"));
-                </script>
-
-                <a
-                    data-type="countdown"
-                    data-id="11415740"
-                    class="tickcounter"
-                    style="
-                        display:block;
-                        left:0;
-                        width:100%;
-                        height:0;
-                        position:relative;
-                        padding-bottom:25%;
-                        margin:0 auto;
-                    "
-                    title="Wedding Countdown"
-                    href="//www.tickcounter.com/"
-                >
-                    Wedding Countdown
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
+<!-- =========================================
      TIMELINE
-===================================================== -->
+========================================= -->
 
-<section id="timelineSection" class="section">
+<section id="timeline">
 
-<div class="section-inner">
+    <div class="timeline-title">
 
-    <div class="section-title" style="text-align:center;">
-        Our Celebration
-    </div>
-
-    <div class="timeline">
-
-        <div class="timeline-line"></div>
-
-        <div
-            class="moving-flower"
-            id="movingFlower"
-        >
-
-            <img
-                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                alt="Flower"
-            >
-
+        <div class="timeline-small">
+            The Celebration
         </div>
 
+        <div class="timeline-heading">
+            Our Nikkah
+        </div>
 
-        <div class="event">
+    </div>
 
-            <div class="event-text">
 
-                <div class="time">
-                    07:00 PM
+    <div class="timeline-line">
+
+
+        <!-- 7:00 PM -->
+
+        <div class="timeline-item">
+
+            <div class="timeline-content">
+
+                <div class="timeline-time">
+                    7:00 PM
                 </div>
 
-                <div class="event-name">
+                <div class="timeline-event">
                     Guest Arrival
                 </div>
 
             </div>
 
-            <div class="event-image">
+            <div class="timeline-image">
 
                 <img
-                    src="https://files.catbox.moe/zt8kp4.jpeg"
-                    alt="Guest Arrival"
-                >
+                    src="https://files.catbox.moe/pvhxig.png"
+                    alt="Guest Arrival">
 
             </div>
+
+            <img
+                class="timeline-flower"
+                src="https://files.catbox.moe/ihrop0.png"
+                alt="">
 
         </div>
 
 
-        <div class="event">
+        <!-- 8:00 PM -->
 
-            <div class="event-image">
+        <div class="timeline-item">
+
+            <div class="timeline-image">
 
                 <img
-                    src="https://files.catbox.moe/kh8bbs.png"
-                    alt="Bride Entry"
-                >
+                    src="https://files.catbox.moe/4xnqph.png"
+                    alt="Bride Entry">
 
             </div>
 
-            <div class="event-text">
+            <div class="timeline-content">
 
-                <div class="time">
-                    08:00 PM
+                <div class="timeline-time">
+                    8:00 PM
                 </div>
 
-                <div class="event-name">
+                <div class="timeline-event">
                     Bride Entry
                 </div>
 
             </div>
 
+            <img
+                class="timeline-flower"
+                src="https://files.catbox.moe/ihrop0.png"
+                alt="">
+
         </div>
 
 
-        <div class="event">
+        <!-- 8:30 PM -->
 
-            <div class="event-text">
+        <div class="timeline-item">
 
-                <div class="time">
-                    08:30 PM
+            <div class="timeline-content">
+
+                <div class="timeline-time">
+                    8:30 PM
                 </div>
 
-                <div class="event-name">
+                <div class="timeline-event">
                     Nikkah Ceremony
                 </div>
 
             </div>
 
-            <div class="event-image">
+            <div class="timeline-image">
 
                 <img
-                    src="https://files.catbox.moe/kph6hd.png"
-                    alt="Nikkah Ceremony"
-                >
+                    src="https://files.catbox.moe/nvolds.png"
+                    alt="Nikkah Ceremony">
 
             </div>
+
+            <img
+                class="timeline-flower"
+                src="https://files.catbox.moe/ihrop0.png"
+                alt="">
 
         </div>
 
 
-        <div class="event">
+        <!-- 9:30 PM -->
 
-            <div class="event-image">
+        <div class="timeline-item">
+
+            <div class="timeline-image">
 
                 <img
-                    src="https://files.catbox.moe/ssoyrc.png"
-                    alt="Buffet"
-                >
+                    src="https://files.catbox.moe/dq34d3.png"
+                    alt="Buffet Opening">
 
             </div>
 
-            <div class="event-text">
+            <div class="timeline-content">
 
-                <div class="time">
-                    09:30 PM
+                <div class="timeline-time">
+                    9:30 PM
                 </div>
 
-                <div class="event-name">
+                <div class="timeline-event">
                     Buffet Opening
                 </div>
 
             </div>
 
+            <img
+                class="timeline-flower"
+                src="https://files.catbox.moe/ihrop0.png"
+                alt="">
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     VENUE
+========================================= -->
+
+<section id="venue">
+
+    <div class="venue-title">
+
+        <div class="timeline-small">
+            Join Us
+        </div>
+
+        <h2>
+            The Venue
+        </h2>
+
+    </div>
+
+
+    <div class="venue-grid">
+
+
+        <div class="venue-card">
+
+            <img
+                class="corner-flower top-left"
+                src="https://files.catbox.moe/kgdqjb.png"
+                alt="">
+
+            <img
+                class="corner-flower bottom-right"
+                src="https://files.catbox.moe/kgdqjb.png"
+                alt="">
+
+            <h3>
+                Royal Palace
+            </h3>
+
+            <p>
+                Bedian Road<br>
+                Lahore
+            </p>
+
+            <a
+                class="map-btn"
+                href="https://www.google.com/maps/search/?api=1&query=Royal+Palace+Bedian+Road+Lahore"
+                target="_blank">
+                VIEW MAP
+            </a>
+
+        </div>
+
+
+        <div class="venue-card">
+
+            <img
+                class="corner-flower top-left"
+                src="https://files.catbox.moe/kgdqjb.png"
+                alt="">
+
+            <img
+                class="corner-flower bottom-right"
+                src="https://files.catbox.moe/kgdqjb.png"
+                alt="">
+
+            <h3>
+                Le Aura Grand Events &amp; Hotel
+            </h3>
+
+            <p>
+                Lahore
+            </p>
+
+            <a
+                class="map-btn"
+                href="https://www.google.com/maps/search/?api=1&query=Le+Aura+Grand+Events+Hotel+Lahore"
+                target="_blank">
+                VIEW MAP
+            </a>
+
+        </div>
+
+
+        <div class="venue-card">
+
+            <img
+                class="corner-flower top-left"
+                src="https://files.catbox.moe/kgdqjb.png"
+                alt="">
+
+            <img
+                class="corner-flower bottom-right"
+                src="https://files.catbox.moe/kgdqjb.png"
+                alt="">
+
+            <h3>
+                Shershah Palace
+            </h3>
+
+            <p>
+                Lahore
+            </p>
+
+            <a
+                class="map-btn"
+                href="https://www.google.com/maps/search/?api=1&query=Shershah+Palace+Lahore"
+                target="_blank">
+                VIEW MAP
+            </a>
+
+        </div>
+
+
+        <div class="venue-card">
+
+            <img
+                class="corner-flower top-left"
+                src="https://files.catbox.moe/kgdqjb.png"
+                alt="">
+
+            <img
+                class="corner-flower bottom-right"
+                src="https://files.catbox.moe/kgdqjb.png"
+                alt="">
+
+            <h3>
+                Grand Vista
+            </h3>
+
+            <p>
+                Lahore
+            </p>
+
+            <a
+                class="map-btn"
+                href="https://www.google.com/maps/search/?api=1&query=Grand+Vista+Lahore"
+                target="_blank">
+                VIEW MAP
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     DRESS CODE
+========================================= -->
+
+<section id="dress">
+
+    <div class="dress-frame">
+
+
+        <img
+            class="corner-flower top-left"
+            src="https://files.catbox.moe/kgdqjb.png"
+            alt="">
+
+        <img
+            class="corner-flower bottom-right"
+            src="https://files.catbox.moe/kgdqjb.png"
+            alt="">
+
+
+        <div class="dress-title">
+
+            <div class="timeline-small">
+                What to Wear
+            </div>
+
+            <h2>
+                Dress Code
+            </h2>
+
+            <p>
+                Elegant Pakistani Attire
+            </p>
+
+        </div>
+
+
+        <img
+            class="dress-image"
+            src="https://files.catbox.moe/vxcqqa.png"
+            alt="Dress Code">
+
+
+        <div class="dress-couples">
+
+            <div class="dress-couple">
+
+                <h3>
+                    For Her
+                </h3>
+
+                <p>
+                    Elegant Pakistani Attire
+                </p>
+
+            </div>
+
+
+            <div class="dress-couple">
+
+                <h3>
+                    For Him
+                </h3>
+
+                <p>
+                    Traditional Pakistani Attire
+                </p>
+
+            </div>
+
         </div>
 
     </div>
 
-</div>
-
 </section>
 
 
-<!-- =====================================================
-     VENUE
-===================================================== -->
+<!-- =========================================
+     PETALS & SPARKLES
+========================================= -->
 
-<section id="venueSection" class="section">
+<canvas id="petalCanvas"></canvas>
+<canvas id="sparkCanvas"></canvas>
 
-<img
-    class="corner-flower top-right"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
-
-<div class="section-inner">
-
-    <div class="section-title">
-        Find Us
-    </div>
-
-    <div class="section-subtitle">
-        We can't wait to celebrate with you
-    </div>
-
-
-    <div class="location-picture-frame">
-
-        <img
-            src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Location.jpg"
-            alt="Venue Location"
-        >
-
-    </div>
-
-
-    <div class="map-box">
-
-        <div id="map"></div>
-
-    </div>
-
-
-    <div class="venue-name">
-
-        Al Hameed Grand Marquee
-        <br>
-        Islamabad
-
-    </div>
-
-
-    <a
-        class="map-button"
-        href="https://www.google.com/maps/search/?api=1&query=Al+Hameed+Grand+Marquee+Islamabad"
-        target="_blank"
-    >
-
-        VIEW ON GOOGLE MAPS
-
-    </a>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     DRESS CODE
-===================================================== -->
-
-<section id="dressSection" class="section">
-
-<img
-    class="corner-flower top-left"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
-
-<div class="section-inner">
-
-    <div class="section-title">
-        Dress Code
-    </div>
-
-    <div class="section-subtitle">
-        Come dressed in your finest
-    </div>
-
-    <div class="dress-video-frame">
-
-        <video
-            playsinline
-            autoplay
-            muted
-            loop
-            preload="auto"
-        >
-
-            <source
-                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/dress.MP4"
-                type="video/mp4"
-            >
-
-        </video>
-
-    </div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     MUSIC
-===================================================== -->
-
-<audio
-    id="weddingMusic"
-    src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Music.mp3"
-    preload="auto"
-    loop
-></audio>
-
-
-<button
-    id="musicButton"
-    onclick="toggleMusic()"
-    aria-label="Music"
->
-    ♫
-</button>
-
-
-<!-- =====================================================
-     LEAFLET
-===================================================== -->
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-/* =========================================================
-   GATE → WELCOME
-   MUSIC STARTS ON SAME TAP
-========================================================= */
+/* =========================================
+   OPENING + MUSIC
+========================================= */
 
-const gateScreen =
-document.getElementById("gateScreen");
+const opening = document.getElementById("opening");
+const tapOverlay = document.getElementById("tapOverlay");
+const gateVideo = document.getElementById("gateVideo");
+const music = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
 
-const gateVideo =
-document.getElementById("gateVideo");
+tapOverlay.addEventListener("click", async function(){
 
-const welcomeVideo =
-document.getElementById("welcomeVideo");
+    /* Start intro video */
+    try{
+        await gateVideo.play();
+    }catch(e){}
 
-const music =
-document.getElementById("weddingMusic");
+    /* Start music immediately from same user tap */
+    try{
+        music.volume = 0.7;
+        await music.play();
+    }catch(e){}
 
+    musicToggle.classList.add("show");
 
-let gateOpened = false;
-let musicPlaying = false;
+    tapOverlay.style.opacity = "0";
+    tapOverlay.style.pointerEvents = "none";
 
+    /*
+       When envelope video finishes,
+       hide opening completely.
+    */
 
-/* =========================================================
-   PREPARE WELCOME VIDEO
-========================================================= */
+    gateVideo.addEventListener("ended", function(){
 
-welcomeVideo.muted = true;
+        opening.classList.add("hide");
 
-welcomeVideo.play().catch(function(){
+    }, {once:true});
+
 });
 
 
-/* =========================================================
-   OPEN GATE
-========================================================= */
+/* Music button */
 
-function openGate(){
-
-    if(gateOpened) return;
-
-    gateOpened = true;
-
-
-    /* =====================================================
-       MUSIC
-       Start directly from the user's tap
-    ===================================================== */
-
-    music.volume = 0.35;
-    music.muted = false;
-
-    music.play()
-        .then(function(){
-
-            musicPlaying = true;
-
-        })
-        .catch(function(error){
-
-            console.log(
-                "Music could not start:",
-                error
-            );
-
-        });
-
-
-    /* =====================================================
-       WELCOME VIDEO
-    ===================================================== */
-
-    welcomeVideo.currentTime = 0;
-
-    welcomeVideo.play().catch(function(){});
-
-
-    /* =====================================================
-       GATE VIDEO
-    ===================================================== */
-
-    gateScreen.classList.add("opening");
-
-    gateVideo.currentTime = 0;
-
-    gateVideo.muted = true;
-
-    gateVideo.play().catch(function(){});
-
-
-    /* =====================================================
-       REMOVE GATE WHEN VIDEO ENDS
-    ===================================================== */
-
-    gateVideo.addEventListener(
-        "ended",
-        function(){
-
-            gateScreen.style.opacity = "0";
-
-            setTimeout(function(){
-
-                gateScreen.style.display = "none";
-
-            },2200);
-
-        },
-        {once:true}
-    );
-
-
-    /* =====================================================
-       FALLBACK FOR MOBILE
-    ===================================================== */
-
-    gateVideo.addEventListener(
-        "loadedmetadata",
-        function(){
-
-            const duration =
-                gateVideo.duration;
-
-            if(duration && isFinite(duration)){
-
-                setTimeout(function(){
-
-                    if(
-                        gateScreen.style.display !== "none"
-                    ){
-
-                        gateScreen.style.opacity = "0";
-
-                        setTimeout(function(){
-
-                            gateScreen.style.display = "none";
-
-                        },2200);
-
-                    }
-
-                }, (duration * 1000) + 300);
-
-            }
-
-        },
-        {once:true}
-    );
-
-}
-
-
-/* =========================================================
-   iPHONE / TOUCH
-========================================================= */
-
-gateScreen.addEventListener(
-    "touchend",
-    function(event){
-
-        event.preventDefault();
-
-        openGate();
-
-    },
-    {passive:false}
-);
-
-
-/* =========================================================
-   NORMAL CLICK
-========================================================= */
-
-gateScreen.addEventListener(
-    "click",
-    function(){
-
-        openGate();
-
-    }
-);
-
-
-/* =========================================================
-   MUSIC BUTTON
-========================================================= */
-
-function toggleMusic(){
+musicToggle.addEventListener("click", function(){
 
     if(music.paused){
 
-        music.muted = false;
+        music.play();
 
-        music.play()
-            .then(function(){
-
-                musicPlaying = true;
-
-            })
-            .catch(function(){
-
-                console.log(
-                    "Music could not start."
-                );
-
-            });
+        musicToggle.innerHTML = "♫";
 
     }else{
 
         music.pause();
 
-        musicPlaying = false;
+        musicToggle.innerHTML = "♪";
+
+    }
+
+});
+
+
+/* =========================================
+   SCRATCH CARD
+========================================= */
+
+const canvas = document.getElementById("scratchCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeScratch(){
+
+    const rect = canvas.getBoundingClientRect();
+
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    ctx.scale(dpr,dpr);
+
+    canvas.style.width = rect.width + "px";
+    canvas.style.height = rect.height + "px";
+
+    /*
+       Transparent canvas means the image below
+       remains visible until scratched.
+    */
+
+}
+
+window.addEventListener("load",resizeScratch);
+window.addEventListener("resize",resizeScratch);
+
+
+let scratching = false;
+
+function scratch(e){
+
+    if(!scratching) return;
+
+    const rect = canvas.getBoundingClientRect();
+
+    let x;
+    let y;
+
+    if(e.touches){
+
+        x = e.touches[0].clientX - rect.left;
+        y = e.touches[0].clientY - rect.top;
+
+    }else{
+
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+
+    }
+
+    ctx.globalCompositeOperation = "destination-out";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y,
+        32,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    createSparkles(
+        e.touches ? e.touches[0].clientX : e.clientX,
+        e.touches ? e.touches[0].clientY : e.clientY
+    );
+
+}
+
+
+canvas.addEventListener("mousedown",function(e){
+    scratching=true;
+    scratch(e);
+});
+
+canvas.addEventListener("mousemove",scratch);
+
+window.addEventListener("mouseup",function(){
+    scratching=false;
+});
+
+
+canvas.addEventListener("touchstart",function(e){
+
+    scratching=true;
+    scratch(e);
+
+},{passive:false});
+
+
+canvas.addEventListener("touchmove",function(e){
+
+    e.preventDefault();
+    scratch(e);
+
+},{passive:false});
+
+
+canvas.addEventListener("touchend",function(){
+
+    scratching=false;
+
+});
+
+
+/* =========================================
+   SMALL SPARKLES WHILE SCRATCHING
+========================================= */
+
+const sparkCanvas = document.getElementById("sparkCanvas");
+const sparkCtx = sparkCanvas.getContext("2d");
+
+function resizeSparkCanvas(){
+
+    sparkCanvas.width = window.innerWidth;
+    sparkCanvas.height = window.innerHeight;
+
+}
+
+resizeSparkCanvas();
+window.addEventListener("resize",resizeSparkCanvas);
+
+let sparks=[];
+
+function createSparkles(x,y){
+
+    for(let i=0;i<3;i++){
+
+        sparks.push({
+
+            x:x,
+            y:y,
+            size:Math.random()*2+1,
+            life:1,
+            vx:(Math.random()-.5)*1.5,
+            vy:(Math.random()-.5)*1.5
+
+        });
 
     }
 
 }
 
+function animateSparks(){
 
-/* =========================================================
-   TIMELINE FLOWER
-========================================================= */
+    sparkCtx.clearRect(
+        0,
+        0,
+        sparkCanvas.width,
+        sparkCanvas.height
+    );
 
-const flower =
-document.getElementById("movingFlower");
+    sparks.forEach((s,index)=>{
 
-const timeline =
-document.querySelector(".timeline");
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life -= .025;
 
+        sparkCtx.globalAlpha=s.life;
 
-function moveFlower(){
+        sparkCtx.beginPath();
 
-    if(!timeline || !flower) return;
-
-
-    const rect =
-        timeline.getBoundingClientRect();
-
-
-    const scrollTop =
-        window.scrollY ||
-        window.pageYOffset;
-
-
-    const timelineTop =
-        rect.top + scrollTop;
-
-
-    const timelineHeight =
-        timeline.offsetHeight;
-
-
-    const flowerTravel =
-        timelineHeight - 120;
-
-
-    const timelineStart =
-        timelineTop -
-        window.innerHeight * 0.35;
-
-
-    const timelineEnd =
-        timelineTop +
-        timelineHeight -
-        window.innerHeight * 0.65;
-
-
-    let progress =
-        (scrollTop - timelineStart) /
-        (timelineEnd - timelineStart);
-
-
-    progress =
-        Math.max(
+        sparkCtx.arc(
+            s.x,
+            s.y,
+            s.size,
             0,
-            Math.min(1,progress)
+            Math.PI*2
         );
 
+        sparkCtx.fillStyle="rgba(170,130,100,.75)";
+        sparkCtx.fill();
 
-    const newTop =
-        55 +
-        (flowerTravel * progress);
+        if(s.life<=0){
+            sparks.splice(index,1);
+        }
+
+    });
+
+    sparkCtx.globalAlpha=1;
+
+    requestAnimationFrame(animateSparks);
+
+}
+
+animateSparks();
 
 
-    flower.style.top =
-        newTop + "px";
+/* =========================================
+   FLOATING PETALS
+========================================= */
+
+const petalCanvas=document.getElementById("petalCanvas");
+const petalCtx=petalCanvas.getContext("2d");
+
+function resizePetals(){
+
+    petalCanvas.width=window.innerWidth;
+    petalCanvas.height=window.innerHeight;
+
+}
+
+resizePetals();
+window.addEventListener("resize",resizePetals);
+
+let petals=[];
+
+for(let i=0;i<18;i++){
+
+    petals.push({
+
+        x:Math.random()*window.innerWidth,
+
+        y:Math.random()*window.innerHeight,
+
+        size:Math.random()*3+2,
+
+        speed:Math.random()*.5+.2,
+
+        drift:Math.random()*.4-.2,
+
+        rotation:Math.random()*Math.PI
+
+    });
 
 }
 
 
-window.addEventListener(
-    "scroll",
-    moveFlower,
-    {passive:true}
-);
+function animatePetals(){
+
+    petalCtx.clearRect(
+        0,
+        0,
+        petalCanvas.width,
+        petalCanvas.height
+    );
+
+    petals.forEach(p=>{
+
+        p.y+=p.speed;
+        p.x+=Math.sin(p.y*.01)*p.drift;
+        p.rotation+=.01;
+
+        if(p.y>petalCanvas.height+10){
+
+            p.y=-10;
+            p.x=Math.random()*petalCanvas.width;
+
+        }
+
+        petalCtx.save();
+
+        petalCtx.translate(p.x,p.y);
+        petalCtx.rotate(p.rotation);
+
+        petalCtx.beginPath();
+
+        petalCtx.ellipse(
+            0,
+            0,
+            p.size,
+            p.size*1.6,
+            0,
+            0,
+            Math.PI*2
+        );
+
+        petalCtx.fillStyle="rgba(125,70,70,.13)";
+        petalCtx.fill();
+
+        petalCtx.restore();
+
+    });
+
+    requestAnimationFrame(animatePetals);
+
+}
+
+animatePetals();
 
 
-window.addEventListener(
-    "resize",
-    moveFlower
-);
+/* =========================================
+   ALL VIDEOS KEEP LOOPING
+========================================= */
 
+document.querySelectorAll("video").forEach(video=>{
 
-moveFlower();
+    video.loop=true;
+    video.playsInline=true;
 
-
-/* =========================================================
-   MAP
-========================================================= */
-
-const venueLat = 33.6390;
-const venueLng = 73.1610;
-
-
-const map =
-L.map("map").setView(
-    [venueLat,venueLng],
-    15
-);
-
-
-L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-        maxZoom:19,
-        attribution:
-        '&copy; OpenStreetMap contributors'
-    }
-).addTo(map);
-
-
-const marker =
-L.marker(
-    [venueLat,venueLng]
-).addTo(map);
-
-
-marker.bindPopup(
-    "<b>Al Hameed Grand Marquee</b><br>" +
-    "Islamabad"
-);
-
-
-marker.openPopup();
-
-
-setTimeout(function(){
-
-    map.invalidateSize();
-
-},500);
+});
 
 
 </script>
