@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +36,7 @@ body{
    TINY GOLD SPARKLES
 ========================= */
 
-#sparkleCanvas{
+#petalCanvas{
     position:fixed;
     inset:0;
     width:100%;
@@ -248,91 +247,56 @@ body{
 
 
 /* =========================
-   FRAME FLOWERS
-   ONLY:
-   SCRATCH
-   COUNTDOWN
-   DRESS CODE
+   FRAME FLOWERS (Larger Size)
 ========================= */
 
 .frame-flower{
     position:absolute;
-
-    width:76px;
-    height:76px;
-
+    width:95px;
+    height:95px;
     object-fit:contain;
-
     z-index:100;
     pointer-events:none;
-
-    filter:
-        drop-shadow(0 3px 5px rgba(101,27,39,.14));
+    filter:drop-shadow(0 3px 5px rgba(101,27,39,.14));
 }
 
 
 /* TOP LEFT */
 
 .frame-flower-tl{
-    top:2px;
-    left:2px;
-
-    animation:
-        flowerFloatTL
-        4.5s
-        ease-in-out
-        infinite;
+    top:-10px;
+    left:-10px;
+    animation:flowerFloatTL 4.5s ease-in-out infinite;
 }
 
 
 /* BOTTOM RIGHT */
 
 .frame-flower-br{
-    bottom:2px;
-    right:2px;
-
+    bottom:-10px;
+    right:-10px;
     transform:rotate(180deg);
-
-    animation:
-        flowerFloatBR
-        4.5s
-        ease-in-out
-        infinite;
+    animation:flowerFloatBR 4.5s ease-in-out infinite;
 }
 
 
 @keyframes flowerFloatTL{
-
     0%,100%{
-        transform:
-            translateY(0)
-            rotate(0deg);
+        transform:translateY(0) rotate(0deg);
     }
-
     50%{
-        transform:
-            translateY(-5px)
-            rotate(3deg);
+        transform:translateY(-5px) rotate(3deg);
     }
-
 }
 
 
 @keyframes flowerFloatBR{
-
     0%,100%{
-        transform:
-            rotate(180deg)
-            translateY(0);
+        transform:rotate(180deg) translateY(0);
     }
-
     50%{
-        transform:
-            rotate(180deg)
-            translateY(-5px)
-            rotate(3deg);
+        transform:rotate(180deg) translateY(-5px) rotate(3deg);
     }
-
 }
 
 
@@ -353,30 +317,20 @@ body{
 
 .countdown-card{
     position:relative;
-
     width:min(92vw,800px);
-
     margin:auto;
-
     padding:55px 25px;
-
     border:1px solid rgba(101,27,39,.22);
-
     background:rgba(255,253,248,.86);
-
     box-shadow:
         0 15px 40px rgba(101,27,39,.09),
         inset 0 0 0 5px rgba(255,255,255,.75);
-
     overflow:hidden;
 }
 
-
-/* Countdown flowers stay close to frame */
-
 .countdown-card .frame-flower{
-    width:78px;
-    height:78px;
+    width:98px;
+    height:98px;
 }
 
 
@@ -471,52 +425,6 @@ body{
 }
 
 
-/* CENTER MOVING FLOWER ONLY */
-
-.timeline-flower{
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    width:75px;
-    height:75px;
-
-    object-fit:contain;
-
-    transform:translate(-50%,-50%);
-
-    z-index:8;
-
-    animation:
-        timelineFlower
-        4s
-        ease-in-out
-        infinite;
-
-    filter:
-        drop-shadow(0 4px 5px rgba(101,27,39,.15));
-}
-
-@keyframes timelineFlower{
-
-    0%,100%{
-        transform:
-            translate(-50%,-50%)
-            rotate(-3deg)
-            translateY(0);
-    }
-
-    50%{
-        transform:
-            translate(-50%,-50%)
-            rotate(4deg)
-            translateY(-7px);
-    }
-
-}
-
-
 /* =========================
    VENUE
 ========================= */
@@ -537,11 +445,8 @@ body{
     object-fit:cover;
     display:block;
     margin:0 auto 35px;
-
     border:1px solid rgba(101,27,39,.2);
-
-    box-shadow:
-        0 15px 40px rgba(101,27,39,.10);
+    box-shadow:0 15px 40px rgba(101,27,39,.10);
 }
 
 .venue-name{
@@ -561,11 +466,8 @@ body{
 #map{
     width:100%;
     height:350px;
-
     border:1px solid rgba(101,27,39,.2);
-
-    box-shadow:
-        0 12px 35px rgba(101,27,39,.08);
+    box-shadow:0 12px 35px rgba(101,27,39,.08);
 }
 
 
@@ -579,32 +481,21 @@ body{
 
 .dress-video-frame{
     width:min(92vw,750px);
-
     margin:auto;
-
     position:relative;
-
     border:1px solid rgba(101,27,39,.25);
-
     background:#fffdf8;
-
     padding:10px;
-
     box-shadow:
         0 15px 40px rgba(101,27,39,.10),
         inset 0 0 0 4px rgba(255,255,255,.8);
-
     overflow:hidden;
 }
 
-
-/* Dress flowers */
-
 .dress-video-frame .frame-flower{
-    width:78px;
-    height:78px;
+    width:98px;
+    height:98px;
 }
-
 
 #dressVideo{
     display:block;
@@ -621,38 +512,23 @@ body{
 
 #musicToggle{
     position:fixed;
-
     right:18px;
     bottom:18px;
-
     width:48px;
     height:48px;
-
     border-radius:50%;
-
     border:1px solid rgba(101,27,39,.3);
-
     background:rgba(255,253,248,.9);
-
     color:#651b27;
-
     z-index:9000;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     font-size:21px;
-
-    box-shadow:
-        0 5px 20px rgba(101,27,39,.15);
-
+    box-shadow:0 5px 20px rgba(101,27,39,.15);
     cursor:pointer;
-
     opacity:0;
-
     pointer-events:none;
-
     transition:.3s ease;
 }
 
@@ -677,36 +553,31 @@ body{
         font-size:55px;
     }
 
-
     .scratch-frame,
     .cn-frame{
         min-height:430px;
     }
 
-
     .frame-flower{
-        width:62px;
-        height:62px;
+        width:72px;
+        height:72px;
     }
 
-
     .frame-flower-tl{
-        top:1px;
-        left:1px;
+        top:-6px;
+        left:-6px;
     }
 
     .frame-flower-br{
-        bottom:1px;
-        right:1px;
+        bottom:-6px;
+        right:-6px;
     }
-
 
     .countdown-card .frame-flower,
     .dress-video-frame .frame-flower{
-        width:64px;
-        height:64px;
+        width:76px;
+        height:76px;
     }
-
 
     .timeline-line{
         left:28px;
@@ -747,33 +618,8 @@ body{
         max-width:230px;
     }
 
-    .timeline-flower{
-        left:28px;
-        width:58px;
-        height:58px;
-    }
-
     #map{
         height:300px;
-    }
-
-}
-
-
-/* =========================
-   EXTRA SMALL SPARKLE GLOW
-========================= */
-
-@keyframes sparkleGlow{
-
-    0%,100%{
-        opacity:.35;
-        transform:scale(.7);
-    }
-
-    50%{
-        opacity:1;
-        transform:scale(1);
     }
 
 }
@@ -788,7 +634,7 @@ body{
      TINY GOLD SPARKLES
 ========================= -->
 
-<canvas id="sparkleCanvas"></canvas>
+<canvas id="petalCanvas"></canvas>
 
 
 <!-- =========================
@@ -796,39 +642,14 @@ body{
 ========================= -->
 
 <div id="gate">
-
-    <img
-        id="gatePoster"
-        src="Gatep.jpg"
-        alt=""
-    >
-
-    <video
-        id="gateVideo"
-        playsinline
-        preload="auto"
-    >
-
-        <source
-            src="gate.MP4"
-            type="video/mp4"
-        >
-
+    <img id="gatePoster" src="Gatep.jpg" alt="">
+    <video id="gateVideo" playsinline preload="auto">
+        <source src="gate.MP4" type="video/mp4">
     </video>
-
-
     <div id="tapOverlay">
-
-        <h1>
-            Tap to Open
-        </h1>
-
-        <p>
-            A LITTLE SURPRISE AWAITS
-        </p>
-
+        <h1>Tap to Open</h1>
+        <p>A LITTLE SURPRISE AWAITS</p>
     </div>
-
 </div>
 
 
@@ -836,61 +657,24 @@ body{
      MUSIC
 ========================= -->
 
-<audio
-    id="bgMusic"
-    loop
->
-
-    <source
-        src="Music.mp3"
-        type="audio/mpeg"
-    >
-
+<audio id="bgMusic" loop>
+    <source src="Music.mp3" type="audio/mpeg">
 </audio>
 
-
-<button
-    id="musicToggle"
-    aria-label="Music"
->
-    ♫
-</button>
+<button id="musicToggle" aria-label="Music">♫</button>
 
 
 <!-- =========================
      WELCOME
 ========================= -->
 
-<section
-    id="welcome"
-    class="section"
->
-
+<section id="welcome" class="section">
     <div class="welcome-video-frame">
-
-        <video
-            id="welcomeVideo"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-        >
-
-            <source
-                src="welcome.mov"
-                type="video/quicktime"
-            >
-
-            <source
-                src="welcome.mov"
-                type="video/mp4"
-            >
-
+        <video id="welcomeVideo" autoplay muted loop playsinline preload="auto">
+            <source src="welcome.mov" type="video/quicktime">
+            <source src="welcome.mov" type="video/mp4">
         </video>
-
     </div>
-
 </section>
 
 
@@ -898,58 +682,16 @@ body{
      BEAUTIFUL BEGINNING
 ========================= -->
 
-<section
-    id="beginning"
-    class="section"
->
-
+<section id="beginning" class="section">
     <div class="section-inner">
-
-        <h2 class="section-title">
-            Beautiful Beginning
-        </h2>
-
-        <p class="section-subtitle">
-            A New Chapter
-        </p>
-
-
-        <div
-            style="
-                max-width:720px;
-                margin:auto;
-                text-align:center;
-                font-family:'Cormorant Garamond',serif;
-                font-size:23px;
-                line-height:1.7;
-                color:#76545a;
-            "
-        >
-
-            <p>
-                With hearts full of joy and gratitude,
-                we invite you to celebrate the beginning
-                of our beautiful new chapter.
-            </p>
-
-
+        <h2 class="section-title">Beautiful Beginning</h2>
+        <p class="section-subtitle">A New Chapter</p>
+        <div style="max-width:720px; margin:auto; text-align:center; font-family:'Cormorant Garamond',serif; font-size:23px; line-height:1.7; color:#76545a;">
+            <p>With hearts full of joy and gratitude, we invite you to celebrate the beginning of our beautiful new chapter.</p>
             <br>
-
-
-            <p
-                style="
-                    font-family:'Parisienne',cursive;
-                    font-size:55px;
-                    color:#651b27;
-                "
-            >
-                Ali & Fatema
-            </p>
-
+            <p style="font-family:'Parisienne',cursive; font-size:55px; color:#651b27;">Ali & Fatema</p>
         </div>
-
     </div>
-
 </section>
 
 
@@ -957,59 +699,20 @@ body{
      SCRATCH
 ========================= -->
 
-<section
-    id="scratch"
-    class="section"
->
-
+<section id="scratch" class="section">
     <div class="section-inner">
-
-        <h2 class="section-title">
-            A Little Surprise
-        </h2>
-
-        <p class="section-subtitle">
-            A special moment awaits
-        </p>
-
-
+        <h2 class="section-title">A Little Surprise</h2>
+        <p class="section-subtitle">A special moment awaits</p>
         <div class="scratch-wrapper">
-
             <div class="scratch-frame">
+                <!-- ONLY TWO CORNER FLOWERS -->
+                <img class="frame-flower frame-flower-tl" src="https://i.postimg.cc/T347PbNC/IMG-7987.png" alt="">
+                <img class="frame-flower frame-flower-br" src="https://i.postimg.cc/T347PbNC/IMG-7987.png" alt="">
 
-
-                <!-- ONLY TWO FLOWERS
-                     ON SCRATCH FRAME -->
-
-                <img
-                    class="frame-flower frame-flower-tl"
-                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                    alt=""
-                >
-
-
-                <img
-                    class="frame-flower frame-flower-br"
-                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                    alt=""
-                >
-
-
-                <iframe
-                    class="cn-frame"
-                    src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
-                    style="border:0;"
-                    loading="lazy"
-                    title="Scratch reveal"
-                >
-                </iframe>
-
+                <iframe class="cn-frame" src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3" style="border:0;" loading="lazy" title="Scratch reveal"></iframe>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 
@@ -1017,36 +720,13 @@ body{
      FAMILY
 ========================= -->
 
-<section
-    id="family"
-    class="section"
->
-
+<section id="family" class="section">
     <div class="family-video-frame">
-
-        <video
-            id="familyVideo"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-        >
-
-            <source
-                src="family.mov"
-                type="video/quicktime"
-            >
-
-            <source
-                src="family.mov"
-                type="video/mp4"
-            >
-
+        <video id="familyVideo" autoplay muted loop playsinline preload="auto">
+            <source src="family.mov" type="video/quicktime">
+            <source src="family.mov" type="video/mp4">
         </video>
-
     </div>
-
 </section>
 
 
@@ -1054,109 +734,30 @@ body{
      COUNTDOWN
 ========================= -->
 
-<section
-    id="countdown"
-    class="section"
->
-
+<section id="countdown" class="section">
     <div class="section-inner">
-
-        <h2 class="section-title">
-            The Countdown
-        </h2>
-
-        <p class="section-subtitle">
-            Until we say Qabool Hai
-        </p>
-
-
+        <h2 class="section-title">The Countdown</h2>
+        <p class="section-subtitle">Until we say Qabool Hai</p>
         <div class="countdown-card">
+            <!-- ONLY TWO CORNER FLOWERS -->
+            <img class="frame-flower frame-flower-tl" src="https://i.postimg.cc/T347PbNC/IMG-7987.png" alt="">
+            <img class="frame-flower frame-flower-br" src="https://i.postimg.cc/T347PbNC/IMG-7987.png" alt="">
 
-
-            <!-- ONLY TWO FLOWERS
-                 ON COUNTDOWN FRAME -->
-
-            <img
-                class="frame-flower frame-flower-tl"
-                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                alt=""
-            >
-
-
-            <img
-                class="frame-flower frame-flower-br"
-                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                alt=""
-            >
-
-
-            <div
-                id="tickcounter"
-                style="
-                    width:100%;
-                    min-height:180px;
-                "
-            >
-            </div>
-
-
+            <div id="tickcounter" style="width:100%; min-height:180px;"></div>
             <script>
-
                 (function(d, s, id) {
-
-                    var js,
-                        fjs =
-                        d.getElementsByTagName(s)[0];
-
-                    if(d.getElementById(id))
-                        return;
-
-                    js =
-                        d.createElement(s);
-
-                    js.id = id;
-
-                    js.src =
-                        "https://www.tickcounter.com/loader.js";
-
-                    fjs.parentNode.insertBefore(
-                        js,
-                        fjs
-                    );
-
-                }(
-                    document,
-                    'script',
-                    'tickcounter-sdk'
-                ));
-
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if(d.getElementById(id)) return;
+                    js = d.createElement(s); js.id = id;
+                    js.src = "https://www.tickcounter.com/loader.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'tickcounter-sdk'));
             </script>
-
-
-            <div
-                class="tickcounter"
-                data-type="countdown"
-                data-id="11415740"
-                style="
-                    width:100%;
-                    position:relative;
-                    padding-bottom:25%;
-                "
-            >
-
-                <a
-                    href="https://www.tickcounter.com/countdown/"
-                    title="Countdown"
-                >
-                    Countdown
-                </a>
-
+            <div class="tickcounter" data-type="countdown" data-id="11415740" style="width:100%; position:relative; padding-bottom:25%;">
+                <a href="https://www.tickcounter.com/countdown/" title="Countdown">Countdown</a>
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 
@@ -1164,162 +765,51 @@ body{
      TIMELINE
 ========================= -->
 
-<section
-    id="timeline"
-    class="section"
->
-
+<section id="timeline" class="section">
     <div class="section-inner">
-
-        <h2 class="section-title">
-            Our Timeline
-        </h2>
-
-        <p class="section-subtitle">
-            The moments leading to our forever
-        </p>
-
-
+        <h2 class="section-title">Our Timeline</h2>
+        <p class="section-subtitle">The moments leading to our forever</p>
         <div class="timeline">
-
             <div class="timeline-line"></div>
 
-
             <!-- EVENT 1 -->
-
             <div class="timeline-item">
-
                 <div class="timeline-content">
-
-                    <div class="timeline-time">
-                        07:00 PM
-                    </div>
-
-                    <div class="timeline-event">
-                        Guest Arrival
-                    </div>
-
+                    <div class="timeline-time">07:00 PM</div>
+                    <div class="timeline-event">Guest Arrival</div>
                 </div>
-
-
-                <img
-                    class="timeline-image"
-                    src="https://files.catbox.moe/zt8kp4.jpeg"
-                    alt=""
-                >
-
-
-                <img
-                    class="timeline-flower"
-                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                    alt=""
-                >
-
+                <img class="timeline-image" src="https://files.catbox.moe/zt8kp4.jpeg" alt="">
             </div>
-
 
             <!-- EVENT 2 -->
-
             <div class="timeline-item">
-
                 <div class="timeline-content">
-
-                    <div class="timeline-time">
-                        08:00 PM
-                    </div>
-
-                    <div class="timeline-event">
-                        Bride Entry
-                    </div>
-
+                    <div class="timeline-time">08:00 PM</div>
+                    <div class="timeline-event">Bride Entry</div>
                 </div>
-
-
-                <img
-                    class="timeline-image"
-                    src="https://files.catbox.moe/kh8bbs.png"
-                    alt=""
-                >
-
-
-                <img
-                    class="timeline-flower"
-                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                    alt=""
-                >
-
+                <img class="timeline-image" src="https://files.catbox.moe/kh8bbs.png" alt="">
             </div>
-
 
             <!-- EVENT 3 -->
-
             <div class="timeline-item">
-
                 <div class="timeline-content">
-
-                    <div class="timeline-time">
-                        08:30 PM
-                    </div>
-
-                    <div class="timeline-event">
-                        Nikkah Ceremony
-                    </div>
-
+                    <div class="timeline-time">08:30 PM</div>
+                    <div class="timeline-event">Nikkah Ceremony</div>
                 </div>
-
-
-                <img
-                    class="timeline-image"
-                    src="https://files.catbox.moe/kph6hd.png"
-                    alt=""
-                >
-
-
-                <img
-                    class="timeline-flower"
-                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                    alt=""
-                >
-
+                <img class="timeline-image" src="https://files.catbox.moe/kph6hd.png" alt="">
             </div>
 
-
             <!-- EVENT 4 -->
-
             <div class="timeline-item">
-
                 <div class="timeline-content">
-
-                    <div class="timeline-time">
-                        09:30 PM
-                    </div>
-
-                    <div class="timeline-event">
-                        Buffet Opening
-                    </div>
-
+                    <div class="timeline-time">09:30 PM</div>
+                    <div class="timeline-event">Buffet Opening</div>
                 </div>
-
-
-                <img
-                    class="timeline-image"
-                    src="https://files.catbox.moe/ssoyrc.png"
-                    alt=""
-                >
-
-
-                <img
-                    class="timeline-flower"
-                    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                    alt=""
-                >
-
+                <img class="timeline-image" src="https://files.catbox.moe/ssoyrc.png" alt="">
             </div>
 
         </div>
-
     </div>
-
 </section>
 
 
@@ -1327,45 +817,15 @@ body{
      VENUE
 ========================= -->
 
-<section
-    id="venue"
-    class="section"
->
-
-    <div
-        class="section-inner venue-card"
-    >
-
-        <h2 class="section-title">
-            The Venue
-        </h2>
-
-        <p class="section-subtitle">
-            Where we celebrate our beginning
-        </p>
-
-
-        <img
-            class="venue-image"
-            src="Location.jpg"
-            alt="Venue"
-        >
-
-
-        <div class="venue-name">
-            Al Hameed Grand Marquee
-        </div>
-
-
-        <div class="venue-address">
-            Islamabad, Pakistan
-        </div>
-
-
+<section id="venue" class="section">
+    <div class="section-inner venue-card">
+        <h2 class="section-title">The Venue</h2>
+        <p class="section-subtitle">Where we celebrate our beginning</p>
+        <img class="venue-image" src="Location.jpg" alt="Venue">
+        <div class="venue-name">Al Hameed Grand Marquee</div>
+        <div class="venue-address">Islamabad, Pakistan</div>
         <div id="map"></div>
-
     </div>
-
 </section>
 
 
@@ -1373,62 +833,20 @@ body{
      DRESS CODE
 ========================= -->
 
-<section
-    id="dress"
-    class="section"
->
-
+<section id="dress" class="section">
     <div class="section-inner">
-
-        <h2 class="section-title">
-            Dress Code
-        </h2>
-
-        <p class="section-subtitle">
-            Dress beautifully and celebrate with us
-        </p>
-
-
+        <h2 class="section-title">Dress Code</h2>
+        <p class="section-subtitle">Dress beautifully and celebrate with us</p>
         <div class="dress-video-frame">
+            <!-- ONLY TWO CORNER FLOWERS -->
+            <img class="frame-flower frame-flower-tl" src="https://i.postimg.cc/T347PbNC/IMG-7987.png" alt="">
+            <img class="frame-flower frame-flower-br" src="https://i.postimg.cc/T347PbNC/IMG-7987.png" alt="">
 
-
-            <!-- ONLY TWO FLOWERS
-                 ON DRESS FRAME -->
-
-            <img
-                class="frame-flower frame-flower-tl"
-                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                alt=""
-            >
-
-
-            <img
-                class="frame-flower frame-flower-br"
-                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                alt=""
-            >
-
-
-            <video
-                id="dressVideo"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="auto"
-            >
-
-                <source
-                    src="dress.MP4"
-                    type="video/mp4"
-                >
-
+            <video id="dressVideo" autoplay muted loop playsinline preload="auto">
+                <source src="dress.MP4" type="video/mp4">
             </video>
-
         </div>
-
     </div>
-
 </section>
 
 
@@ -1441,529 +859,179 @@ body{
    GATE + MUSIC
 ========================= */
 
-const gate =
-    document.getElementById("gate");
-
-const gatePoster =
-    document.getElementById("gatePoster");
-
-const gateVideo =
-    document.getElementById("gateVideo");
-
-const tapOverlay =
-    document.getElementById("tapOverlay");
-
-const bgMusic =
-    document.getElementById("bgMusic");
-
-const musicToggle =
-    document.getElementById("musicToggle");
-
-const welcomeVideo =
-    document.getElementById("welcomeVideo");
-
-const familyVideo =
-    document.getElementById("familyVideo");
-
-const dressVideo =
-    document.getElementById("dressVideo");
-
+const gate = document.getElementById("gate");
+const gatePoster = document.getElementById("gatePoster");
+const gateVideo = document.getElementById("gateVideo");
+const tapOverlay = document.getElementById("tapOverlay");
+const bgMusic = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+const welcomeVideo = document.getElementById("welcomeVideo");
+const familyVideo = document.getElementById("familyVideo");
+const dressVideo = document.getElementById("dressVideo");
 
 let musicPlaying = false;
 
-
-tapOverlay.addEventListener(
-    "click",
-    async function(){
-
-        /* MUSIC STARTS WITH TAP */
-
-        try{
-
-            bgMusic.volume = 0.75;
-
-            await bgMusic.play();
-
-            musicPlaying = true;
-
-            musicToggle.classList.add("show");
-
-        }
-        catch(error){
-
-            console.log(
-                "Music could not start:",
-                error
-            );
-
-        }
-
-
-        /* PLAY GATE VIDEO */
-
-        gatePoster.style.display =
-            "none";
-
-        gateVideo.style.display =
-            "block";
-
-        gateVideo.currentTime = 0;
-
-
-        try{
-
-            await gateVideo.play();
-
-        }
-        catch(error){
-
-            console.log(
-                "Gate video could not play:",
-                error
-            );
-
-        }
-
-
-        tapOverlay.style.display =
-            "none";
-
-
-        /* WHEN GATE ENDS */
-
-        gateVideo.addEventListener(
-            "ended",
-            function(){
-
-                gate.style.opacity = "0";
-
-                gate.style.transition =
-                    "opacity 1s ease";
-
-
-                setTimeout(
-                    function(){
-
-                        gate.remove();
-
-
-                        try{
-                            welcomeVideo.play();
-                        }
-                        catch(e){}
-
-
-                        try{
-                            familyVideo.play();
-                        }
-                        catch(e){}
-
-
-                        try{
-                            dressVideo.play();
-                        }
-                        catch(e){}
-
-                    },
-                    1000
-                );
-
-            },
-            {once:true}
-        );
-
+tapOverlay.addEventListener("click", async function(){
+    try{
+        bgMusic.volume = 0.75;
+        await bgMusic.play();
+        musicPlaying = true;
+        musicToggle.classList.add("show");
+    }catch(error){
+        console.log("Music could not start:", error);
     }
-);
+
+    gatePoster.style.display = "none";
+    gateVideo.style.display = "block";
+    gateVideo.currentTime = 0;
+
+    try{
+        await gateVideo.play();
+    }catch(error){
+        console.log("Gate video could not play:", error);
+    }
+
+    tapOverlay.style.display = "none";
+
+    gateVideo.addEventListener("ended", function(){
+        gate.style.opacity = "0";
+        gate.style.transition = "opacity 1s ease";
+        setTimeout(function(){
+            gate.remove();
+            try{ welcomeVideo.play(); }catch(e){}
+            try{ familyVideo.play(); }catch(e){}
+            try{ dressVideo.play(); }catch(e){}
+        }, 1000);
+    }, {once:true});
+});
 
 
 /* =========================
    MUSIC BUTTON
 ========================= */
 
-musicToggle.addEventListener(
-    "click",
-    function(){
-
-        if(bgMusic.paused){
-
-            bgMusic
-                .play()
-                .then(function(){
-
-                    musicPlaying = true;
-
-                })
-                .catch(function(error){
-
-                    console.log(error);
-
-                });
-
-        }
-        else{
-
-            bgMusic.pause();
-
-            musicPlaying = false;
-
-        }
-
+musicToggle.addEventListener("click", function(){
+    if(bgMusic.paused){
+        bgMusic.play().then(function(){
+            musicPlaying = true;
+        }).catch(function(error){
+            console.log(error);
+        });
+    } else {
+        bgMusic.pause();
+        musicPlaying = false;
     }
-);
+});
 
 
 /* =========================
    FORCE VIDEO LOOPS
 ========================= */
 
-welcomeVideo.addEventListener(
-    "ended",
-    function(){
+welcomeVideo.addEventListener("ended", function(){
+    welcomeVideo.currentTime = 0;
+    welcomeVideo.play();
+});
 
-        welcomeVideo.currentTime = 0;
+familyVideo.addEventListener("ended", function(){
+    familyVideo.currentTime = 0;
+    familyVideo.play();
+});
 
-        welcomeVideo.play();
-
-    }
-);
-
-
-familyVideo.addEventListener(
-    "ended",
-    function(){
-
-        familyVideo.currentTime = 0;
-
-        familyVideo.play();
-
-    }
-);
-
-
-dressVideo.addEventListener(
-    "ended",
-    function(){
-
-        dressVideo.currentTime = 0;
-
-        dressVideo.play();
-
-    }
-);
+dressVideo.addEventListener("ended", function(){
+    dressVideo.currentTime = 0;
+    dressVideo.play();
+});
 
 
 /* =========================
    LEAFLET MAP
 ========================= */
 
-const map =
-    L.map("map").setView(
-        [33.6390,73.1610],
-        15
-    );
+const map = L.map("map").setView([33.6390,73.1610], 15);
 
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors"
+}).addTo(map);
 
-L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-        attribution:
-            "© OpenStreetMap contributors"
-    }
-).addTo(map);
-
-
-L.marker(
-    [33.6390,73.1610]
-)
-.addTo(map)
-.bindPopup(
-    "<b>Al Hameed Grand Marquee</b><br>Islamabad"
-)
-.openPopup();
+L.marker([33.6390,73.1610]).addTo(map).bindPopup("<b>Al Hameed Grand Marquee</b><br>Islamabad").openPopup();
 
 
 /* =========================
    TINY GOLD SPARKLES
 ========================= */
 
-const canvas =
-    document.getElementById(
-        "sparkleCanvas"
-    );
-
-const ctx =
-    canvas.getContext("2d");
-
+const canvas = document.getElementById("petalCanvas");
+const ctx = canvas.getContext("2d");
 
 let sparkles = [];
 
-
 function resizeSparkleCanvas(){
-
-    canvas.width =
-        window.innerWidth;
-
-    canvas.height =
-        window.innerHeight;
-
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
-
 
 resizeSparkleCanvas();
-
-
-window.addEventListener(
-    "resize",
-    resizeSparkleCanvas
-);
-
-
-/*
-   VERY SMALL GOLD SPARKLES
-*/
+window.addEventListener("resize", resizeSparkleCanvas);
 
 function createSparkle(){
-
     return {
-
-        x:
-            Math.random() *
-            canvas.width,
-
-        y:
-            -10 -
-            Math.random() *
-            canvas.height,
-
-        size:
-            0.7 +
-            Math.random() *
-            1.4,
-
-        speed:
-            0.25 +
-            Math.random() *
-            0.65,
-
-        drift:
-            (Math.random() - 0.5) *
-            0.25,
-
-        opacity:
-            0.35 +
-            Math.random() *
-            0.5,
-
-        twinkle:
-            Math.random() *
-            Math.PI *
-            2,
-
-        twinkleSpeed:
-            0.025 +
-            Math.random() *
-            0.035
-
+        x: Math.random() * canvas.width,
+        y: -10 - Math.random() * canvas.height,
+        size: 0.8 + Math.random() * 1.5,
+        speed: 0.3 + Math.random() * 0.7,
+        drift: (Math.random() - 0.5) * 0.3,
+        opacity: 0.4 + Math.random() * 0.5,
+        twinkle: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.03 + Math.random() * 0.04
     };
-
 }
 
-
-/* small quantity */
-
-for(
-    let i = 0;
-    i < 70;
-    i++
-){
-
-    sparkles.push(
-        createSparkle()
-    );
-
+for(let i = 0; i < 70; i++){
+    sparkles.push(createSparkle());
 }
-
-
-/* =========================
-   DRAW GOLD SPARKLE
-========================= */
 
 function drawSparkle(s){
-
     ctx.save();
-
-    ctx.translate(
-        s.x,
-        s.y
-    );
-
-
-    const glow =
-        0.55 +
-        Math.sin(s.twinkle) *
-        0.35;
-
-
-    ctx.globalAlpha =
-        Math.max(
-            0.15,
-            s.opacity * glow
-        );
-
-
-    /*
-       SOFT ANTIQUE GOLD
-    */
-
-    ctx.fillStyle =
-        "#b99755";
-
-
-    /*
-       Tiny 4-point sparkle
-    */
+    ctx.translate(s.x, s.y);
+    const glow = 0.55 + Math.sin(s.twinkle) * 0.35;
+    ctx.globalAlpha = Math.max(0.15, s.opacity * glow);
+    ctx.fillStyle = "#d4af37"; // Rich Gold Color
 
     ctx.beginPath();
-
-    ctx.moveTo(
-        0,
-        -s.size * 2.2
-    );
-
-    ctx.lineTo(
-        s.size * .55,
-        -s.size * .55
-    );
-
-    ctx.lineTo(
-        s.size * 2.2,
-        0
-    );
-
-    ctx.lineTo(
-        s.size * .55,
-        s.size * .55
-    );
-
-    ctx.lineTo(
-        0,
-        s.size * 2.2
-    );
-
-    ctx.lineTo(
-        -s.size * .55,
-        s.size * .55
-    );
-
-    ctx.lineTo(
-        -s.size * 2.2,
-        0
-    );
-
-    ctx.lineTo(
-        -s.size * .55,
-        -s.size * .55
-    );
-
+    ctx.moveTo(0, -s.size * 2.2);
+    ctx.lineTo(s.size * .55, -s.size * .55);
+    ctx.lineTo(s.size * 2.2, 0);
+    ctx.lineTo(s.size * .55, s.size * .55);
+    ctx.lineTo(0, s.size * 2.2);
+    ctx.lineTo(-s.size * .55, s.size * .55);
+    ctx.lineTo(-s.size * 2.2, 0);
+    ctx.lineTo(-s.size * .55, -s.size * .55);
     ctx.closePath();
-
     ctx.fill();
-
-
-    /*
-       Tiny center glow
-    */
 
     ctx.beginPath();
-
-    ctx.arc(
-        0,
-        0,
-        s.size * .55,
-        0,
-        Math.PI * 2
-    );
-
+    ctx.arc(0, 0, s.size * .55, 0, Math.PI * 2);
     ctx.fill();
-
-
     ctx.restore();
-
 }
-
-
-/* =========================
-   ANIMATE SPARKLES
-========================= */
 
 function animateSparkles(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    sparkles.forEach(function(s){
+        s.y += s.speed;
+        s.x += s.drift + Math.sin(s.y * 0.01) * 0.12;
+        s.twinkle += s.twinkleSpeed;
+        drawSparkle(s);
 
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-
-    sparkles.forEach(
-        function(s){
-
-            s.y += s.speed;
-
-            s.x +=
-                s.drift +
-                Math.sin(
-                    s.y * 0.01
-                ) * 0.12;
-
-
-            s.twinkle +=
-                s.twinkleSpeed;
-
-
-            drawSparkle(s);
-
-
-            /*
-               Reset after falling
-            */
-
-            if(
-                s.y >
-                    canvas.height + 15
-                ||
-                s.x <
-                    -15
-                ||
-                s.x >
-                    canvas.width + 15
-            ){
-
-                s.x =
-                    Math.random() *
-                    canvas.width;
-
-                s.y =
-                    -10;
-
-                s.speed =
-                    0.25 +
-                    Math.random() *
-                    0.65;
-
-            }
-
+        if(s.y > canvas.height + 15 || s.x < -15 || s.x > canvas.width + 15){
+            s.x = Math.random() * canvas.width;
+            s.y = -10;
+            s.speed = 0.3 + Math.random() * 0.7;
         }
-    );
-
-
-    requestAnimationFrame(
-        animateSparkles
-    );
-
+    });
+    requestAnimationFrame(animateSparkles);
 }
-
 
 animateSparkles();
 
