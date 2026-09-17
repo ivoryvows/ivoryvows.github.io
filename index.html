@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 
@@ -37,18 +36,71 @@ html{
 body{
     width:100%;
     min-height:100vh;
-    background:#fffdf8;
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            #fffdf3 0%,
+            #fcf2d9 32%,
+            #f5e5bd 68%,
+            #ecd6a5 100%
+        );
     color:#651b27;
     overflow-x:hidden;
     font-family:"Cormorant Garamond",serif;
 }
 
 :root{
-    --ivory:#fffdf8;
+    --ivory:#fbf0d5;
     --maroon:#651b27;
     --dark-maroon:#4b111b;
     --gold:#b18a45;
-    --light-gold:#d8b96a;
+    --light-gold:#e1c477;
+}
+
+
+/* =========================================================
+   DREAMY BACKGROUND
+========================================================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:8998;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,.42),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 80% 45%,
+            rgba(255,239,187,.30),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(255,250,224,.32),
+            transparent 35%
+        );
+
+    animation:dreamGlow 10s ease-in-out infinite alternate;
+}
+
+@keyframes dreamGlow{
+
+    0%{
+        opacity:.65;
+        transform:scale(1);
+    }
+
+    100%{
+        opacity:1;
+        transform:scale(1.035);
+    }
+
 }
 
 
@@ -59,8 +111,18 @@ body{
 .section{
     width:100%;
     position:relative;
-    background:var(--ivory);
     overflow:hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 10%,
+            rgba(255,253,241,.98) 0%,
+            rgba(251,239,210,.96) 45%,
+            rgba(241,219,174,.96) 100%
+        );
+
+    margin:0;
+    padding-top:0;
 }
 
 .section-inner{
@@ -71,40 +133,20 @@ body{
 
 
 /* =========================================================
-   DECORATIVE FLOWERS
+   REMOVE ALL FLOWERS
 ========================================================= */
 
-.corner-flower{
-    position:absolute;
-    width:105px;
-    height:105px;
-    object-fit:contain;
-    opacity:.95;
-    pointer-events:none;
-    z-index:3;
-}
-
-.corner-flower.top-left{
-    top:8px;
-    left:0;
-}
-
-.corner-flower.top-right{
-    top:8px;
-    right:0;
-    transform:scaleX(-1);
-}
-
-.corner-flower.bottom-left{
-    bottom:8px;
-    left:0;
-    transform:scaleY(-1);
-}
-
-.corner-flower.bottom-right{
-    bottom:8px;
-    right:0;
-    transform:scale(-1);
+.corner-flower,
+.welcome-frame:before,
+.welcome-frame:after,
+.scratch-wrapper:before,
+.scratch-wrapper:after,
+.countdown-card:before,
+.countdown-card:after,
+.countdown-inner:before,
+.countdown-inner:after,
+.moving-flower{
+    display:none !important;
 }
 
 
@@ -116,12 +158,22 @@ body{
     position:fixed;
     inset:0;
     z-index:9999;
-    background:var(--ivory);
+
+    background:
+        radial-gradient(
+            circle at center,
+            #fffdf5 0%,
+            #f8edcf 65%,
+            #ecd6a5 100%
+        );
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     cursor:pointer;
     opacity:1;
+
     transition:opacity 2.2s ease;
 }
 
@@ -129,43 +181,63 @@ body{
     width:100%;
     height:100%;
     object-fit:cover;
+
     transition:opacity:1.4s ease;
 }
 
 .gate-overlay{
     position:absolute;
+
     bottom:9%;
     left:50%;
+
     transform:translateX(-50%);
+
     text-align:center;
+
     color:white;
-    text-shadow:0 2px 12px rgba(0,0,0,.5);
+
+    text-shadow:
+        0 2px 12px rgba(0,0,0,.5);
+
     z-index:5;
-    transition:opacity:1.2s ease;
+
+    transition:opacity 1.2s ease;
 }
 
 .gate-tap{
     font-family:"Cormorant Garamond",serif;
+
     font-size:19px;
+
     letter-spacing:3px;
+
     margin-bottom:6px;
 }
 
 .gate-small{
     font-family:"Montserrat",sans-serif;
+
     font-size:9px;
+
     letter-spacing:3px;
 }
 
 #gateVideo{
     position:absolute;
+
     inset:0;
+
     width:100%;
     height:100%;
+
     object-fit:cover;
+
     opacity:0;
+
     pointer-events:none;
-    transition:opacity:1.8s ease;
+
+    transition:opacity 1.8s ease;
 }
 
 #gateScreen.opening .gate-image,
@@ -184,23 +256,34 @@ body{
 
 #welcomeSection{
     min-height:100vh;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     background:var(--ivory);
+
+    margin:0;
+    padding:0;
 }
 
 .welcome-video-frame{
     position:relative;
+
     width:100%;
     height:100vh;
+
     overflow:hidden;
+
+    margin:0;
 }
 
 #welcomeVideo{
     width:100%;
     height:100%;
+
     object-fit:cover;
+
     display:block;
 
     filter:
@@ -209,115 +292,106 @@ body{
         saturate(.94);
 
     opacity:1;
-    transition:opacity:2.2s ease;
+
+    transition:opacity 2.2s ease;
 }
 
 .welcome-overlay{
     position:absolute;
+
     inset:0;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     pointer-events:none;
 }
 
 .welcome-frame{
     position:absolute;
+
     inset:35px 25px;
+
     border:1px solid rgba(177,138,69,.65);
-}
 
-.welcome-frame:before,
-.welcome-frame:after{
-    content:"";
-    position:absolute;
-    width:80px;
-    height:80px;
-    background-image:url("https://i.postimg.cc/T347PbNC/IMG-7987.png");
-    background-size:contain;
-    background-repeat:no-repeat;
-}
-
-.welcome-frame:before{
-    top:-15px;
-    left:-15px;
-}
-
-.welcome-frame:after{
-    bottom:-15px;
-    right:-15px;
-    transform:rotate(180deg);
+    box-shadow:
+        0 0 25px rgba(177,138,69,.10);
 }
 
 
 /* =========================================================
-   SCRATCH SECTION
+   SCRATCH
 ========================================================= */
 
 #scratchSection{
-    padding:55px 18px 45px;
+    padding:35px 18px 35px;
+
     text-align:center;
 }
 
 .section-title{
     font-family:"Parisienne",cursive;
+
     font-size:45px;
+
     color:var(--maroon);
-    margin-bottom:8px;
+
+    margin-bottom:6px;
+
+    text-shadow:
+        0 1px 10px rgba(177,138,69,.16);
 }
 
 .section-subtitle{
     font-size:18px;
+
     color:var(--maroon);
-    margin-bottom:22px;
+
+    margin-bottom:15px;
 }
 
 .scratch-wrapper{
     position:relative;
+
     width:100%;
     max-width:600px;
-    margin:auto;
-    padding:18px;
+
+    margin:0 auto;
+
+    padding:12px;
+
     border:1px solid var(--gold);
-    background:rgba(255,253,248,.8);
-}
 
-.scratch-wrapper:before,
-.scratch-wrapper:after{
-    content:"";
-    position:absolute;
-    width:70px;
-    height:70px;
-    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
-        center/contain no-repeat;
-    z-index:2;
-    pointer-events:none;
-}
+    background:
+        rgba(255,250,232,.52);
 
-.scratch-wrapper:before{
-    top:-20px;
-    left:-20px;
-}
-
-.scratch-wrapper:after{
-    bottom:-20px;
-    right:-20px;
-    transform:rotate(180deg);
+    box-shadow:
+        0 5px 25px rgba(164,125,48,.12),
+        inset 0 0 25px rgba(255,255,255,.30);
 }
 
 .scratch-frame{
     width:100%;
+
     min-height:180px;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     border:1px solid rgba(101,27,39,.35);
-    background:#fffdf8;
+
+    background:
+        rgba(255,253,248,.70);
 }
 
 .scratch-frame iframe{
     width:100%;
+
     min-height:350px;
+
     border:0;
 }
 
@@ -327,21 +401,34 @@ body{
 ========================================================= */
 
 #familySection{
-    padding:40px 18px;
+    padding:30px 18px;
+
     text-align:center;
 }
 
 .family-video-box{
     width:100%;
+
     max-width:650px;
-    margin:auto;
+
+    margin:0 auto;
+
     position:relative;
-    padding:12px;
+
+    padding:10px;
+
     border:1px solid var(--gold);
+
+    background:
+        rgba(255,250,232,.42);
+
+    box-shadow:
+        0 5px 25px rgba(164,125,48,.12);
 }
 
 .family-video-box video{
     width:100%;
+
     display:block;
 }
 
@@ -351,75 +438,44 @@ body{
 ========================================================= */
 
 #countdownSection{
-    padding:45px 18px 48px;
+    padding:32px 18px 35px;
+
     text-align:center;
 }
 
 .countdown-card{
     position:relative;
+
     width:100%;
     max-width:650px;
-    margin:25px auto 0;
-    padding:28px 18px;
+
+    margin:0 auto;
+
+    padding:18px;
+
     border:1px solid var(--gold);
-    background:var(--ivory);
-}
 
-.countdown-card:before,
-.countdown-card:after{
-    content:"";
-    position:absolute;
-    width:95px;
-    height:95px;
-    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
-        center/contain no-repeat;
-    z-index:2;
-    pointer-events:none;
-}
+    background:
+        rgba(255,250,232,.46);
 
-.countdown-card:before{
-    top:-25px;
-    left:-22px;
-}
-
-.countdown-card:after{
-    bottom:-25px;
-    right:-22px;
-    transform:rotate(180deg);
+    box-shadow:
+        0 5px 25px rgba(164,125,48,.12);
 }
 
 .countdown-inner{
     position:relative;
+
     border:1px solid rgba(177,138,69,.55);
-    padding:15px;
-    background:#fffdf8;
-}
 
-.countdown-inner:before,
-.countdown-inner:after{
-    content:"";
-    position:absolute;
-    width:65px;
-    height:65px;
-    background:url("https://i.postimg.cc/T347PbNC/IMG-7987.png")
-        center/contain no-repeat;
-    pointer-events:none;
-}
+    padding:12px;
 
-.countdown-inner:before{
-    top:-17px;
-    right:-15px;
-    transform:scaleX(-1);
-}
-
-.countdown-inner:after{
-    bottom:-17px;
-    left:-15px;
-    transform:rotate(180deg);
+    background:
+        rgba(255,253,248,.68);
 }
 
 .countdown-embed{
     width:100%;
+
     min-height:120px;
 }
 
@@ -429,86 +485,94 @@ body{
 ========================================================= */
 
 #timelineSection{
-    padding:35px 8px 55px;
+    padding:30px 8px 38px;
 }
 
 .timeline{
     position:relative;
+
     width:100%;
     max-width:760px;
+
     margin:auto;
-    padding:55px 5px 65px;
+
+    padding:45px 5px 45px;
 }
 
 .timeline-line{
     position:absolute;
-    top:55px;
-    bottom:65px;
+
+    top:45px;
+    bottom:45px;
+
     left:50%;
+
     width:1.5px;
+
     background:var(--maroon);
+
     transform:translateX(-50%);
+
     z-index:1;
-}
-
-.moving-flower{
-    position:absolute;
-    left:50%;
-    top:55px;
-    width:58px;
-    height:58px;
-    transform:translate(-50%,0);
-    z-index:10;
-    pointer-events:none;
-    transition:top .12s linear;
-}
-
-.moving-flower img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
 }
 
 .event{
     position:relative;
+
     display:grid;
+
     grid-template-columns:1fr 1fr;
-    min-height:220px;
+
+    min-height:190px;
+
     align-items:center;
+
     z-index:2;
 }
 
 .event-text{
     text-align:center;
-    padding:10px 8px;
+
+    padding:8px;
 }
 
 .time{
     font-family:"Parisienne",cursive;
+
     font-size:34px;
+
     line-height:1.1;
+
     color:var(--maroon);
+
     margin-bottom:5px;
 }
 
 .event-name{
     font-family:"Parisienne",cursive;
+
     font-size:37px;
+
     line-height:1.05;
+
     color:var(--maroon);
 }
 
 .event-image{
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     padding:4px;
 }
 
 .event-image img{
     width:190px;
     height:190px;
+
     object-fit:contain;
+
     display:block;
 }
 
@@ -558,29 +622,44 @@ body{
 ========================================================= */
 
 #venueSection{
-    padding:40px 15px 42px;
+    padding:32px 15px 35px;
+
     text-align:center;
 }
 
 .location-picture-frame{
     position:relative;
+
     width:100%;
     max-width:620px;
-    margin:18px auto 22px;
-    padding:10px;
+
+    margin:0 auto 15px;
+
+    padding:8px;
+
     border:1px solid var(--gold);
+
+    background:
+        rgba(255,250,232,.45);
+
+    box-shadow:
+        0 5px 25px rgba(164,125,48,.12);
 }
 
 .location-picture-frame img{
     width:100%;
+
     display:block;
 }
 
 .map-box{
     width:100%;
     max-width:650px;
+
     margin:0 auto;
+
     border:1px solid var(--gold);
+
     overflow:hidden;
 }
 
@@ -591,20 +670,31 @@ body{
 
 .venue-name{
     font-family:"Parisienne",cursive;
+
     font-size:34px;
+
     color:var(--maroon);
-    margin:18px 0 12px;
+
+    margin:14px 0 10px;
 }
 
 .map-button{
     display:inline-block;
+
     padding:9px 24px;
+
     border:1px solid var(--maroon);
+
     color:var(--maroon);
-    background:transparent;
+
+    background:rgba(255,250,232,.35);
+
     text-decoration:none;
+
     font-family:"Montserrat",sans-serif;
+
     font-size:9px;
+
     letter-spacing:2px;
 }
 
@@ -614,20 +704,32 @@ body{
 ========================================================= */
 
 #dressSection{
-    padding:40px 18px 45px;
+    padding:32px 18px 38px;
+
     text-align:center;
 }
 
 .dress-video-frame{
     width:100%;
+
     max-width:650px;
-    margin:20px auto 0;
-    padding:10px;
+
+    margin:0 auto;
+
+    padding:8px;
+
     border:1px solid var(--gold);
+
+    background:
+        rgba(255,250,232,.45);
+
+    box-shadow:
+        0 5px 25px rgba(164,125,48,.12);
 }
 
 .dress-video-frame video{
     width:100%;
+
     display:block;
 }
 
@@ -638,17 +740,138 @@ body{
 
 #musicButton{
     position:fixed;
+
     right:15px;
     bottom:15px;
+
     width:43px;
     height:43px;
+
     border-radius:50%;
+
     border:1px solid var(--gold);
-    background:rgba(255,253,248,.94);
+
+    background:
+        rgba(255,253,248,.94);
+
     color:var(--maroon);
+
     z-index:9000;
+
     cursor:pointer;
+
     font-size:16px;
+
+    box-shadow:
+        0 3px 15px rgba(120,80,20,.15);
+}
+
+
+/* =========================================================
+   GOLD FALLING SPARKLES
+========================================================= */
+
+#goldSparkles{
+    position:fixed;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    pointer-events:none;
+
+    z-index:8999;
+
+    overflow:hidden;
+}
+
+.gold-sparkle{
+    position:absolute;
+
+    top:-15px;
+
+    width:2.5px;
+    height:2.5px;
+
+    border-radius:50%;
+
+    background:
+        rgba(190,145,45,.78);
+
+    box-shadow:
+        0 0 5px rgba(255,224,139,.95),
+        0 0 10px rgba(232,190,89,.50);
+
+    opacity:0;
+
+    animation:
+        goldFall linear infinite;
+}
+
+.gold-sparkle.small{
+    width:1.8px;
+    height:1.8px;
+
+    box-shadow:
+        0 0 4px rgba(255,224,139,.85),
+        0 0 7px rgba(232,190,89,.40);
+}
+
+.gold-sparkle.large{
+    width:3.5px;
+    height:3.5px;
+
+    box-shadow:
+        0 0 7px rgba(255,229,151,1),
+        0 0 15px rgba(232,190,89,.60);
+}
+
+@keyframes goldFall{
+
+    0%{
+        transform:
+            translate3d(0,-20px,0)
+            scale(.5)
+            rotate(0deg);
+
+        opacity:0;
+    }
+
+    10%{
+        opacity:.75;
+    }
+
+    35%{
+        transform:
+            translate3d(12px,35vh,0)
+            scale(1)
+            rotate(90deg);
+
+        opacity:.65;
+    }
+
+    65%{
+        transform:
+            translate3d(-10px,68vh,0)
+            scale(.8)
+            rotate(180deg);
+
+        opacity:.55;
+    }
+
+    88%{
+        opacity:.4;
+    }
+
+    100%{
+        transform:
+            translate3d(14px,110vh,0)
+            scale(.45)
+            rotate(270deg);
+
+        opacity:0;
+    }
 }
 
 
@@ -658,21 +881,12 @@ body{
 
 @media(max-width:600px){
 
-    .corner-flower{
-        width:75px;
-        height:75px;
-    }
-
-    .welcome-frame{
-        inset:25px 17px;
-    }
-
     .section-title{
         font-size:39px;
     }
 
     .event{
-        min-height:195px;
+        min-height:175px;
     }
 
     .event-image img{
@@ -688,17 +902,20 @@ body{
         font-size:30px;
     }
 
-    .moving-flower{
-        width:46px;
-        height:46px;
-    }
-
     #map{
         height:300px;
     }
 
     .venue-name{
         font-size:29px;
+    }
+
+    .scratch-wrapper{
+        padding:10px;
+    }
+
+    .countdown-card{
+        padding:14px;
     }
 
 }
@@ -708,6 +925,14 @@ body{
 </head>
 
 <body>
+
+
+<!-- =====================================================
+     GOLD SPARKLES
+===================================================== -->
+
+<div id="goldSparkles" aria-hidden="true"></div>
+
 
 <!-- =====================================================
      GATE
@@ -789,16 +1014,6 @@ body{
 
 <section id="scratchSection" class="section">
 
-<img
-    class="corner-flower top-left"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
-
-<img
-    class="corner-flower top-right"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
-
 <div class="section-inner">
 
     <div class="section-title">
@@ -832,11 +1047,6 @@ body{
 ===================================================== -->
 
 <section id="familySection" class="section">
-
-<img
-    class="corner-flower top-left"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
 
 <div class="section-inner">
 
@@ -873,11 +1083,6 @@ body{
 ===================================================== -->
 
 <section id="countdownSection" class="section">
-
-<img
-    class="corner-flower bottom-right"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
 
 <div class="section-inner">
 
@@ -946,25 +1151,16 @@ body{
 
 <div class="section-inner">
 
-    <div class="section-title" style="text-align:center;">
+    <div
+        class="section-title"
+        style="text-align:center;"
+    >
         Our Celebration
     </div>
 
     <div class="timeline">
 
         <div class="timeline-line"></div>
-
-        <div
-            class="moving-flower"
-            id="movingFlower"
-        >
-
-            <img
-                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-                alt="Flower"
-            >
-
-        </div>
 
 
         <div class="event">
@@ -1083,11 +1279,6 @@ body{
 
 <section id="venueSection" class="section">
 
-<img
-    class="corner-flower top-right"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
-
 <div class="section-inner">
 
     <div class="section-title">
@@ -1145,11 +1336,6 @@ body{
 ===================================================== -->
 
 <section id="dressSection" class="section">
-
-<img
-    class="corner-flower top-left"
-    src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
->
 
 <div class="section-inner">
 
@@ -1214,6 +1400,7 @@ body{
 
 <script>
 
+
 /* =========================================================
    GATE → WELCOME
    MUSIC STARTS ON SAME TAP
@@ -1231,8 +1418,8 @@ document.getElementById("welcomeVideo");
 const music =
 document.getElementById("weddingMusic");
 
-
 let gateOpened = false;
+
 let musicPlaying = false;
 
 
@@ -1243,6 +1430,7 @@ let musicPlaying = false;
 welcomeVideo.muted = true;
 
 welcomeVideo.play().catch(function(){
+
 });
 
 
@@ -1257,12 +1445,10 @@ function openGate(){
     gateOpened = true;
 
 
-    /* =====================================================
-       MUSIC
-       Start directly from the user's tap
-    ===================================================== */
+    /* MUSIC */
 
     music.volume = 0.35;
+
     music.muted = false;
 
     music.play()
@@ -1281,18 +1467,16 @@ function openGate(){
         });
 
 
-    /* =====================================================
-       WELCOME VIDEO
-    ===================================================== */
+    /* WELCOME VIDEO */
 
     welcomeVideo.currentTime = 0;
 
-    welcomeVideo.play().catch(function(){});
+    welcomeVideo.play().catch(function(){
+
+    });
 
 
-    /* =====================================================
-       GATE VIDEO
-    ===================================================== */
+    /* GATE VIDEO */
 
     gateScreen.classList.add("opening");
 
@@ -1300,12 +1484,12 @@ function openGate(){
 
     gateVideo.muted = true;
 
-    gateVideo.play().catch(function(){});
+    gateVideo.play().catch(function(){
+
+    });
 
 
-    /* =====================================================
-       REMOVE GATE WHEN VIDEO ENDS
-    ===================================================== */
+    /* REMOVE GATE WHEN VIDEO ENDS */
 
     gateVideo.addEventListener(
         "ended",
@@ -1324,9 +1508,7 @@ function openGate(){
     );
 
 
-    /* =====================================================
-       FALLBACK FOR MOBILE
-    ===================================================== */
+    /* MOBILE FALLBACK */
 
     gateVideo.addEventListener(
         "loadedmetadata",
@@ -1335,7 +1517,10 @@ function openGate(){
             const duration =
                 gateVideo.duration;
 
-            if(duration && isFinite(duration)){
+            if(
+                duration &&
+                isFinite(duration)
+            ){
 
                 setTimeout(function(){
 
@@ -1353,7 +1538,7 @@ function openGate(){
 
                     }
 
-                }, (duration * 1000) + 300);
+                },(duration * 1000) + 300);
 
             }
 
@@ -1431,90 +1616,64 @@ function toggleMusic(){
 
 
 /* =========================================================
-   TIMELINE FLOWER
+   GOLD SPARKLES
 ========================================================= */
 
-const flower =
-document.getElementById("movingFlower");
+const sparkleContainer =
+    document.getElementById("goldSparkles");
 
-const timeline =
-document.querySelector(".timeline");
+if(sparkleContainer){
 
+    const sparkleCount = 52;
 
-function moveFlower(){
+    for(
+        let i = 0;
+        i < sparkleCount;
+        i++
+    ){
 
-    if(!timeline || !flower) return;
+        const sparkle =
+            document.createElement("span");
 
-
-    const rect =
-        timeline.getBoundingClientRect();
-
-
-    const scrollTop =
-        window.scrollY ||
-        window.pageYOffset;
-
-
-    const timelineTop =
-        rect.top + scrollTop;
+        sparkle.className =
+            "gold-sparkle";
 
 
-    const timelineHeight =
-        timeline.offsetHeight;
+        const sizeClass =
+            Math.random();
 
 
-    const flowerTravel =
-        timelineHeight - 120;
+        if(sizeClass < .20){
+
+            sparkle.classList.add("large");
+
+        }
+        else if(sizeClass < .65){
+
+            sparkle.classList.add("small");
+
+        }
 
 
-    const timelineStart =
-        timelineTop -
-        window.innerHeight * 0.35;
+        sparkle.style.left =
+            (Math.random() * 100) + "%";
 
 
-    const timelineEnd =
-        timelineTop +
-        timelineHeight -
-        window.innerHeight * 0.65;
+        sparkle.style.animationDuration =
+            (7 + Math.random() * 9) + "s";
 
 
-    let progress =
-        (scrollTop - timelineStart) /
-        (timelineEnd - timelineStart);
+        sparkle.style.animationDelay =
+            (-Math.random() * 14) + "s";
 
 
-    progress =
-        Math.max(
-            0,
-            Math.min(1,progress)
+        sparkleContainer.appendChild(
+            sparkle
         );
 
-
-    const newTop =
-        55 +
-        (flowerTravel * progress);
-
-
-    flower.style.top =
-        newTop + "px";
+    }
 
 }
-
-
-window.addEventListener(
-    "scroll",
-    moveFlower,
-    {passive:true}
-);
-
-
-window.addEventListener(
-    "resize",
-    moveFlower
-);
-
-
-moveFlower();
 
 
 /* =========================================================
@@ -1522,12 +1681,16 @@ moveFlower();
 ========================================================= */
 
 const venueLat = 33.6390;
+
 const venueLng = 73.1610;
 
 
 const map =
 L.map("map").setView(
-    [venueLat,venueLng],
+    [
+        venueLat,
+        venueLng
+    ],
     15
 );
 
@@ -1536,6 +1699,7 @@ L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
         maxZoom:19,
+
         attribution:
         '&copy; OpenStreetMap contributors'
     }
@@ -1544,7 +1708,10 @@ L.tileLayer(
 
 const marker =
 L.marker(
-    [venueLat,venueLng]
+    [
+        venueLat,
+        venueLng
+    ]
 ).addTo(map);
 
 
