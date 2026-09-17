@@ -2,1932 +2,1643 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Ivory Vows</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Parisienne&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Parisienne&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
 <style>
 
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-  font-family:'Montserrat',sans-serif;
-  color:#651b27;
-  overflow-x:hidden;
-
-  background:
-    radial-gradient(circle at 20% 10%,rgba(255,255,255,.95),transparent 30%),
-    radial-gradient(circle at 80% 80%,rgba(255,255,255,.75),transparent 28%),
-    linear-gradient(135deg,#fffdf7,#faf3e5,#f4e8cf,#efe0c1);
+    width:100%;
+    min-height:100vh;
+    background:var(--ivory);
+    color:#651b27;
+    overflow-x:hidden;
+    font-family:"Cormorant Garamond",serif;
 }
+
+:root{
+    --ivory:#faf3e5;
+    --maroon:#651b27;
+    --dark-maroon:#4b111b;
+    --gold:#b18a45;
+    --light-gold:#e2c47b;
+    --gold-bg:#f8edcf;
+}
+
 
 /* =========================================================
-   GENERAL
+   FANCY IVORY BACKGROUND
 ========================================================= */
 
-section{
-  position:relative;
-  width:100%;
-  padding:70px 20px;
-  overflow:hidden;
-
-  background:
-    radial-gradient(circle at top left,rgba(255,255,255,.72),transparent 35%),
-    radial-gradient(circle at bottom right,rgba(255,255,255,.55),transparent 35%),
-    linear-gradient(135deg,#fffdf7,#faf1df,#f3e3c3);
+.section{
+    width:100%;
+    position:relative;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255,255,255,.98) 0%,
+            rgba(252,246,231,.96) 28%,
+            rgba(247,235,207,.94) 62%,
+            rgba(242,224,185,.96) 100%
+        );
+    overflow:hidden;
 }
 
-.section-title{
-  text-align:center;
-  margin-bottom:35px;
-  position:relative;
-  z-index:2;
+.section::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+        radial-gradient(
+            circle at 15% 25%,
+            rgba(255,255,255,.55) 0,
+            rgba(255,255,255,0) 32%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(255,255,255,.48) 0,
+            rgba(255,255,255,0) 34%
+        );
+    z-index:0;
 }
 
-.section-title h2{
-  font-family:'Parisienne',cursive;
-  font-size:58px;
-  font-weight:400;
-  color:#651b27;
-  text-shadow:0 2px 12px rgba(101,27,39,.12);
+.section-inner{
+    width:100%;
+    max-width:760px;
+    margin:auto;
+    position:relative;
+    z-index:2;
 }
 
-.section-title p{
-  margin-top:5px;
-  font-family:'Cormorant Garamond',serif;
-  font-size:21px;
-  color:#8c6740;
-  letter-spacing:1px;
-}
 
 /* =========================================================
-   GOLD DREAMY SPARKLES
+   DECORATIVE FLOWERS — HIDDEN
 ========================================================= */
 
-#sparkCanvas,
-#petalCanvas{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  z-index:999;
+.corner-flower{
+    display:none !important;
 }
+
 
 /* =========================================================
-   OPENING
+   GATE
 ========================================================= */
 
-#opening{
-  position:fixed;
-  inset:0;
-  z-index:5000;
-  background:#f8f0df;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  transition:opacity 1.2s ease,visibility 1.2s ease;
+#gateScreen{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:var(--ivory);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    opacity:1;
+    transition:opacity 2.2s ease;
 }
 
-#opening.hide{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
+.gate-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:opacity:1.4s ease;
 }
 
-#gatePoster{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:1;
+.gate-overlay{
+    position:absolute;
+    bottom:9%;
+    left:50%;
+    transform:translateX(-50%);
+    text-align:center;
+    color:white;
+    text-shadow:0 2px 12px rgba(0,0,0,.5);
+    z-index:5;
+    transition:opacity 1.2s ease;
+}
+
+.gate-tap{
+    font-family:"Cormorant Garamond",serif;
+    font-size:19px;
+    letter-spacing:3px;
+    margin-bottom:6px;
+}
+
+.gate-small{
+    font-family:"Montserrat",sans-serif;
+    font-size:9px;
+    letter-spacing:3px;
 }
 
 #gateVideo{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-  z-index:2;
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity:1.8s ease;
 }
 
-#tapOverlay{
-  position:absolute;
-  bottom:10%;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:10;
-  cursor:pointer;
-  text-align:center;
-  white-space:nowrap;
+#gateScreen.opening .gate-image,
+#gateScreen.opening .gate-overlay{
+    opacity:0;
 }
 
-#tapOverlay span{
-  font-family:'Parisienne',cursive;
-  font-size:42px;
-  color:#fffaf0;
-  text-shadow:
-    0 2px 8px rgba(0,0,0,.35),
-    0 0 15px rgba(255,230,170,.8);
-  animation:tapGlow 2s ease-in-out infinite;
-}
-
-@keyframes tapGlow{
-  0%,100%{
-    opacity:.75;
-    transform:scale(1);
-  }
-  50%{
+#gateScreen.opening #gateVideo{
     opacity:1;
-    transform:scale(1.05);
-  }
 }
+
 
 /* =========================================================
    WELCOME
 ========================================================= */
 
-#welcome{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:30px 15px;
+#welcomeSection{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--ivory);
+}
+
+.welcome-video-frame{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+#welcomeVideo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+
+    filter:
+        brightness(.96)
+        contrast(.98)
+        saturate(.94);
+
+    opacity:1;
+    transition:opacity:2.2s ease;
+}
+
+.welcome-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
 }
 
 .welcome-frame{
-  position:relative;
-  width:min(100%,1000px);
-  padding:10px;
-  border:1px solid rgba(180,145,83,.75);
-  background:rgba(255,252,243,.45);
-  box-shadow:
-    0 0 0 4px rgba(255,255,255,.55),
-    0 0 0 6px rgba(181,143,76,.28),
-    0 15px 45px rgba(101,27,39,.14);
+    position:absolute;
+    inset:35px 25px;
+    border:1px solid rgba(177,138,69,.65);
 }
 
-.welcome-frame::before{
-  content:"";
-  position:absolute;
-  inset:5px;
-  border:1px solid rgba(181,143,76,.5);
-  pointer-events:none;
-  z-index:3;
-}
-
-.welcome-frame::after{
-  content:"✦";
-  position:absolute;
-  top:-15px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:23px;
-  color:#b58f4c;
-  background:#f8efdc;
-  padding:0 12px;
-  z-index:4;
-}
-
-.welcome-frame video{
-  width:100%;
-  display:block;
-  max-height:85vh;
-  object-fit:cover;
-}
 
 /* =========================================================
-   BEAUTIFUL BEGINNING
+   SCRATCH SECTION
 ========================================================= */
 
-#beginning{
-  text-align:center;
-  padding-top:80px;
-  padding-bottom:80px;
+#scratchSection{
+    padding:55px 18px 45px;
+    text-align:center;
 }
 
-.beginning-card{
-  width:min(900px,100%);
-  margin:auto;
-  padding:50px 25px;
-  position:relative;
-  border:1px solid rgba(181,143,76,.55);
-
-  background:
-    radial-gradient(circle at 30% 20%,rgba(255,255,255,.9),transparent 35%),
-    rgba(255,250,238,.58);
-
-  box-shadow:
-    0 15px 50px rgba(101,27,39,.12),
-    inset 0 0 35px rgba(255,255,255,.65);
+.section-title{
+    font-family:"Parisienne",cursive;
+    font-size:45px;
+    color:var(--maroon);
+    margin-bottom:8px;
 }
 
-.beginning-card h3{
-  font-family:'Parisienne',cursive;
-  font-size:62px;
-  font-weight:400;
-  color:#651b27;
+.section-subtitle{
+    font-size:18px;
+    color:var(--maroon);
+    margin-bottom:22px;
 }
 
-.beginning-card .subtitle{
-  font-family:'Cormorant Garamond',serif;
-  font-size:25px;
-  color:#9b7449;
-  margin:5px 0 25px;
-  letter-spacing:2px;
-}
-
-.beginning-card p{
-  max-width:700px;
-  margin:auto;
-  font-family:'Cormorant Garamond',serif;
-  font-size:22px;
-  line-height:1.8;
-  color:#6c4a38;
-}
-
-.couple-name{
-  margin-top:25px;
-  font-family:'Parisienne',cursive;
-  font-size:52px;
-  color:#651b27;
-}
 
 /* =========================================================
-   FAMILY VIDEO
+   SCRATCH — SAME CONTENT, LUXURY GOLD FRAME
 ========================================================= */
-
-.family-section{
-  padding-top:65px;
-  padding-bottom:65px;
-}
-
-.family-video-box{
-  width:min(900px,100%);
-  margin:auto;
-  position:relative;
-  padding:10px;
-
-  border:1px solid rgba(181,143,76,.72);
-  background:rgba(255,252,243,.55);
-
-  box-shadow:
-    0 12px 45px rgba(101,27,39,.14),
-    0 0 0 5px rgba(255,255,255,.45);
-}
-
-.family-video-box::before{
-  content:"";
-  position:absolute;
-  inset:5px;
-  border:1px solid rgba(181,143,76,.45);
-  pointer-events:none;
-  z-index:2;
-}
-
-.family-video-box::after{
-  content:"✦";
-  position:absolute;
-  right:18px;
-  top:10px;
-  color:#b58f4c;
-  font-size:18px;
-  z-index:3;
-}
-
-.family-video-box video{
-  width:100%;
-  display:block;
-  max-height:80vh;
-  object-fit:cover;
-}
-
-/* =========================================================
-   SCRATCH
-========================================================= */
-
-#scratch{
-  padding-top:70px;
-  padding-bottom:70px;
-}
 
 .scratch-wrapper{
-  position:relative;
-  width:min(600px,94%);
-  margin:auto;
-  padding:12px;
+    position:relative;
+    width:100%;
+    max-width:600px;
+    margin:auto;
+    padding:14px;
+    border:1px solid rgba(177,138,69,.95);
 
-  border:1px solid rgba(181,143,76,.75);
-  background:
-    linear-gradient(145deg,
-      rgba(255,252,242,.9),
-      rgba(248,238,214,.7));
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.96),
+            rgba(248,237,207,.9),
+            rgba(255,253,248,.98)
+        );
 
-  box-shadow:
-    0 12px 40px rgba(101,27,39,.13),
-    0 0 0 4px rgba(255,255,255,.45);
+    box-shadow:
+        0 0 0 5px rgba(255,253,248,.75),
+        0 0 0 6px rgba(177,138,69,.42),
+        0 10px 30px rgba(101,27,39,.08);
 }
 
 .scratch-wrapper::before{
-  content:"";
-  position:absolute;
-  inset:5px;
-  border:1px solid rgba(181,143,76,.48);
-  pointer-events:none;
-  z-index:5;
-}
-
-.scratch-wrapper::after{
-  content:"✦";
-  position:absolute;
-  top:8px;
-  right:13px;
-  color:#b58f4c;
-  font-size:17px;
-  z-index:6;
-}
-
-/* opposite corner flowers */
-
-.scratch-flower{
-  position:absolute;
-  width:72px;
-  height:72px;
-  object-fit:contain;
-  z-index:8;
-  pointer-events:none;
-  filter:drop-shadow(0 3px 6px rgba(101,27,39,.15));
-}
-
-.scratch-flower.top-left{
-  top:-25px;
-  left:-25px;
-  animation:flowerFloat 4s ease-in-out infinite;
-}
-
-.scratch-flower.bottom-right{
-  bottom:-25px;
-  right:-25px;
-  animation:flowerFloat 4.5s ease-in-out infinite reverse;
-}
-
-@keyframes flowerFloat{
-  0%,100%{
-    transform:translateY(0) rotate(0deg);
-  }
-  50%{
-    transform:translateY(-5px) rotate(2deg);
-  }
+    content:"";
+    position:absolute;
+    inset:6px;
+    border:1px solid rgba(226,196,123,.65);
+    pointer-events:none;
+    z-index:3;
 }
 
 .scratch-frame{
-  position:relative;
-  width:100%;
-  overflow:hidden;
+    width:100%;
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid rgba(101,27,39,.25);
+    background:#fffdf8;
+    position:relative;
+    z-index:2;
 }
 
 .scratch-frame iframe{
-  width:100%;
-  height:360px;
-  border:0;
-  display:block;
-  background:transparent;
+    width:100%;
+    min-height:350px;
+    border:0;
+    display:block;
 }
 
+
 /* =========================================================
-   COUNTDOWN
+   FAMILY
 ========================================================= */
 
-#countdown{
-  padding-top:70px;
-  padding-bottom:80px;
+#familySection{
+    padding:40px 18px;
+    text-align:center;
+}
+
+.family-video-box{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+    position:relative;
+    padding:12px;
+    border:1px solid var(--gold);
+    background:rgba(255,253,248,.75);
+
+    box-shadow:
+        0 0 0 4px rgba(255,255,255,.55),
+        0 0 0 5px rgba(177,138,69,.28);
+}
+
+.family-video-box video{
+    width:100%;
+    display:block;
+}
+
+
+/* =========================================================
+   COUNTDOWN — SAME COUNTDOWN, GOLD FRAME AROUND IT
+========================================================= */
+
+#countdownSection{
+    padding:45px 18px 48px;
+    text-align:center;
 }
 
 .countdown-card{
-  width:min(700px,94%);
-  margin:auto;
-  position:relative;
-  padding:18px;
+    position:relative;
+    width:100%;
+    max-width:650px;
+    margin:25px auto 0;
+    padding:14px;
 
-  border:1px solid rgba(181,143,76,.78);
+    border:1px solid rgba(177,138,69,.95);
 
-  background:
-    radial-gradient(circle at top left,rgba(255,255,255,.9),transparent 38%),
-    linear-gradient(135deg,#fffaf0,#f6e8ca);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.96),
+            rgba(248,237,207,.88),
+            rgba(255,253,248,.98)
+        );
 
-  box-shadow:
-    0 15px 50px rgba(101,27,39,.15),
-    0 0 0 5px rgba(255,255,255,.5);
+    box-shadow:
+        0 0 0 5px rgba(255,253,248,.75),
+        0 0 0 6px rgba(177,138,69,.42),
+        0 10px 30px rgba(101,27,39,.08);
 }
 
 .countdown-card::before{
-  content:"";
-  position:absolute;
-  inset:6px;
-  border:1px solid rgba(181,143,76,.5);
-  pointer-events:none;
-  z-index:2;
-}
-
-.countdown-card::after{
-  content:"✦";
-  position:absolute;
-  top:8px;
-  right:14px;
-  color:#b58f4c;
-  font-size:18px;
-  z-index:4;
+    content:"";
+    position:absolute;
+    inset:6px;
+    border:1px solid rgba(226,196,123,.7);
+    pointer-events:none;
+    z-index:3;
 }
 
 .countdown-inner{
-  position:relative;
-  min-height:180px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
+    position:relative;
+    border:1px solid rgba(101,27,39,.25);
+    padding:15px;
+    background:#fffdf8;
+    z-index:2;
 }
 
-/* countdown flowers */
-
-.countdown-flower{
-  position:absolute;
-  object-fit:contain;
-  z-index:5;
-  pointer-events:none;
-  filter:drop-shadow(0 3px 6px rgba(101,27,39,.14));
+.countdown-embed{
+    width:100%;
+    min-height:120px;
 }
 
-.countdown-flower.one{
-  width:95px;
-  height:95px;
-  top:-25px;
-  left:-22px;
-  animation:flowerFloat 4s ease-in-out infinite;
-}
-
-.countdown-flower.two{
-  width:95px;
-  height:95px;
-  bottom:-25px;
-  right:-22px;
-  animation:flowerFloat 4.5s ease-in-out infinite reverse;
-}
-
-.countdown-flower.three{
-  width:65px;
-  height:65px;
-  top:-17px;
-  right:-15px;
-  animation:flowerFloat 5s ease-in-out infinite;
-}
-
-.countdown-flower.four{
-  width:65px;
-  height:65px;
-  bottom:-17px;
-  left:-15px;
-  animation:flowerFloat 5s ease-in-out infinite reverse;
-}
-
-.tickcounter{
-  position:relative;
-  z-index:3;
-  width:100%;
-  text-align:center;
-}
 
 /* =========================================================
-   TIMELINE
+   TIMELINE — CENTER LINE
 ========================================================= */
 
-#timeline{
-  padding-top:80px;
-  padding-bottom:100px;
+#timelineSection{
+    padding:35px 8px 55px;
 }
 
 .timeline{
-  position:relative;
-  width:100%;
-  max-width:1000px;
-  margin:auto;
-  padding:40px 0;
+    position:relative;
+    width:100%;
+    max-width:760px;
+    margin:auto;
+    padding:55px 5px 65px;
 }
-
-/* CENTER LINE */
 
 .timeline-line{
-  position:absolute;
-  top:0;
-  bottom:0;
-  left:50%;
-  width:2px;
-  background:#651b27;
-  transform:translateX(-50%);
-  opacity:.55;
+    position:absolute;
+    top:55px;
+    bottom:65px;
+    left:50%;
+    width:1.5px;
+    background:var(--maroon);
+    transform:translateX(-50%);
+    z-index:1;
 }
-
-/* EVENTS */
-
-.event{
-  position:relative;
-  width:100%;
-  min-height:220px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:15px;
-}
-
-.event-content{
-  width:42%;
-  text-align:right;
-  padding:10px;
-}
-
-.event-image{
-  width:42%;
-  padding:10px;
-}
-
-.event-image img{
-  width:100%;
-  max-width:280px;
-  border-radius:8px;
-  display:block;
-  margin:auto;
-
-  padding:5px;
-  border:1px solid rgba(181,143,76,.75);
-  background:#fffaf0;
-
-  box-shadow:
-    0 8px 25px rgba(101,27,39,.13),
-    0 0 0 3px rgba(255,255,255,.5);
-}
-
-/* Explicit alternating sides */
-
-.event.left-info .event-content{
-  order:1;
-  text-align:right;
-}
-
-.event.left-info .event-image{
-  order:2;
-}
-
-.event.right-info .event-content{
-  order:2;
-  text-align:left;
-}
-
-.event.right-info .event-image{
-  order:1;
-}
-
-.event-time{
-  font-family:'Parisienne',cursive;
-  font-size:38px;
-  color:#651b27;
-  line-height:1.1;
-}
-
-.event-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:27px;
-  font-weight:600;
-  color:#8c6740;
-  margin-top:4px;
-}
-
-/* center moving flower */
 
 .moving-flower{
-  position:absolute;
-  left:50%;
-  top:0;
-  transform:translate(-50%,-50%);
-  width:55px;
-  height:55px;
-  z-index:10;
-  transition:top .15s linear;
-  pointer-events:none;
+    position:absolute;
+    left:50%;
+    top:55px;
+    width:58px;
+    height:58px;
+    transform:translate(-50%,0);
+    z-index:10;
+    pointer-events:none;
+    transition:top .12s linear;
 }
 
 .moving-flower img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  filter:drop-shadow(0 4px 8px rgba(101,27,39,.18));
+    width:100%;
+    height:100%;
+    object-fit:contain;
 }
 
+.event{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:220px;
+    align-items:center;
+    z-index:2;
+}
+
+.event-text{
+    text-align:center;
+    padding:10px 8px;
+}
+
+.time{
+    font-family:"Parisienne",cursive;
+    font-size:34px;
+    line-height:1.1;
+    color:var(--maroon);
+    margin-bottom:5px;
+}
+
+.event-name{
+    font-family:"Parisienne",cursive;
+    font-size:37px;
+    line-height:1.05;
+    color:var(--maroon);
+}
+
+.event-image{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:4px;
+}
+
+.event-image img{
+    width:190px;
+    height:190px;
+    object-fit:contain;
+    display:block;
+}
+
+.event:nth-of-type(1) .event-text{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(1) .event-image{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(2) .event-image{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(2) .event-text{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(3) .event-text{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(3) .event-image{
+    grid-column:2;
+    grid-row:1;
+}
+
+.event:nth-of-type(4) .event-image{
+    grid-column:1;
+    grid-row:1;
+}
+
+.event:nth-of-type(4) .event-text{
+    grid-column:2;
+    grid-row:1;
+}
+
+
 /* =========================================================
-   LOCATION
+   VENUE
 ========================================================= */
 
-#location{
-  text-align:center;
+#venueSection{
+    padding:40px 15px 42px;
+    text-align:center;
 }
 
 .location-picture-frame{
-  width:min(850px,94%);
-  margin:0 auto 30px;
-  padding:12px;
-  position:relative;
-
-  border:1px solid rgba(181,143,76,.75);
-  background:rgba(255,251,240,.7);
-
-  box-shadow:
-    0 12px 45px rgba(101,27,39,.14),
-    0 0 0 4px rgba(255,255,255,.5);
-}
-
-.location-picture-frame::before{
-  content:"";
-  position:absolute;
-  inset:5px;
-  border:1px solid rgba(181,143,76,.45);
-  pointer-events:none;
-  z-index:2;
+    position:relative;
+    width:100%;
+    max-width:620px;
+    margin:18px auto 22px;
+    padding:10px;
+    border:1px solid var(--gold);
+    background:rgba(255,255,255,.55);
 }
 
 .location-picture-frame img{
-  width:100%;
-  display:block;
+    width:100%;
+    display:block;
 }
 
 .map-box{
-  width:min(850px,94%);
-  height:400px;
-  margin:auto;
-  position:relative;
-  border:1px solid rgba(181,143,76,.75);
-  box-shadow:0 12px 40px rgba(101,27,39,.13);
-  overflow:hidden;
+    width:100%;
+    max-width:650px;
+    margin:0 auto;
+    border:1px solid var(--gold);
+    overflow:hidden;
 }
 
 #map{
-  width:100%;
-  height:100%;
+    width:100%;
+    height:350px;
 }
+
+.venue-name{
+    font-family:"Parisienne",cursive;
+    font-size:34px;
+    color:var(--maroon);
+    margin:18px 0 12px;
+}
+
+.map-button{
+    display:inline-block;
+    padding:9px 24px;
+    border:1px solid var(--maroon);
+    color:var(--maroon);
+    background:transparent;
+    text-decoration:none;
+    font-family:"Montserrat",sans-serif;
+    font-size:9px;
+    letter-spacing:2px;
+}
+
 
 /* =========================================================
    DRESS CODE
 ========================================================= */
 
-#dress{
-  padding-bottom:100px;
+#dressSection{
+    padding:40px 18px 45px;
+    text-align:center;
 }
 
 .dress-video-frame{
-  width:min(850px,94%);
-  margin:auto;
-  padding:12px;
-  position:relative;
-
-  border:1px solid rgba(181,143,76,.75);
-  background:rgba(255,251,240,.7);
-
-  box-shadow:
-    0 12px 45px rgba(101,27,39,.14),
-    0 0 0 4px rgba(255,255,255,.5);
-}
-
-.dress-video-frame::before{
-  content:"";
-  position:absolute;
-  inset:5px;
-  border:1px solid rgba(181,143,76,.45);
-  pointer-events:none;
-  z-index:2;
+    width:100%;
+    max-width:650px;
+    margin:20px auto 0;
+    padding:10px;
+    border:1px solid var(--gold);
+    background:rgba(255,255,255,.55);
 }
 
 .dress-video-frame video{
-  width:100%;
-  display:block;
-  max-height:80vh;
-  object-fit:cover;
+    width:100%;
+    display:block;
 }
+
 
 /* =========================================================
-   MUSIC BUTTON
+   MUSIC
 ========================================================= */
 
-#musicToggle{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  border:1px solid rgba(181,143,76,.75);
-  background:rgba(255,249,235,.92);
-  color:#651b27;
-  font-size:20px;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:4500;
-  box-shadow:0 5px 18px rgba(101,27,39,.18);
-  cursor:pointer;
+#musicButton{
+    position:fixed;
+    right:15px;
+    bottom:15px;
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    background:rgba(255,253,248,.94);
+    color:var(--maroon);
+    z-index:9000;
+    cursor:pointer;
+    font-size:16px;
 }
 
-#musicToggle.show{
-  display:flex;
+
+/* =========================================================
+   GOLDEN DREAMY SPARKLES
+========================================================= */
+
+#goldSparkles{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:8999;
+    overflow:hidden;
 }
 
-#musicToggle.muted{
-  opacity:.65;
+.gold-sparkle{
+    position:absolute;
+    top:-12px;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:rgba(190,145,45,.72);
+    box-shadow:
+        0 0 5px rgba(225,190,95,.8),
+        0 0 10px rgba(225,190,95,.35);
+    opacity:0;
+    animation:goldFall linear infinite;
 }
+
+.gold-sparkle.small{
+    width:2px;
+    height:2px;
+    opacity:.55;
+}
+
+.gold-sparkle.large{
+    width:4px;
+    height:4px;
+    box-shadow:
+        0 0 7px rgba(225,190,95,.9),
+        0 0 14px rgba(225,190,95,.4);
+}
+
+@keyframes goldFall{
+
+    0%{
+        transform:translate3d(0,-20px,0) scale(.65);
+        opacity:0;
+    }
+
+    10%{
+        opacity:.7;
+    }
+
+    50%{
+        transform:translate3d(18px,50vh,0) scale(1);
+        opacity:.5;
+    }
+
+    90%{
+        opacity:.65;
+    }
+
+    100%{
+        transform:translate3d(-14px,110vh,0) scale(.55);
+        opacity:0;
+    }
+
+}
+
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
-@media(max-width:700px){
+@media(max-width:600px){
 
-  section{
-    padding:55px 14px;
-  }
+    .welcome-frame{
+        inset:25px 17px;
+    }
 
-  .section-title h2{
-    font-size:48px;
-  }
+    .section-title{
+        font-size:39px;
+    }
 
-  .section-title p{
-    font-size:18px;
-  }
+    .event{
+        min-height:195px;
+    }
 
-  #tapOverlay{
-    bottom:9%;
-  }
+    .event-image img{
+        width:155px;
+        height:155px;
+    }
 
-  #tapOverlay span{
-    font-size:36px;
-  }
+    .time{
+        font-size:27px;
+    }
 
-  .beginning-card{
-    padding:40px 18px;
-  }
+    .event-name{
+        font-size:30px;
+    }
 
-  .beginning-card h3{
-    font-size:48px;
-  }
+    .moving-flower{
+        width:46px;
+        height:46px;
+    }
 
-  .beginning-card .subtitle{
-    font-size:21px;
-  }
+    #map{
+        height:300px;
+    }
 
-  .beginning-card p{
-    font-size:19px;
-  }
+    .venue-name{
+        font-size:29px;
+    }
 
-  .couple-name{
-    font-size:44px;
-  }
-
-  .family-video-box,
-  .welcome-frame,
-  .dress-video-frame{
-    width:100%;
-  }
-
-  /* scratch stays compact on mobile */
-
-  .scratch-wrapper{
-    width:94%;
-    padding:10px;
-  }
-
-  .scratch-frame iframe{
-    height:340px;
-  }
-
-  .scratch-flower{
-    width:62px;
-    height:62px;
-  }
-
-  .scratch-flower.top-left{
-    top:-20px;
-    left:-20px;
-  }
-
-  .scratch-flower.bottom-right{
-    bottom:-20px;
-    right:-20px;
-  }
-
-  /* countdown */
-
-  .countdown-card{
-    width:94%;
-    padding:14px;
-  }
-
-  .countdown-inner{
-    min-height:165px;
-  }
-
-  .countdown-flower.one,
-  .countdown-flower.two{
-    width:75px;
-    height:75px;
-  }
-
-  .countdown-flower.three,
-  .countdown-flower.four{
-    width:52px;
-    height:52px;
-  }
-
-  /* =====================================================
-     MOBILE TIMELINE
-  ===================================================== */
-
-  .timeline{
-    padding:25px 0 25px 0;
-  }
-
-  .timeline-line{
-    left:25px;
-    transform:translateX(-50%);
-  }
-
-  .moving-flower{
-    left:25px;
-    width:48px;
-    height:48px;
-  }
-
-  .event{
-    display:block;
-    width:100%;
-    min-height:0;
-    margin-bottom:42px;
-    padding-left:58px;
-  }
-
-  .event-content,
-  .event-image{
-    width:100%;
-    padding:5px 5px 8px;
-  }
-
-  .event.left-info .event-content,
-  .event.right-info .event-content{
-    order:initial;
-    text-align:left;
-  }
-
-  .event.left-info .event-image,
-  .event.right-info .event-image{
-    order:initial;
-  }
-
-  .event-time{
-    font-size:34px;
-  }
-
-  .event-title{
-    font-size:25px;
-  }
-
-  .event-image img{
-    max-width:280px;
-    margin-left:0;
-  }
-
-  .map-box{
-    height:330px;
-    width:100%;
-  }
-
-  .location-picture-frame{
-    width:100%;
-  }
-
-}
-
-/* =========================================================
-   VERY SMALL PHONES
-========================================================= */
-
-@media(max-width:380px){
-
-  #tapOverlay span{
-    font-size:32px;
-  }
-
-  .section-title h2{
-    font-size:43px;
-  }
-
-  .event-time{
-    font-size:31px;
-  }
-
-  .event-title{
-    font-size:23px;
-  }
+    .scratch-wrapper,
+    .countdown-card{
+        padding:12px;
+    }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- =======================================================
-     SPARKLE CANVASES
-======================================================= -->
-
-<canvas id="petalCanvas"></canvas>
-<canvas id="sparkCanvas"></canvas>
+<div id="goldSparkles" aria-hidden="true"></div>
 
 
-<!-- =======================================================
-     OPENING
-======================================================= -->
+<!-- =====================================================
+     GATE
+===================================================== -->
 
-<div id="opening">
+<div id="gateScreen">
 
-  <img
-    id="gatePoster"
+<img
+    class="gate-image"
     src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Gatep.jpg"
-    alt=""
-  >
+    alt="Wedding Gate"
+>
 
-  <video
+<video
     id="gateVideo"
     playsinline
+    muted
     preload="auto"
-  >
+>
     <source
-      src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/gate.MP4"
-      type="video/mp4"
+        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/gate.MP4"
+        type="video/mp4"
     >
-  </video>
+</video>
 
-  <div id="tapOverlay">
-    <span>Tap to Open</span>
-  </div>
+<div class="gate-overlay">
+
+    <div class="gate-tap">
+        Tap to Open
+    </div>
+
+    <div class="gate-small">
+        A LITTLE SURPRISE AWAITS
+    </div>
+
+</div>
 
 </div>
 
 
-<!-- =======================================================
+<!-- =====================================================
+     WELCOME VIDEO
+===================================================== -->
+
+<section id="welcomeSection" class="section">
+
+<div class="welcome-video-frame">
+
+    <video
+        id="welcomeVideo"
+        playsinline
+        muted
+        autoplay
+        loop
+        preload="auto"
+    >
+
+        <source
+            src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/welcome.mov"
+            type="video/quicktime"
+        >
+
+    </video>
+
+    <div class="welcome-overlay">
+
+        <div class="welcome-frame"></div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     SCRATCH
+===================================================== -->
+
+<section id="scratchSection" class="section">
+
+<div class="section-inner">
+
+    <div class="section-title">
+        A Little Surprise
+    </div>
+
+    <div class="section-subtitle">
+        A special moment awaits
+    </div>
+
+    <div class="scratch-wrapper">
+
+        <div class="scratch-frame">
+
+            <iframe
+                src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
+                loading="lazy">
+            </iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     FAMILY
+===================================================== -->
+
+<section id="familySection" class="section">
+
+<div class="section-inner">
+
+    <div class="section-title">
+        Our Families
+    </div>
+
+    <div class="family-video-box">
+
+        <video
+            playsinline
+            autoplay
+            muted
+            loop
+            preload="auto"
+        >
+
+            <source
+                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/family.mov"
+                type="video/quicktime"
+            >
+
+        </video>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     COUNTDOWN
+===================================================== -->
+
+<section id="countdownSection" class="section">
+
+<div class="section-inner">
+
+    <div class="section-title">
+        Until We Say I Do
+    </div>
+
+    <div class="countdown-card">
+
+        <div class="countdown-inner">
+
+            <div class="countdown-embed">
+
+                <script>
+                (function(d, s, id) {
+
+                    var js,
+                    pjs = d.getElementsByTagName(s)[0];
+
+                    if (d.getElementById(id)) return;
+
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//www.tickcounter.com/static/js/loader.js";
+
+                    pjs.parentNode.insertBefore(js, pjs);
+
+                }(document, "script", "tickcounter-sdk"));
+                </script>
+
+                <a
+                    data-type="countdown"
+                    data-id="11415740"
+                    class="tickcounter"
+                    style="
+                        display:block;
+                        left:0;
+                        width:100%;
+                        height:0;
+                        position:relative;
+                        padding-bottom:25%;
+                        margin:0 auto;
+                    "
+                    title="Wedding Countdown"
+                    href="//www.tickcounter.com/"
+                >
+                    Wedding Countdown
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     TIMELINE
+===================================================== -->
+
+<section id="timelineSection" class="section">
+
+<div class="section-inner">
+
+    <div class="section-title" style="text-align:center;">
+        Our Celebration
+    </div>
+
+    <div class="timeline">
+
+        <div class="timeline-line"></div>
+
+        <div
+            class="moving-flower"
+            id="movingFlower"
+        >
+
+            <img
+                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+                alt="Flower"
+            >
+
+        </div>
+
+
+        <div class="event">
+
+            <div class="event-text">
+
+                <div class="time">
+                    07:00 PM
+                </div>
+
+                <div class="event-name">
+                    Guest Arrival
+                </div>
+
+            </div>
+
+            <div class="event-image">
+
+                <img
+                    src="https://files.catbox.moe/zt8kp4.jpeg"
+                    alt="Guest Arrival"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="event">
+
+            <div class="event-image">
+
+                <img
+                    src="https://files.catbox.moe/kh8bbs.png"
+                    alt="Bride Entry"
+                >
+
+            </div>
+
+            <div class="event-text">
+
+                <div class="time">
+                    08:00 PM
+                </div>
+
+                <div class="event-name">
+                    Bride Entry
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="event">
+
+            <div class="event-text">
+
+                <div class="time">
+                    08:30 PM
+                </div>
+
+                <div class="event-name">
+                    Nikkah Ceremony
+                </div>
+
+            </div>
+
+            <div class="event-image">
+
+                <img
+                    src="https://files.catbox.moe/kph6hd.png"
+                    alt="Nikkah Ceremony"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="event">
+
+            <div class="event-image">
+
+                <img
+                    src="https://files.catbox.moe/ssoyrc.png"
+                    alt="Buffet"
+                >
+
+            </div>
+
+            <div class="event-text">
+
+                <div class="time">
+                    09:30 PM
+                </div>
+
+                <div class="event-name">
+                    Buffet Opening
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     VENUE
+===================================================== -->
+
+<section id="venueSection" class="section">
+
+<div class="section-inner">
+
+    <div class="section-title">
+        Find Us
+    </div>
+
+    <div class="section-subtitle">
+        We can't wait to celebrate with you
+    </div>
+
+
+    <div class="location-picture-frame">
+
+        <img
+            src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Location.jpg"
+            alt="Venue Location"
+        >
+
+    </div>
+
+
+    <div class="map-box">
+
+        <div id="map"></div>
+
+    </div>
+
+
+    <div class="venue-name">
+
+        Al Hameed Grand Marquee
+        <br>
+        Islamabad
+
+    </div>
+
+
+    <a
+        class="map-button"
+        href="https://www.google.com/maps/search/?api=1&query=Al+Hameed+Grand+Marquee+Islamabad"
+        target="_blank"
+    >
+
+        VIEW ON GOOGLE MAPS
+
+    </a>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     DRESS CODE
+===================================================== -->
+
+<section id="dressSection" class="section">
+
+<div class="section-inner">
+
+    <div class="section-title">
+        Dress Code
+    </div>
+
+    <div class="section-subtitle">
+        Come dressed in your finest
+    </div>
+
+    <div class="dress-video-frame">
+
+        <video
+            playsinline
+            autoplay
+            muted
+            loop
+            preload="auto"
+        >
+
+            <source
+                src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/dress.MP4"
+                type="video/mp4"
+            >
+
+        </video>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
      MUSIC
-======================================================= -->
+===================================================== -->
 
 <audio
-  id="bgMusic"
-  loop
-  preload="auto"
->
-  <source
+    id="weddingMusic"
     src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Music.mp3"
-    type="audio/mpeg"
-  >
-</audio>
+    preload="auto"
+    loop
+></audio>
 
-<button id="musicToggle" aria-label="Music">
-  ♫
+
+<button
+    id="musicButton"
+    onclick="toggleMusic()"
+    aria-label="Music"
+>
+    ♫
 </button>
 
 
-<!-- =======================================================
-     WELCOME
-======================================================= -->
-
-<section id="welcome">
-
-  <div class="welcome-frame">
-
-    <video
-      id="welcomeVideo"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-    >
-      <source
-        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/welcome.mov"
-        type="video/quicktime"
-      >
-    </video>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     BEAUTIFUL BEGINNING
-======================================================= -->
-
-<section id="beginning">
-
-  <div class="section-title">
-    <h2>Beautiful Beginning</h2>
-    <p>A New Chapter</p>
-  </div>
-
-  <div class="beginning-card">
-
-    <p>
-      With hearts full of joy and gratitude,
-      we invite you to celebrate the beginning
-      of a beautiful new chapter in our lives.
-    </p>
-
-    <div class="couple-name">
-      Ali &amp; Fatema
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     FAMILY
-======================================================= -->
-
-<section class="family-section">
-
-  <div class="section-title">
-    <h2>Our Families</h2>
-  </div>
-
-  <div class="family-video-box">
-
-    <video
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-    >
-      <source
-        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/family.mov"
-        type="video/quicktime"
-      >
-    </video>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     SCRATCH
-======================================================= -->
-
-<section id="scratch">
-
-  <div class="section-title">
-    <h2>Something Special</h2>
-    <p>A little surprise awaits...</p>
-  </div>
-
-  <div class="scratch-wrapper">
-
-    <img
-      class="scratch-flower top-left"
-      src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-      alt=""
-    >
-
-    <img
-      class="scratch-flower bottom-right"
-      src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-      alt=""
-    >
-
-    <div class="scratch-frame">
-
-      <iframe
-        src="https://widgets.commoninja.com/iframe/f7aead67-de02-47ef-b9a4-daad035031a3"
-        loading="lazy"
-        title="Scratch to reveal"
-      ></iframe>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     COUNTDOWN
-======================================================= -->
-
-<section id="countdown">
-
-  <div class="section-title">
-    <h2>Counting Down</h2>
-    <p>Until our beautiful day</p>
-  </div>
-
-  <div class="countdown-card">
-
-    <img
-      class="countdown-flower one"
-      src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-      alt=""
-    >
-
-    <img
-      class="countdown-flower two"
-      src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-      alt=""
-    >
-
-    <img
-      class="countdown-flower three"
-      src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-      alt=""
-    >
-
-    <img
-      class="countdown-flower four"
-      src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
-      alt=""
-    >
-
-    <div class="countdown-inner">
-
-      <div
-        class="tickcounter"
-        data-type="countdown"
-        data-id="11415740"
-      ></div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     TIMELINE
-======================================================= -->
-
-<section id="timeline">
-
-  <div class="section-title">
-    <h2>Our Nikkah</h2>
-    <p>A night to remember</p>
-  </div>
-
-  <div class="timeline">
-
-    <!-- CENTER LINE -->
-
-    <div class="timeline-line"></div>
-
-    <!-- MOVING FLOWER -->
-
-    <div
-      id="movingFlower"
-      class="moving-flower"
-    >
-      <img
-        src="https://files.catbox.moe/rd9anq.png"
-        alt=""
-      >
-    </div>
-
-
-    <!-- =================================================
-         07:00 — INFO LEFT / IMAGE RIGHT
-    ================================================== -->
-
-    <div class="event left-info">
-
-      <div class="event-content">
-
-        <div class="event-time">
-          07:00 PM
-        </div>
-
-        <div class="event-title">
-          Guest Arrival
-        </div>
-
-      </div>
-
-      <div class="event-image">
-
-        <img
-          src="https://files.catbox.moe/zt8kp4.jpeg"
-          alt="Guest Arrival"
-        >
-
-      </div>
-
-    </div>
-
-
-    <!-- =================================================
-         08:00 — IMAGE LEFT / INFO RIGHT
-    ================================================== -->
-
-    <div class="event right-info">
-
-      <div class="event-content">
-
-        <div class="event-time">
-          08:00 PM
-        </div>
-
-        <div class="event-title">
-          Bride Entry
-        </div>
-
-      </div>
-
-      <div class="event-image">
-
-        <img
-          src="https://files.catbox.moe/kh8bbs.png"
-          alt="Bride Entry"
-        >
-
-      </div>
-
-    </div>
-
-
-    <!-- =================================================
-         08:30 — INFO LEFT / IMAGE RIGHT
-    ================================================== -->
-
-    <div class="event left-info">
-
-      <div class="event-content">
-
-        <div class="event-time">
-          08:30 PM
-        </div>
-
-        <div class="event-title">
-          Nikkah Ceremony
-        </div>
-
-      </div>
-
-      <div class="event-image">
-
-        <img
-          src="https://files.catbox.moe/kph6hd.png"
-          alt="Nikkah Ceremony"
-        >
-
-      </div>
-
-    </div>
-
-
-    <!-- =================================================
-         09:30 — IMAGE LEFT / INFO RIGHT
-    ================================================== -->
-
-    <div class="event right-info">
-
-      <div class="event-content">
-
-        <div class="event-time">
-          09:30 PM
-        </div>
-
-        <div class="event-title">
-          Buffet Opening
-        </div>
-
-      </div>
-
-      <div class="event-image">
-
-        <img
-          src="https://files.catbox.moe/ssoyrc.png"
-          alt="Buffet Opening"
-        >
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     LOCATION
-======================================================= -->
-
-<section id="location">
-
-  <div class="section-title">
-    <h2>Our Venue</h2>
-    <p>We can't wait to celebrate with you</p>
-  </div>
-
-  <div class="location-picture-frame">
-
-    <img
-      src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/Location.jpg"
-      alt="Venue"
-    >
-
-  </div>
-
-  <div class="map-box">
-
-    <div id="map"></div>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     DRESS CODE
-======================================================= -->
-
-<section id="dress">
-
-  <div class="section-title">
-    <h2>Dress Code</h2>
-    <p>Dress beautifully for our beautiful evening</p>
-  </div>
-
-  <div class="dress-video-frame">
-
-    <video
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="auto"
-    >
-
-      <source
-        src="https://raw.githubusercontent.com/ivoryvows/ivoryvows.github.io/refs/heads/main/dress.MP4"
-        type="video/mp4"
-      >
-
-    </video>
-
-  </div>
-
-</section>
-
-
-<!-- =======================================================
-     LEAFLET MAP
-======================================================= -->
-
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-
-<script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
-
+<!-- =====================================================
+     LEAFLET
+===================================================== -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
 /* =========================================================
-   GATE + MUSIC
+   GATE → WELCOME
+   MUSIC STARTS ON EXACT SAME TAP
 ========================================================= */
 
-const opening = document.getElementById("opening");
-const gatePoster = document.getElementById("gatePoster");
-const gateVideo = document.getElementById("gateVideo");
-const tapOverlay = document.getElementById("tapOverlay");
+const gateScreen =
+document.getElementById("gateScreen");
 
-const bgMusic = document.getElementById("bgMusic");
-const musicToggle = document.getElementById("musicToggle");
+const gateVideo =
+document.getElementById("gateVideo");
 
-let musicPlaying = false;
+const welcomeVideo =
+document.getElementById("welcomeVideo");
+
+const music =
+document.getElementById("weddingMusic");
+
+
 let gateOpened = false;
 
 
-/*
-  IMPORTANT:
-  Music starts directly inside the user's tap/click event.
-  This is necessary for iPhone autoplay restrictions.
-*/
+/* =========================================================
+   PREPARE WELCOME VIDEO
+========================================================= */
+
+welcomeVideo.muted = true;
+
+welcomeVideo.play().catch(function(){
+});
+
+
+/* =========================================================
+   OPEN GATE
+========================================================= */
 
 function openGate(){
 
-  if(gateOpened) return;
+    if(gateOpened) return;
 
-  gateOpened = true;
-
-  /* MUSIC — SAME USER TAP */
-
-  bgMusic.volume = 0.75;
-
-  const musicPromise = bgMusic.play();
-
-  if(musicPromise !== undefined){
-
-    musicPromise
-      .then(() => {
-
-        musicPlaying = true;
-        musicToggle.classList.add("show");
-        musicToggle.classList.remove("muted");
-
-      })
-      .catch(() => {
-
-        musicToggle.classList.add("show");
-        musicToggle.classList.add("muted");
-
-      });
-
-  }else{
-
-    musicPlaying = true;
-    musicToggle.classList.add("show");
-
-  }
+    gateOpened = true;
 
 
-  /* START GATE VIDEO */
+    /* =====================================================
+       MUSIC — DIRECTLY INSIDE USER TAP
+    ===================================================== */
 
-  tapOverlay.style.display = "none";
-  gatePoster.style.display = "none";
+    music.volume = 0.35;
+    music.muted = false;
 
-  gateVideo.style.display = "block";
+    const musicPromise = music.play();
 
-  gateVideo.currentTime = 0;
+    if(musicPromise !== undefined){
 
-  const videoPromise = gateVideo.play();
+        musicPromise
+            .then(function(){
 
-  if(videoPromise !== undefined){
-    videoPromise.catch(() => {});
-  }
+                console.log("Wedding music started");
+
+            })
+            .catch(function(error){
+
+                console.log(
+                    "Music could not start:",
+                    error
+                );
+
+            });
+
+    }
+
+
+    /* =====================================================
+       WELCOME VIDEO
+    ===================================================== */
+
+    welcomeVideo.currentTime = 0;
+
+    welcomeVideo.play().catch(function(){});
+
+
+    /* =====================================================
+       GATE VIDEO
+    ===================================================== */
+
+    gateScreen.classList.add("opening");
+
+    gateVideo.currentTime = 0;
+
+    gateVideo.muted = true;
+
+    gateVideo.play().catch(function(){});
+
+
+    /* =====================================================
+       REMOVE GATE WHEN VIDEO ENDS
+    ===================================================== */
+
+    gateVideo.addEventListener(
+        "ended",
+        function(){
+
+            gateScreen.style.opacity = "0";
+
+            setTimeout(function(){
+
+                gateScreen.style.display = "none";
+
+            },2200);
+
+        },
+        {once:true}
+    );
+
+
+    /* =====================================================
+       MOBILE FALLBACK
+    ===================================================== */
+
+    gateVideo.addEventListener(
+        "loadedmetadata",
+        function(){
+
+            const duration =
+                gateVideo.duration;
+
+            if(duration && isFinite(duration)){
+
+                setTimeout(function(){
+
+                    if(
+                        gateScreen.style.display !== "none"
+                    ){
+
+                        gateScreen.style.opacity = "0";
+
+                        setTimeout(function(){
+
+                            gateScreen.style.display = "none";
+
+                        },2200);
+
+                    }
+
+                }, (duration * 1000) + 300);
+
+            }
+
+        },
+        {once:true}
+    );
 
 }
 
 
-/* both tap areas trigger the exact same function */
+/* =========================================================
+   TOUCH
+========================================================= */
 
-tapOverlay.addEventListener("click",openGate);
-tapOverlay.addEventListener("touchend",function(e){
-  e.preventDefault();
-  openGate();
-},{passive:false});
+gateScreen.addEventListener(
+    "touchend",
+    function(event){
+
+        event.preventDefault();
+
+        openGate();
+
+    },
+    {passive:false}
+);
 
 
-/* when gate video ends, remove opening */
+/* =========================================================
+   CLICK
+========================================================= */
 
-gateVideo.addEventListener("ended",function(){
+gateScreen.addEventListener(
+    "click",
+    function(){
 
-  opening.classList.add("hide");
+        openGate();
 
-  const welcomeVideo = document.getElementById("welcomeVideo");
-
-  if(welcomeVideo){
-
-    welcomeVideo.play().catch(()=>{});
-
-  }
-
-});
+    }
+);
 
 
 /* =========================================================
    MUSIC BUTTON
 ========================================================= */
 
-musicToggle.addEventListener("click",function(){
+function toggleMusic(){
 
-  if(bgMusic.paused){
+    if(music.paused){
 
-    bgMusic.play()
-      .then(()=>{
+        music.muted = false;
 
-        musicPlaying = true;
-        musicToggle.classList.remove("muted");
+        music.play()
+            .then(function(){
 
-      })
-      .catch(()=>{});
+                console.log("Music playing");
 
-  }else{
+            })
+            .catch(function(){
 
-    bgMusic.pause();
+                console.log(
+                    "Music could not start."
+                );
 
-    musicPlaying = false;
+            });
 
-    musicToggle.classList.add("muted");
+    }else{
 
-  }
+        music.pause();
 
-});
-
-
-/* =========================================================
-   TICKCOUNTER
-========================================================= */
-
-(function(d,s,id){
-
-  var js,
-      fjs = d.getElementsByTagName(s)[0];
-
-  if(d.getElementById(id)) return;
-
-  js = d.createElement(s);
-
-  js.id = id;
-
-  js.src = "https://www.tickcounter.com/js/countdown.js";
-
-  fjs.parentNode.insertBefore(js,fjs);
-
-}(document,"script","tickcounter-script"));
-
-
-/* =========================================================
-   CENTER MOVING FLOWER
-========================================================= */
-
-const movingFlower =
-  document.getElementById("movingFlower");
-
-const timeline =
-  document.querySelector(".timeline");
-
-function moveFlower(){
-
-  if(!movingFlower || !timeline) return;
-
-  const rect =
-    timeline.getBoundingClientRect();
-
-  const scrollCenter =
-    window.innerHeight / 2;
-
-  let y =
-    scrollCenter - rect.top;
-
-  const maxY =
-    timeline.offsetHeight;
-
-  y =
-    Math.max(0,Math.min(maxY,y));
-
-  movingFlower.style.top =
-    y + "px";
+    }
 
 }
 
-window.addEventListener(
-  "scroll",
-  moveFlower,
-  {passive:true}
-);
-
-window.addEventListener(
-  "resize",
-  moveFlower
-);
-
-moveFlower();
-
 
 /* =========================================================
-   LEAFLET MAP
+   TIMELINE FLOWER
 ========================================================= */
 
-const map =
-  L.map("map",{
-    scrollWheelZoom:false
-  }).setView(
-    [33.6390,73.1610],
-    15
-  );
+const flower =
+document.getElementById("movingFlower");
 
-L.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  {
-    maxZoom:19,
-    attribution:"&copy; OpenStreetMap contributors"
-  }
-).addTo(map);
+const timeline =
+document.querySelector(".timeline");
 
-L.marker(
-  [33.6390,73.1610]
-).addTo(map)
- .bindPopup(
-   "<b>Al Hameed Grand Marquee</b><br>Islamabad"
- )
- .openPopup();
+
+function moveFlower(){
+
+    if(!timeline || !flower) return;
+
+
+    const rect =
+        timeline.getBoundingClientRect();
+
+
+    const scrollTop =
+        window.scrollY ||
+        window.pageYOffset;
+
+
+    const timelineTop =
+        rect.top + scrollTop;
+
+
+    const timelineHeight =
+        timeline.offsetHeight;
+
+
+    const flowerTravel =
+        timelineHeight - 120;
+
+
+    const timelineStart =
+        timelineTop -
+        window.innerHeight * 0.35;
+
+
+    const timelineEnd =
+        timelineTop +
+        timelineHeight -
+        window.innerHeight * 0.65;
+
+
+    let progress =
+        (scrollTop - timelineStart) /
+        (timelineEnd - timelineStart);
+
+
+    progress =
+        Math.max(
+            0,
+            Math.min(1,progress)
+        );
+
+
+    const newTop =
+        55 +
+        (flowerTravel * progress);
+
+
+    flower.style.top =
+        newTop + "px";
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    moveFlower,
+    {passive:true}
+);
+
+
+window.addEventListener(
+    "resize",
+    moveFlower
+);
+
+
+moveFlower();
 
 
 /* =========================================================
    GOLD SPARKLES
 ========================================================= */
 
-const sparkCanvas =
-  document.getElementById("sparkCanvas");
+const sparkleContainer =
+    document.getElementById("goldSparkles");
 
-const sparkCtx =
-  sparkCanvas.getContext("2d");
+if(sparkleContainer){
 
-let sparks = [];
+    const sparkleCount = 48;
 
-function resizeSparkCanvas(){
+    for(let i = 0; i < sparkleCount; i++){
 
-  sparkCanvas.width =
-    window.innerWidth;
+        const sparkle =
+            document.createElement("span");
 
-  sparkCanvas.height =
-    window.innerHeight;
-
-}
-
-resizeSparkCanvas();
-
-window.addEventListener(
-  "resize",
-  resizeSparkCanvas
-);
+        sparkle.className =
+            "gold-sparkle";
 
 
-function createSpark(){
+        const sizeClass =
+            Math.random();
 
-  sparks.push({
+        if(sizeClass < 0.22){
 
-    x:Math.random()*sparkCanvas.width,
+            sparkle.classList.add("large");
 
-    y:Math.random()*sparkCanvas.height,
+        }else if(sizeClass < 0.62){
 
-    size:Math.random()*1.8+.5,
+            sparkle.classList.add("small");
 
-    alpha:Math.random()*.6+.2,
-
-    speed:Math.random()*.25+.08,
-
-    phase:Math.random()*Math.PI*2
-
-  });
-
-}
+        }
 
 
-for(let i=0;i<55;i++){
-  createSpark();
-}
+        sparkle.style.left =
+            (Math.random() * 100) + "%";
 
 
-function drawSparks(){
+        sparkle.style.animationDuration =
+            (7 + Math.random() * 9) + "s";
 
-  sparkCtx.clearRect(
-    0,
-    0,
-    sparkCanvas.width,
-    sparkCanvas.height
-  );
 
-  for(const s of sparks){
+        sparkle.style.animationDelay =
+            (-Math.random() * 14) + "s";
 
-    s.phase += .02;
 
-    const glow =
-      s.alpha +
-      Math.sin(s.phase)*.2;
+        sparkle.style.transform =
+            "translate3d(0,-20px,0)";
 
-    sparkCtx.beginPath();
 
-    sparkCtx.arc(
-      s.x,
-      s.y,
-      s.size,
-      0,
-      Math.PI*2
-    );
-
-    sparkCtx.fillStyle =
-      "rgba(181,143,76," +
-      Math.max(.05,glow) +
-      ")";
-
-    sparkCtx.fill();
-
-    s.y -= s.speed;
-
-    if(s.y < -5){
-
-      s.y =
-        sparkCanvas.height + 5;
-
-      s.x =
-        Math.random()*sparkCanvas.width;
+        sparkleContainer.appendChild(
+            sparkle
+        );
 
     }
 
-  }
-
-  requestAnimationFrame(drawSparks);
-
 }
-
-drawSparks();
 
 
 /* =========================================================
-   SOFT PETALS
+   MAP
 ========================================================= */
 
-const petalCanvas =
-  document.getElementById("petalCanvas");
+const venueLat = 33.6390;
+const venueLng = 73.1610;
 
-const petalCtx =
-  petalCanvas.getContext("2d");
 
-let petals = [];
-
-function resizePetalCanvas(){
-
-  petalCanvas.width =
-    window.innerWidth;
-
-  petalCanvas.height =
-    window.innerHeight;
-
-}
-
-resizePetalCanvas();
-
-window.addEventListener(
-  "resize",
-  resizePetalCanvas
+const map =
+L.map("map").setView(
+    [venueLat,venueLng],
+    15
 );
 
 
-for(let i=0;i<18;i++){
-
-  petals.push({
-
-    x:Math.random()*window.innerWidth,
-
-    y:Math.random()*window.innerHeight,
-
-    size:Math.random()*4+2,
-
-    speed:Math.random()*.4+.15,
-
-    drift:Math.random()*.5-.25,
-
-    rotation:Math.random()*Math.PI
-
-  });
-
-}
-
-
-function drawPetals(){
-
-  petalCtx.clearRect(
-    0,
-    0,
-    petalCanvas.width,
-    petalCanvas.height
-  );
-
-  petals.forEach(p=>{
-
-    p.y += p.speed;
-    p.x += p.drift;
-
-    p.rotation += .005;
-
-    if(p.y > petalCanvas.height + 10){
-
-      p.y = -10;
-
-      p.x =
-        Math.random()*petalCanvas.width;
-
+L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+        maxZoom:19,
+        attribution:
+        '&copy; OpenStreetMap contributors'
     }
-
-    petalCtx.save();
-
-    petalCtx.translate(
-      p.x,
-      p.y
-    );
-
-    petalCtx.rotate(
-      p.rotation
-    );
-
-    petalCtx.beginPath();
-
-    petalCtx.ellipse(
-      0,
-      0,
-      p.size,
-      p.size*1.5,
-      0,
-      0,
-      Math.PI*2
-    );
-
-    petalCtx.fillStyle =
-      "rgba(255,255,255,.25)";
-
-    petalCtx.fill();
-
-    petalCtx.restore();
-
-  });
-
-  requestAnimationFrame(drawPetals);
-
-}
-
-drawPetals();
+).addTo(map);
 
 
-/* =========================================================
-   KEEP ALL VIDEOS PLAYING / LOOPING
-========================================================= */
-
-document.querySelectorAll("video").forEach(video=>{
-
-  video.loop = true;
-
-});
+const marker =
+L.marker(
+    [venueLat,venueLng]
+).addTo(map);
 
 
-/*
-  Gate itself should NOT loop.
-  It opens once and then disappears.
-*/
-
-gateVideo.loop = false;
-
-
-/* =========================================================
-   PREVENT WELCOME/FAMILY/DRESS FROM STAYING PAUSED
-========================================================= */
-
-document.addEventListener(
-  "visibilitychange",
-  ()=>{
-
-    if(document.visibilityState === "visible"){
-
-      document
-        .querySelectorAll("video")
-        .forEach(video=>{
-
-          if(video !== gateVideo){
-
-            video.play().catch(()=>{});
-
-          }
-
-        });
-
-    }
-
-  }
+marker.bindPopup(
+    "<b>Al Hameed Grand Marquee</b><br>" +
+    "Islamabad"
 );
+
+
+marker.openPopup();
+
+
+setTimeout(function(){
+
+    map.invalidateSize();
+
+},500);
+
 
 </script>
 
 </body>
 </html>
+
 
