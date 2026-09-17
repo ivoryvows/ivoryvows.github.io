@@ -129,7 +129,7 @@ body{
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:opacity:1.4s ease;
+    transition:opacity 1.4s ease;
 }
 
 .gate-overlay{
@@ -165,7 +165,7 @@ body{
     object-fit:cover;
     opacity:0;
     pointer-events:none;
-    transition:opacity:1.8s ease;
+    transition:opacity 1.8s ease;
 }
 
 #gateScreen.opening .gate-image,
@@ -209,7 +209,7 @@ body{
         saturate(.94);
 
     opacity:1;
-    transition:opacity:2.2s ease;
+    transition:opacity 2.2s ease;
 }
 
 .welcome-overlay{
@@ -296,6 +296,7 @@ body{
     background:#fffdf8;
     position:relative;
     z-index:2;
+    padding-top:8px;
 }
 
 .scratch-frame iframe{
@@ -387,6 +388,52 @@ body{
 .countdown-embed{
     width:100%;
     min-height:120px;
+}
+
+
+/* =========================================================
+   COUNTDOWN FLOWER FRAME — RESTORED
+========================================================= */
+
+.countdown-flower{
+    position:absolute;
+    width:95px;
+    height:95px;
+    object-fit:contain;
+    z-index:5;
+    pointer-events:none;
+}
+
+.countdown-flower-tl{
+    top:-25px;
+    left:-22px;
+}
+
+.countdown-flower-br{
+    bottom:-25px;
+    right:-22px;
+    transform:rotate(180deg);
+}
+
+.countdown-inner-flower{
+    position:absolute;
+    width:65px;
+    height:65px;
+    object-fit:contain;
+    z-index:5;
+    pointer-events:none;
+}
+
+.countdown-inner-flower-tr{
+    top:-17px;
+    right:-15px;
+    transform:scaleX(-1);
+}
+
+.countdown-inner-flower-bl{
+    bottom:-17px;
+    left:-15px;
+    transform:rotate(180deg);
 }
 
 
@@ -908,7 +955,33 @@ body{
 
     <div class="countdown-card">
 
+        <!-- RESTORED FLOWER FRAME -->
+
+        <img
+            class="countdown-flower countdown-flower-tl"
+            src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+            alt=""
+        >
+
+        <img
+            class="countdown-flower countdown-flower-br"
+            src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+            alt=""
+        >
+
         <div class="countdown-inner">
+
+            <img
+                class="countdown-inner-flower countdown-inner-flower-tr"
+                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+                alt=""
+            >
+
+            <img
+                class="countdown-inner-flower countdown-inner-flower-bl"
+                src="https://i.postimg.cc/T347PbNC/IMG-7987.png"
+                alt=""
+            >
 
             <div class="countdown-embed">
 
